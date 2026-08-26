@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Vunotho — Farmer-to-Market Operating System</title>
+  
+  <!-- SEO & OpenGraph Meta Tags -->
+  <meta name="description" content="Vunotho is an integrated farmer-to-market operating system featuring net-return price intelligence, multi-farmer load aggregation, offline-first reliability, and circular value recovery." />
+  <meta name="theme-color" content="#0F2942" />
+  
+  <!-- PWA Manifest & App Icons -->
+  <link rel="manifest" href="manifest.json" />
+  
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Core CSS Files -->
+  <link rel="stylesheet" href="css/main.css?v=4.0" />
+  <link rel="stylesheet" href="css/components.css?v=4.0" />
+  <link rel="stylesheet" href="css/views.css?v=4.0" />
+  <link rel="stylesheet" href="css/landing.css?v=4.0" />
+</head>
+<body>
+
+  <!-- Cinematic Orbital Splash Screen & App Boot Loader (Concept-Aligned) -->
+  <div id="splash-screen" class="splash-overlay">
+    <div class="orbital-loader-container">
+      <!-- 5 Orbiting Tiny Satellites -->
+      <div class="orbital-ring">
+        <div class="orbital-particle particle-1"></div>
+        <div class="orbital-particle particle-2"></div>
+        <div class="orbital-particle particle-3"></div>
+        <div class="orbital-particle particle-4"></div>
+        <div class="orbital-particle particle-5"></div>
+      </div>
+
+      <!-- Floating Core Emblem Disc -->
+      <div class="orbital-core-disc">
+        <span class="orbital-v-logo">V</span>
+      </div>
+    </div>
+
+    <h1 class="splash-title">VUNOTHO</h1>
+    <div class="splash-tagline">Farmer-to-Market Operating System</div>
+
+    <div class="splash-progress-wrapper">
+      <div class="splash-progress-track">
+        <div class="splash-progress-bar" id="splash-progress-bar"></div>
+      </div>
+      <div class="splash-status-caption" id="splash-status-text">Loading assets...</div>
+    </div>
+
+    <button type="button" class="splash-skip-btn" onclick="window.vunothoApp.dismissSplash()">
+      Skip Intro →
+    </button>
+  </div>
+
+  <!-- Main Application Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <!-- Brand Identity -->
+      <a href="./" class="brand-wrapper" id="brand-link" onclick="if(window.location.hash){window.location.hash='';}">
+        <div class="brand-logo">V</div>
+        <div class="brand-text">
+          <span class="brand-title">VUNOTHO</span>
+          <span class="brand-tagline">Turning Produce into Value</span>
+        </div>
+      </a>
+
+      <!-- Header Actions / Authenticated Profile / Guest Login -->
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <div class="sync-status-pill status-synced" id="sync-status-indicator" title="All records up-to-date and confirmed.">
+          <span class="sync-pulse"></span>
+          <span id="sync-status-text">Synced</span>
+        </div>
+
+        <div id="header-right-nav">
+          <!-- Populated dynamically: Guest Login buttons or User Profile + Sign Out -->
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Application Viewport -->
+  <main class="main-viewport" id="main-content">
+    
+    <!-- Offline Status Alert Banner (Shown dynamically when disconnected) -->
+    <div id="offline-banner" class="offline-banner hidden" role="alert">
+      <div class="offline-banner-content">
+        <div>
+          <strong>Offline Mode Active:</strong> You can safely log harvests, draft listings, and view cached offers. Actions that require central order locks will sync once connectivity returns.
+        </div>
+      </div>
+      <button class="btn btn-sm btn-outline" style="color: #ffffff; border-color: rgba(255,255,255,0.3);" onclick="window.vunothoSync.syncPendingQueue()">
+        Sync Now
+      </button>
+    </div>
+
+    <!-- Dynamic Main View Container (Landing, Farmer, Buyer, Transporter, or Admin) -->
+    <div id="app-view-container" style="transition: opacity 0.2s ease-in-out;">
+      <!-- Populated dynamically by Router -->
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div>
+        <strong>Vunotho Platform</strong> • An Integrated Farmer-to-Market Operating System & Logistics Layer
+      </div>
+      <div class="enactus-tag">
+        Enactus International Blueprint
+      </div>
+    </div>
+  </footer>
+
+  <!-- Global Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- EcoCash & Mobile Money PIN Keypad Modal -->
+  <div id="payment-pin-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="pin-modal-title">
+    <div class="modal-box" style="max-width: 380px;">
+      <div class="modal-header">
+        <h3 class="h3-title" id="pin-modal-title" style="margin: 0;">EcoCash Authorization</h3>
+        <button class="modal-close-btn" onclick="window.vunothoSettlement.closePinModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="pin-display-wrapper">
+          <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Authorizing Net Payout</div>
+          <div id="pin-modal-amount" style="font-size: 2rem; font-weight: 800; font-family: var(--font-mono); color: var(--green-600); margin: 0.25rem 0;">$0.00</div>
+          <div style="font-size: 0.85rem; color: var(--navy-800);">To: <strong id="pin-modal-farmer">Farmer</strong></div>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">Enter 4-digit Sandbox EcoCash PIN to confirm release</p>
+
+          <div class="pin-dots-container">
+            <div class="pin-dot"></div>
+            <div class="pin-dot"></div>
+            <div class="pin-dot"></div>
+            <div class="pin-dot"></div>
+          </div>
+        </div>
+
+        <!-- Interactive PIN Keypad -->
+        <div class="keypad-grid">
+          <button type="button" class="keypad-btn" onclick="window.vunothoSettlement.handlePinInput('1')">1</button>
+          <button type="button" class="keypad-btn" onclick="window.vunothoSettlement.handlePinInput('2')">2</button>
+          <button type="button" class="keypad-btn" onclick="window.vunothoSettlement.handlePinInput('3')">3</button>
+          <button type="button" class="keypad-btn" onclick="window.vunothoSettlement.handlePinInput('4')">4</button>
+          <button type="button" class="keypad-btn" onclick="window.vunothoSettlement.handlePinInput('5')">5</button>
+          <button type="button" class="keypad-btn" onclick="window.vunothoSettlement.handlePinInput('6')">6</button>
+          <button type="button" class="keypad-btn" onclick="window.vunothoSettlement.handlePinInput('7')">7</button>
+          <button type="button" class="keypad-btn" onclick="window.vunothoSettlement.handlePinInput('8')">8</button>
+          <button type="button" class="keypad-btn" onclick="window.vunothoSettlement.handlePinInput('9')">9</button>
+          <button type="button" class="keypad-btn" style="font-size: 0.85rem; font-weight: 600;" onclick="window.vunothoSettlement.closePinModal()">Cancel</button>
+          <button type="button" class="keypad-btn" onclick="window.vunothoSettlement.handlePinInput('0')">0</button>
+          <button type="button" class="keypad-btn" onclick="window.vunothoSettlement.handlePinBackspace()">⌫</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Verifiable Digital Receipt Modal -->
+  <div id="receipt-modal" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="h3-title">Verifiable Digital Receipt</h3>
+        <button class="modal-close-btn" onclick="document.getElementById('receipt-modal').classList.remove('active')">✕</button>
+      </div>
+      <div class="modal-body" id="receipt-modal-content">
+        <!-- Injected dynamically by Settlement Engine -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="window.print()">Print Receipt</button>
+        <button class="btn btn-primary-green" onclick="document.getElementById('receipt-modal').classList.remove('active')">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Core JavaScript Modules (Executed in Dependency Order) -->
+  <script src="js/icons.js?v=4.0"></script>
+  <script src="js/db.js?v=4.0"></script>
+  <script src="js/api.js?v=4.0"></script>
+  <script src="js/auth.js?v=4.0"></script>
+  <script src="js/sync.js?v=4.0"></script>
+  <script src="js/geo.js?v=4.0"></script>
+  <script src="js/pricing.js?v=4.0"></script>
+  <script src="js/logistics.js?v=4.0"></script>
+  <script src="js/value_recovery.js?v=4.0"></script>
+  <script src="js/settlement.js?v=4.0"></script>
+  <script src="js/views/landingView.js?v=4.0"></script>
+  <script src="js/views/farmerView.js?v=4.0"></script>
+  <script src="js/views/buyerView.js?v=4.0"></script>
+  <script src="js/views/transporterView.js?v=4.0"></script>
+  <script src="js/views/adminView.js?v=4.0"></script>
+  <script src="js/app.js?v=4.0"></script>
+
+</body>
+</html>

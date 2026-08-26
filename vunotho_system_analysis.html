@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vunotho — System Analysis & Design Document (SADM)</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Mermaid.js for Dynamic Interactive System Diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#0f2942',
+                primaryTextColor: '#ffffff',
+                primaryBorderColor: '#059669',
+                lineColor: '#0284c7',
+                secondaryColor: '#fef3c7',
+                tertiaryColor: '#f1f5f9',
+                noteBkgColor: '#fef3c7',
+                noteTextColor: '#92400e',
+                fontFamily: 'Plus Jakarta Sans, sans-serif'
+            }
+        });
+    </script>
+    <style>
+        :root {
+            /* 70% Deep Navy + White */
+            --navy-dark: #0a192f;
+            --navy-primary: #0f2942;
+            --navy-light: #1e3a8a;
+            --navy-surface: #f8fafc;
+            --navy-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border-color: #e2e8f0;
+            
+            /* 20% Gold + Emerald Green */
+            --gold-primary: #d97706;
+            --gold-accent: #f59e0b;
+            --gold-light: #fef3c7;
+            --green-primary: #059669;
+            --green-dark: #047857;
+            --green-light: #d1fae5;
+            
+            /* 10% Orange + Teal */
+            --orange-alert: #ea580c;
+            --orange-light: #ffedd5;
+            --teal-data: #0d9488;
+            --teal-light: #ccfbf1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--navy-surface);
+            color: var(--text-main);
+            line-height: 1.65;
+            padding: 0;
+        }
+
+        header.header {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-primary) 100%);
+            color: #ffffff;
+            padding: 3rem 2rem;
+            border-bottom: 4px solid var(--gold-accent);
+            box-shadow: 0 10px 25px -5px rgba(10, 25, 47, 0.3);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .badge-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.35rem 0.85rem;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .badge-navy { background: rgba(255,255,255,0.15); color: #ffffff; border: 1px solid rgba(255,255,255,0.25); }
+        .badge-gold { background: var(--gold-light); color: #92400e; border: 1px solid var(--gold-accent); }
+        .badge-green { background: var(--green-light); color: var(--green-dark); border: 1px solid var(--green-primary); }
+        .badge-orange { background: var(--orange-light); color: #9a3412; border: 1px solid var(--orange-alert); }
+        .badge-teal { background: var(--teal-light); color: #115e59; border: 1px solid var(--teal-data); }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            color: #cbd5e1;
+            max-width: 850px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .quick-nav {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 1.25rem 1.75rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .quick-nav span {
+            font-weight: 700;
+            color: var(--navy-primary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .quick-nav a {
+            color: var(--navy-light);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .quick-nav a:hover {
+            background: var(--navy-surface);
+            color: var(--green-primary);
+        }
+
+        .section-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 2.25rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            border-top-left-radius: 16px;
+            border-bottom-left-radius: 16px;
+            background: var(--navy-primary);
+        }
+
+        .section-card.accent-green::before { background: var(--green-primary); }
+        .section-card.accent-gold::before { background: var(--gold-primary); }
+        .section-card.accent-orange::before { background: var(--orange-alert); }
+        .section-card.accent-teal::before { background: var(--teal-data); }
+
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--navy-dark);
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--navy-primary);
+            margin: 1.5rem 0 0.75rem;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        /* Diagram Containers */
+        .diagram-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+        }
+
+        .diagram-caption {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-align: center;
+            margin-top: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Missing Info Flag [!N] */
+        .flag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--orange-alert);
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 0.8rem;
+            padding: 0.15rem 0.55rem;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 0 0.25rem;
+            box-shadow: 0 2px 5px rgba(234, 88, 12, 0.35);
+            transition: transform 0.15s ease;
+        }
+
+        .flag:hover {
+            transform: scale(1.1);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 0.85rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: #f1f5f9;
+            color: var(--navy-dark);
+            font-weight: 700;
+        }
+
+        tr:hover td {
+            background: #f8fafc;
+        }
+
+        /* Question Box Style */
+        .question-card {
+            background: #fffaf0;
+            border: 1px solid #feebc8;
+            border-left: 4px solid var(--orange-alert);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .question-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            color: #9a3412;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-body {
+            color: #431407;
+            font-size: 0.95rem;
+        }
+
+        .system-pill {
+            display: inline-block;
+            padding: 0.25rem 0.65rem;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            background: #e2e8f0;
+            color: var(--navy-dark);
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--border-color);
+            background: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-container">
+            <div class="badge-bar">
+                <span class="badge badge-navy">SADM Architectural Blueprint</span>
+                <span class="badge badge-green">Enactus Competition Standard</span>
+                <span class="badge badge-gold">Value-Recovery Model</span>
+                <span class="badge badge-teal">Offline-First Tech</span>
+            </div>
+            <h1>VUNOTHO — System Analysis & Design Document (SADM)</h1>
+            <p class="subtitle">
+                A formal System Analysis & Design Methodology specification transforming the farmer-to-market value chain into a resilient, scalable digital operating system.
+            </p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Navigation Bar -->
+        <nav class="quick-nav">
+            <span>Sections:</span>
+            <a href="#overview">1. System Context</a>
+            <a href="#actors">2. User & Actor Matrix</a>
+            <a href="#dfd">3. Data Flow Diagrams (DFD)</a>
+            <a href="#erd">4. Entity-Relationship (ERD)</a>
+            <a href="#sequence">5. Sequence & Value Chain</a>
+            <a href="#offline">6. Offline Sync State Machine</a>
+            <a href="#value-recovery">7. Value-Recovery Engine</a>
+            <a href="#questions" style="color: var(--orange-alert);">8. Questions & Clarifications <span class="system-pill" style="background: var(--orange-alert); color:#fff;">[!1 - !9]</span></a>
+        </nav>
+
+        <!-- 1. SYSTEM CONTEXT & PROBLEM SCOPE -->
+        <section id="overview" class="section-card accent-green">
+            <h2>🌱 1. System Overview & Problem Statement</h2>
+            <p>
+                <strong>Vunotho</strong> is not a passive produce listing board or basic farm management utility. It is an integrated <strong>Farmer-to-Value Operating System</strong> designed to solve the structural bottlenecks faced by rural smallholder farmers in emerging economies (starting with Zimbabwe <a href="#q1" class="flag">!1</a>).
+            </p>
+
+            <div class="diagram-box">
+                <div class="mermaid">
+                graph LR
+                    subgraph Rural Smallholder Problem
+                        P1[Unreliable Buyers]
+                        P2[Price Opacity]
+                        P3[Excess Appearance Rejection]
+                        P4[Prohibitive Transport Cost]
+                        P5[Post-Harvest Waste]
+                    end
+                    
+                    subgraph Vunotho Unified System
+                        V1[Verified Buyer Matching]
+                        V2[Net-Return Price Intelligence]
+                        V3[4-Tier Value Recovery]
+                        V4[Pooled Load Logistics]
+                        V5[Offline-First Digital Ledger]
+                    end
+                    
+                    P1 -.-> V1
+                    P2 -.-> V2
+                    P3 -.-> V3
+                    P4 -.-> V4
+                    P5 -.-> V5
+                </div>
+                <div class="diagram-caption">Figure 1.1: Problem-to-Solution Mapping Paradigm</div>
+            </div>
+        </section>
+
+        <!-- 2. ACTORS & USE CASE MATRIX -->
+        <section id="actors" class="section-card accent-teal">
+            <h2>👥 2. Stakeholder & Role-Based Actor Matrix</h2>
+            <p>
+                The system provides tailored interfaces and workflows based on distinct actor roles:
+            </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Actor Role</th>
+                        <th>Primary Responsibilities</th>
+                        <th>Core Capabilities</th>
+                        <th>Connectivity Profile</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Farmer</strong></td>
+                        <td>Registers harvest, reviews transparent net returns, requests pickup.</td>
+                        <td>Create harvest listings, compare buyer offers, schedule aggregated transport, view digital transaction ledger.</td>
+                        <td><strong>Offline-First</strong> (Intermittent 2G/3G connectivity).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Buyer (Commercial / Retail)</strong></td>
+                        <td>Posts verified demand requests, approves batches, issues payments.</td>
+                        <td>Submit crop specs, order aggregated supply, track delivery milestones, review supplier quality metrics.</td>
+                        <td>Continuous Internet (Web / Mobile).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transporter / Driver</strong></td>
+                        <td>Executes route pickups, verifies load weight/grade at farmgate, delivers to hubs.</td>
+                        <td>Receive dispatched route assignments, scan/verify manifests, update live GPS/status checkpoints <a href="#q2" class="flag">!2</a>.</td>
+                        <td>Semi-Connected (Mobile app with offline cache).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Vunotho Hub Administrator</strong></td>
+                        <td>Oversees marketplace balance, routes surplus to processing, tracks Enactus KPIs.</td>
+                        <td>Dispatch routes, manage value-recovery facilities, resolve disputes, export verified impact analytics.</td>
+                        <td>Continuous Internet (High-density Admin Portal).</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- 3. DATA FLOW DIAGRAMS -->
+        <section id="dfd" class="section-card accent-navy">
+            <h2>🔄 3. Data Flow Diagrams (DFD)</h2>
+            <p>
+                The data flow illustrates how listings, pricing quotes, transport manifests, and payments navigate through central and local boundaries.
+            </p>
+
+            <h3>Context Level 0 Diagram</h3>
+            <div class="diagram-box">
+                <div class="mermaid">
+                flowchart TD
+                    F[Farmer] <-->|1. Produce Listing & Transport Acceptance / Net Return Records| V[VUNOTHO CORE OS]
+                    B[Buyer] <-->|2. Demand Specs, Purchase Orders & Escrow Payments| V
+                    T[Transporter] <-->|3. Route Manifests, Pickup Confirmation & Delivery Proof| V
+                    H[Value-Recovery Hub] <-->|4. Processing Intakes, Byproduct Sales & Diversion Logs| V
+                    A[Hub Admin] <-->|5. Platform Governance, Dispute Arbitrations & Impact Reporting| V
+                </div>
+                <div class="diagram-caption">Figure 3.1: DFD Level 0 (Context Level Diagram)</div>
+            </div>
+
+            <h3>Level 1 Diagram — Core Transaction & Value-Chain Subsystems</h3>
+            <div class="diagram-box">
+                <div class="mermaid">
+                flowchart TB
+                    subgraph Farmer Subsystem
+                        F_In[Harvest Entry] --> P1[1.0 Listing & Catalog Service]
+                        P1 --> D1[(Local SQLite / Cache)]
+                    end
+
+                    subgraph Intelligence & Matching
+                        P1 -->|Sync Event| P2[2.0 Pricing & Offer Matching Engine]
+                        B_In[Buyer Demand] --> P2
+                        P2 -->|Compute Net: Price - Transport - Fee| P3[3.0 Net-Return Calculator]
+                        P3 --> F_View[Farmer Comparison View]
+                    end
+
+                    subgraph Logistics & Fulfillment
+                        F_View -->|Accept Offer| P4[4.0 Load Aggregator & Dispatch]
+                        P4 -->|Nearby Farmer Grouping| D2[(Logistics Queue)]
+                        D2 --> P5[5.0 Transporter Routing]
+                        P5 --> T_Driver[Driver Manifest]
+                    end
+
+                    subgraph Value Recovery Engine
+                        P1 -->|Sub-grade / Surplus Tag| P6[6.0 Multi-Path Value Recovery Router]
+                        P6 --> H_Fresh[Fresh Market]
+                        P6 --> H_Proc[Processing: Flour/Chips]
+                        P6 --> H_Feed[Animal Feed]
+                        P6 --> H_Comp[Organic Compost]
+                    end
+
+                    subgraph Settlement & Ledger
+                        P5 -->|Delivery Confirmed| P7[7.0 Transaction Ledger & Settlement]
+                        P7 --> D3[(Audit & Impact Database)]
+                    end
+                </div>
+                <div class="diagram-caption">Figure 3.2: DFD Level 1 (Decomposition of Value Pipeline)</div>
+            </div>
+        </section>
+
+        <!-- 4. DATA MODEL & ERD -->
+        <section id="erd" class="section-card accent-gold">
+            <h2>🗄️ 4. Entity-Relationship Model (ERD)</h2>
+            <p>
+                Core relational model maintaining transaction integrity, multi-producer aggregation, and audit logs.
+            </p>
+
+            <div class="diagram-box">
+                <div class="mermaid">
+                erDiagram
+                    USER ||--o{ FARMER_PROFILE : is
+                    USER ||--o{ BUYER_PROFILE : is
+                    USER ||--o{ TRANSPORTER_PROFILE : is
+                    
+                    FARMER_PROFILE ||--o{ PRODUCE_LISTING : creates
+                    PRODUCE_LISTING ||--o{ VALUE_RECOVERY_ROUTING : categorizes
+                    
+                    BUYER_PROFILE ||--o{ DEMAND_REQUEST : submits
+                    DEMAND_REQUEST ||--o{ MATCHED_OFFER : triggers
+                    
+                    PRODUCE_LISTING ||--o{ MATCHED_OFFER : satisfies
+                    MATCHED_OFFER ||--|| ORDER_ITEM : converts_to
+                    
+                    AGGREGATED_ORDER ||--|{ ORDER_ITEM : contains
+                    AGGREGATED_ORDER ||--|| TRANSPORT_MANIFEST : assigned_to
+                    TRANSPORTER_PROFILE ||--o{ TRANSPORT_MANIFEST : executes
+                    
+                    AGGREGATED_ORDER ||--|| TRANSACTION_RECORD : settles
+                    TRANSACTION_RECORD ||--|| IMPACT_METRIC_LOG : calculates
+                    
+                    PRODUCE_LISTING {
+                        uuid listing_id PK
+                        uuid farmer_id FK
+                        string crop_type
+                        decimal quantity_kg
+                        string quality_tier
+                        string collection_lat_long
+                        string sync_status
+                        datetime harvest_date
+                    }
+
+                    MATCHED_OFFER {
+                        uuid offer_id PK
+                        decimal gross_offer_price
+                        decimal est_transport_cost
+                        decimal est_service_fee
+                        decimal calculated_net_return
+                        string acceptance_status
+                    }
+
+                    TRANSPORT_MANIFEST {
+                        uuid manifest_id PK
+                        uuid transporter_id FK
+                        decimal aggregated_weight_kg
+                        string pickup_route_waypoints
+                        decimal total_payout_amount
+                        string dispatch_status
+                    }
+
+                    IMPACT_METRIC_LOG {
+                        uuid impact_id PK
+                        decimal farmer_income_lift_pct
+                        decimal kg_diverted_from_waste
+                        decimal transport_savings_pct
+                        int youth_hours_generated
+                    }
+                </div>
+                <div class="diagram-caption">Figure 4.1: High-Level Entity-Relationship Model</div>
+            </div>
+        </section>
+
+        <!-- 5. SEQUENCE & PROCESS FLOW -->
+        <section id="sequence" class="section-card accent-teal">
+            <h2>⏱️ 5. End-to-End Value-Chain Sequence Flow</h2>
+            <p>
+                Visualizing how a single transaction seamlessly transitions from farmgate harvest logging to final net payout and impact ledger update.
+            </p>
+
+            <div class="diagram-box">
+                <div class="mermaid">
+                sequenceDiagram
+                    autonumber
+                    actor F as Farmer
+                    participant App as Vunotho Mobile (Offline-Ready)
+                    participant S as Vunotho Core Cloud
+                    actor B as Buyer
+                    actor T as Transporter
+                    participant H as Value-Recovery Hub
+
+                    F->>App: Logs Harvest (e.g., 200kg Potatoes, Grade B)
+                    Note over App: Stored in Local SQLite [Saved Offline]
+                    App-->>S: Syncs when signal detected [Syncing -> Synced]
+                    
+                    B->>S: Creates Demand Request (Bulk Potato Requirement)
+                    S->>S: Calculates Multi-Offer Intelligence:<br/>Offer Price ($X) - Transport ($Y) - Fee = Net ($Z)
+                    S->>App: Delivers Comparative Offers
+                    
+                    F->>App: Accepts Optimal Offer
+                    App->>S: Confirm Transaction Commitment
+                    
+                    S->>S: Aggregation Engine groups nearby farm orders
+                    S->>T: Dispatches Aggregated Pickup Manifest
+                    
+                    T->>F: Arrives at Farmgate, verifies weight/quality
+                    T->>S: Confirms Farmgate Handover
+                    
+                    alt Fresh Pathway
+                        T->>B: Delivers to Commercial Buyer
+                        B->>S: Acknowledges Delivery & Quality
+                    else Processing / Recovery Pathway
+                        T->>H: Delivers to Vunotho Processing Centre (Flour/Crisps)
+                        H->>S: Logs Quantity Diverted & Intake Weight
+                    end
+                    
+                    S->>F: Releases Digital Net Payout & Transaction Receipt
+                    S->>S: Updates Pilot KPI Dashboard (Waste Diverted, Income Lift)
+                </div>
+                <div class="diagram-caption">Figure 5.1: Value-Chain Execution Sequence</div>
+            </div>
+        </section>
+
+        <!-- 6. OFFLINE-FIRST STATE MACHINE -->
+        <section id="offline" class="section-card accent-navy">
+            <h2>📶 6. Offline-First Synchronization State Machine</h2>
+            <p>
+                Given real-world rural telecom constraints, the system handles state transitions strictly through four observable states:
+            </p>
+
+            <div class="diagram-box">
+                <div class="mermaid">
+                stateDiagram-v2
+                    [*] --> SavedOffline: Farmer writes action (No Network)
+                    SavedOffline --> Syncing: Network Detected / Auto-Trigger
+                    
+                    state Syncing {
+                        [*] --> ValidateLocalHash
+                        ValidateLocalHash --> UploadPayload
+                        UploadPayload --> ReconcileConflicts
+                    }
+                    
+                    Syncing --> Synced: Transaction Confirmed by Central OS
+                    Syncing --> NeedsAttention: Version Conflict / Price Expired / Server Reject
+                    
+                    NeedsAttention --> SavedOffline: Farmer resolves dispute / updates data
+                    Synced --> [*]
+                </div>
+                <div class="diagram-caption">Figure 6.1: Synchronization Lifecycle State Machine</div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Status Pill</th>
+                        <th>Color</th>
+                        <th>System State Trigger</th>
+                        <th>User Action Permitted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="system-pill" style="background:#e2e8f0; color:#334155;">Saved Offline</span></td>
+                        <td>Slate Grey</td>
+                        <td>Transaction saved locally in SQLite; waiting for uplink.</td>
+                        <td>Edit, cancel, view cached records.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="system-pill" style="background:var(--teal-light); color:#115e59;">Syncing</span></td>
+                        <td>Teal</td>
+                        <td>Network handshake active; background queue transmitting payloads.</td>
+                        <td>Read-only lock on current record.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="system-pill" style="background:var(--green-light); color:var(--green-dark);">Synced</span></td>
+                        <td>Emerald Green</td>
+                        <td>Central backend acknowledged, verified, and assigned global UUID.</td>
+                        <td>Full access to live status and dispatch tracker.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="system-pill" style="background:var(--orange-light); color:#9a3412;">Needs Attention</span></td>
+                        <td>Orange</td>
+                        <td>Conflict detected (e.g. buyer offer expired while farmer was offline) <a href="#q3" class="flag">!3</a>.</td>
+                        <td>Review resolution options and re-confirm.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- 7. VALUE-RECOVERY ENGINE ARCHITECTURE -->
+        <section id="value-recovery" class="section-card accent-orange">
+            <h2>♻️ 7. Circular Value-Recovery Decision Tree</h2>
+            <p>
+                The engine evaluates produce parameters (freshness, visual defects, size irregularities, shelf-life) to systematically prevent farm-level dump waste.
+            </p>
+
+            <div class="diagram-box">
+                <div class="mermaid">
+                graph TD
+                    P[Harvest Intake Inspection] --> Q{Quality & Cosmetic Assessment}
+                    
+                    Q -->|Grade A / Commercial Spec| R1[1. Fresh-Market Pathway]
+                    Q -->|Imperfect Appearance / Oversupply| R2[2. Processing Pathway]
+                    Q -->|Sub-grade / Trim / Non-Human| R3[3. Animal-Feed Pathway]
+                    Q -->|Organic Residue / Spoiled| R4[4. Composting & Soil Regeneration]
+                    
+                    R1 --> S1[Supermarkets, Wholesalers & Direct Retail]
+                    R2 --> S2[Vunotho Processing: Potato Chips, Starch, Flour, Dried]
+                    R3 --> S3[Local Livestock Feed Suppliers]
+                    R4 --> S4[Bio-fertilizer for Next Crop Cycle]
+                    
+                    S1 & S2 & S3 & S4 --> M[Central Metric: Total KG Diverted from Disposal]
+                </div>
+                <div class="diagram-caption">Figure 7.1: Value-Recovery Routing Algorithm</div>
+            </div>
+        </section>
+
+        <!-- 8. QUESTIONS & CLARIFICATIONS SECTION -->
+        <section id="questions" class="section-card accent-orange">
+            <h2>❓ 8. Missing Information & Clarification Questions</h2>
+            <p>
+                To transition from architectural analysis into implementation without assumptions, the following numbered items (<span class="system-pill" style="background: var(--orange-alert); color: #fff;">[!1] - [!9]</span>) require explicit clarification:
+            </p>
+
+            <div id="q1" class="question-card">
+                <div class="question-header">
+                    <span class="flag">!1</span> Target Geographic Location & Currency Handling
+                </div>
+                <div class="question-body">
+                    The blueprint mentions Zimbabwe and international competitions (Enactus). Which target currency or dual-currency model should the platform calculate and display (e.g., USD $, ZiG, or multi-currency)?
+                </div>
+            </div>
+
+            <div id="q2" class="question-card">
+                <div class="question-header">
+                    <span class="flag">!2</span> Transporter Matching & GPS Capability
+                </div>
+                <div class="question-body">
+                    In rural collection areas where cell towers or GPS accuracy may fluctuate, how should collection points be designated? Via precise GPS coordinates, predefined community collection hubs, or manual landmark drop-points?
+                </div>
+            </div>
+
+            <div id="q3" class="question-card">
+                <div class="question-header">
+                    <span class="flag">!3</span> Offline Price Offer Expiry & Conflict Rules
+                </div>
+                <div class="question-body">
+                    If a farmer accepts a cached buyer offer while offline, but the buyer fills their quota or retracts the offer before the farmer re-establishes internet, what is the automated fallback policy for "Needs Attention"? Should the system auto-match the next best offer or prompt the farmer?
+                </div>
+            </div>
+
+            <div id="q4" class="question-card">
+                <div class="question-header">
+                    <span class="flag">!4</span> Payment Settlement Mechanism
+                </div>
+                <div class="question-body">
+                    How are payments transferred to farmers upon completion? Via mobile money (e.g., EcoCash, InnBucks), cash on farmgate collection by transporter, bank transfer, or internal Vunotho digital escrow balances?
+                </div>
+            </div>
+
+            <div id="q5" class="question-card">
+                <div class="question-header">
+                    <span class="flag">!5</span> Transport Fee Splitting Logic
+                </div>
+                <div class="question-body">
+                    When the logistics engine aggregates loads from 3 different farmers into one truck: is the transport fee divided proportionally by weight (kg), distance from hub, or flat rate per pickup?
+                </div>
+            </div>
+
+            <div id="q6" class="question-card">
+                <div class="question-header">
+                    <span class="flag">!6</span> Processing Pathway Operation Model
+                </div>
+                <div class="question-body">
+                    Are the Vunotho Processing Centres physical facilities owned and operated directly by the Enactus team/cooperative, or are they 3rd-party processing partners connected via the platform?
+                </div>
+            </div>
+
+            <div id="q7" class="question-card">
+                <div class="question-header">
+                    <span class="flag">!7</span> Role Permissions & User Sign-up Flow
+                </div>
+                <div class="question-body">
+                    Can a farmer register themselves directly via the app, or is registration carried out in person by community field agents/Enactus team members to guarantee verified profiles?
+                </div>
+            </div>
+
+            <div id="q8" class="question-card">
+                <div class="question-header">
+                    <span class="flag">!8</span> Communication Channels for Non-Smartphone Farmers
+                </div>
+                <div class="question-body">
+                    Is the platform strictly a smartphone application (PWA/Android), or should it support auxiliary SMS / USSD / WhatsApp bot bridges for farmers without smartphones in the pilot community?
+                </div>
+            </div>
+
+            <div id="q9" class="question-card">
+                <div class="question-header">
+                    <span class="flag">!9</span> Enactus Competition Presentation & Interactive Demo Mode
+                </div>
+                <div class="question-body">
+                    Do you require a built-in "Enactus Judge / Demo Walkthrough Mode" with preloaded pilot data (showing stage 1 potato farmer income before vs. after, kg saved from waste, and live map aggregation) to demonstrate directly during competition pitches?
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p><strong>Vunotho Operating System</strong> • System Analysis & Design Specification • Enactus International Blueprint</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,275 @@
+/* ==========================================================================
+   VUNOTHO VIEW SPECIFIC STYLES
+   Farmer, Buyer, Transporter, Admin, and Value Recovery Interfaces
+   ========================================================================== */
+
+/* Role Header Banner */
+.role-banner {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.role-banner-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.role-avatar {
+  width: 54px;
+  height: 54px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.role-avatar.farmer { background: linear-gradient(135deg, var(--green-600) 0%, var(--green-900) 100%); }
+.role-avatar.buyer { background: linear-gradient(135deg, var(--teal-600) 0%, var(--navy-800) 100%); }
+.role-avatar.transporter { background: linear-gradient(135deg, var(--orange-600) 0%, var(--gold-600) 100%); }
+.role-avatar.admin { background: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-700) 100%); }
+
+/* Offer Card (Farmer Price Intelligence) */
+.offer-card {
+  background: #ffffff;
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  transition: var(--transition);
+}
+
+.offer-card:hover {
+  border-color: var(--teal-500);
+  box-shadow: var(--shadow-md);
+}
+
+.offer-card.recommended {
+  border-color: var(--gold-500);
+  background: #fffdfa;
+}
+
+.offer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.offer-buyer-name {
+  font-weight: 700;
+  color: var(--navy-900);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.offer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  background: var(--navy-50);
+  padding: 0.85rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.offer-stat-title {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.offer-stat-val {
+  font-size: 1.15rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  margin-top: 0.15rem;
+}
+
+/* Aggregated Batch List (Buyer & Transporter View) */
+.batch-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1rem;
+  background: var(--navy-50);
+  border-radius: var(--radius-md);
+  margin-bottom: 0.5rem;
+  border-left: 3px solid var(--green-600);
+}
+
+.batch-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.batch-farmer {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--navy-900);
+}
+
+.batch-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Transporter Route Waypoint Timeline */
+.waypoint-timeline {
+  position: relative;
+  padding-left: 2rem;
+  margin: 1.5rem 0;
+}
+
+.waypoint-timeline::before {
+  content: '';
+  position: absolute;
+  left: 0.6rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 3px;
+  background: var(--border-light);
+}
+
+.waypoint-step {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.waypoint-step:last-child {
+  margin-bottom: 0;
+}
+
+.waypoint-marker {
+  position: absolute;
+  left: -2rem;
+  top: 0.1rem;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid var(--orange-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--orange-600);
+}
+
+.waypoint-step.completed .waypoint-marker {
+  background: var(--green-600);
+  border-color: var(--green-600);
+  color: #ffffff;
+}
+
+.waypoint-content {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Value Recovery Pathways Grid */
+.recovery-pathway-card {
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  border: 2px solid var(--border-light);
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: var(--transition);
+}
+
+.recovery-pathway-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.recovery-pathway-card.tier-fresh { border-top: 4px solid var(--green-600); }
+.recovery-pathway-card.tier-processing { border-top: 4px solid var(--gold-500); }
+.recovery-pathway-card.tier-feed { border-top: 4px solid var(--teal-600); }
+.recovery-pathway-card.tier-compost { border-top: 4px solid var(--orange-600); }
+
+/* Enactus Impact Scorecard Table & Grid */
+.enactus-scorecard-header {
+  background: linear-gradient(135deg, var(--navy-950) 0%, var(--navy-900) 100%);
+  color: #ffffff;
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 4px solid var(--gold-500);
+}
+
+.enactus-grid-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.enactus-metric-box {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+
+.enactus-metric-val {
+  font-size: 2rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--gold-500);
+}
+
+.enactus-metric-lbl {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #cbd5e1;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* Digital Receipt Modal Content */
+.receipt-box {
+  background: #ffffff;
+  border: 2px dashed var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin: 1rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.35rem 0;
+  border-bottom: 1px dotted var(--border-light);
+}
+
+.receipt-row.total {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--navy-900);
+  border-top: 2px solid var(--navy-900);
+  border-bottom: none;
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+}

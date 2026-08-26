@@ -1,0 +1,353 @@
+/* ==========================================================================
+   VUNOTHO DESIGN SYSTEM & CORE TOKENS
+   Color Distribution (Strict 70 / 20 / 10 Specification):
+   - 70%: Deep Navy (#0A192F, #0F2942) + Pure White & Light Surface (#F8FAFC)
+   - 20%: Emerald Green (#059669) + Warm Gold (#D97706, #F59E0B)
+   - 10%: Alert Orange (#EA580C) + Connectivity Teal (#0D9488)
+   ========================================================================== */
+
+:root {
+  /* 70% Deep Navy & Neutral Scale */
+  --navy-950: #060d17;
+  --navy-900: #0a192f;
+  --navy-850: #0f233d;
+  --navy-800: #0f2942;
+  --navy-700: #1b385c;
+  --navy-600: #2a4e7a;
+  --navy-100: #e2e8f0;
+  --navy-50: #f8fafc;
+  
+  --bg-primary: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-elevated: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border-light: #e2e8f0;
+  --border-focus: #0f2942;
+
+  /* 20% Emerald Green & Gold */
+  --green-900: #064e3b;
+  --green-700: #047857;
+  --green-600: #059669;
+  --green-500: #10b981;
+  --green-100: #d1fae5;
+  --green-50: #ecfdf5;
+
+  --gold-800: #92400e;
+  --gold-700: #b45309;
+  --gold-600: #d97706;
+  --gold-500: #f59e0b;
+  --gold-100: #fef3c7;
+  --gold-50: #fffbeb;
+
+  /* 10% Orange & Teal */
+  --orange-700: #c2410c;
+  --orange-600: #ea580c;
+  --orange-500: #f97316;
+  --orange-100: #ffedd5;
+  --orange-50: #fff7ed;
+
+  --teal-700: #0f766e;
+  --teal-600: #0d9488;
+  --teal-500: #14b8a6;
+  --teal-100: #ccfbf1;
+  --teal-50: #f0fdfa;
+
+  /* Shadows & Glassmorphism */
+  --shadow-sm: 0 1px 2px 0 rgba(10, 25, 47, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(10, 25, 47, 0.08), 0 2px 4px -2px rgba(10, 25, 47, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(10, 25, 47, 0.1), 0 4px 6px -4px rgba(10, 25, 47, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(10, 25, 47, 0.12), 0 8px 10px -6px rgba(10, 25, 47, 0.06);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark Mode Tokens for Headers and Specific Panels */
+.theme-dark {
+  --bg-primary: #0a192f;
+  --bg-surface: #0f233d;
+  --bg-elevated: #1b385c;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border-light: rgba(255, 255, 255, 0.1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(5, 150, 105, 0.035) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(15, 41, 66, 0.04) 0%, transparent 45%),
+    radial-gradient(circle, rgba(148, 163, 184, 0.22) 0.8px, transparent 0.8px),
+    linear-gradient(to right, rgba(226, 232, 240, 0.45) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(226, 232, 240, 0.45) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 28px 28px, 56px 56px, 56px 56px;
+  background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* App Header & Navigation */
+.app-header {
+  background: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-800) 100%);
+  color: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(10, 25, 47, 0.25);
+  border-bottom: 2px solid rgba(217, 119, 6, 0.3);
+}
+
+.header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.brand-logo {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--green-600) 0%, var(--gold-500) 100%);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.4);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: #ffffff;
+}
+
+.brand-tagline {
+  font-size: 0.7rem;
+  color: var(--gold-500);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Role Selector Tabs */
+.role-tabs {
+  display: flex;
+  background: rgba(15, 35, 61, 0.8);
+  padding: 0.25rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.role-tab-btn {
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  font-family: var(--font-sans);
+  font-size: 0.825rem;
+  font-weight: 600;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: var(--transition);
+}
+
+.role-tab-btn:hover {
+  color: #ffffff;
+}
+
+.role-tab-btn.active {
+  background: #ffffff;
+  color: var(--navy-900);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.role-tab-btn.active.role-farmer { color: var(--green-700); }
+.role-tab-btn.active.role-buyer { color: var(--teal-700); }
+.role-tab-btn.active.role-transporter { color: var(--orange-700); }
+.role-tab-btn.active.role-admin { color: var(--navy-900); }
+
+/* Header Utilities */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Offline Sync Status Badge */
+.sync-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: var(--transition);
+}
+
+.sync-status-pill.status-saved-offline {
+  background: rgba(255, 255, 255, 0.15);
+  color: #f1f5f9;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.sync-status-pill.status-syncing {
+  background: var(--teal-50);
+  color: var(--teal-700);
+  border: 1px solid var(--teal-500);
+}
+
+.sync-status-pill.status-synced {
+  background: var(--green-50);
+  color: var(--green-700);
+  border: 1px solid var(--green-500);
+}
+
+.sync-status-pill.status-needs-attention {
+  background: var(--orange-50);
+  color: var(--orange-700);
+  border: 1px solid var(--orange-500);
+}
+
+.sync-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.sync-status-pill.status-syncing .sync-pulse {
+  animation: pulse-ring 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.3); }
+}
+
+/* Main Content Area */
+.main-viewport {
+  flex: 1;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+
+/* Offline Notice Banner */
+.offline-banner {
+  background: linear-gradient(90deg, #1e293b 0%, var(--navy-900) 100%);
+  color: #ffffff;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-left: 4px solid var(--gold-500);
+  box-shadow: var(--shadow-sm);
+  font-size: 0.875rem;
+}
+
+.offline-banner.hidden {
+  display: none;
+}
+
+.offline-banner-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Footer */
+.app-footer {
+  background: #ffffff;
+  border-top: 1px solid var(--border-light);
+  padding: 1.5rem 1.25rem;
+  font-size: 0.825rem;
+  color: var(--text-muted);
+}
+
+.footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.enactus-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 700;
+  color: var(--gold-700);
+}
+
+/* Utility Media Queries */
+@media (max-width: 900px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .role-tabs {
+    overflow-x: auto;
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .header-actions {
+    justify-content: space-between;
+  }
+}
