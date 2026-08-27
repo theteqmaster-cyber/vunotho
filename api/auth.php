@@ -17,10 +17,14 @@ if ($method === 'POST') {
     if ($action === 'register') {
         try {
             $name = trim($data['name'] ?? '');
+            $organisation = trim($data['organisation'] ?? '');
             $email_or_phone = strtolower(trim($data['email_or_phone'] ?? ''));
             $password = $data['password'] ?? '';
             $role = strtolower(trim($data['role'] ?? 'farmer'));
+            $province = trim($data['province'] ?? 'Manicaland');
             $district = trim($data['district'] ?? 'Nyanga');
+            $main_produce = trim($data['main_produce'] ?? '');
+            $vehicle_type = trim($data['vehicle_type'] ?? '');
 
             // Read Master Admin credentials strictly from Environment Variables
             $envAdminEmail = strtolower(getenv('ADMIN_EMAIL') ?: 'admin@vunotho@gmail.com');
@@ -51,20 +55,26 @@ if ($method === 'POST') {
             $created_at = date('c');
 
             $stmt = $pdo->prepare("
-                INSERT INTO users (id, name, email_or_phone, password_hash, role, district, kyc_status, created_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO users (id, name, organisation, email_or_phone, password_hash, role, province, district, main_produce, vehicle_type, kyc_status, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ");
-            $stmt->execute([$id, $name, $email_or_phone, $password_hash, $role, $district, $kyc_status, $created_at]);
+            $stmt->execute([$id, $name, $organisation, $email_or_phone, $password_hash, $role, $province, $district, $main_produce, $vehicle_type, $kyc_status, $created_at]);
 
             $userProfile = [
                 'id' => $id,
                 'name' => $name,
+                'organisation' => $organisation,
                 'email_or_phone' => $email_or_phone,
                 'role' => $role,
+                'province' => $province,
                 'district' => $district,
+                'main_produce' => $main_produce,
+                'vehicle_type' => $vehicle_type,
                 'kycStatus' => $kyc_status,
                 'created_at' => $created_at
             ];
+
+            $_SESSION['user'] = $userProfile;
 
             send_json_response([
                 'success' => true,
@@ -94,11 +104,14 @@ if ($method === 'POST') {
                     $userProfile = [
                         'id' => 'USR-ROOT-ADMIN',
                         'name' => 'System Administrator',
+                        'organisation' => 'Vunotho Headquarters',
                         'email_or_phone' => $envAdminEmail,
                         'role' => 'admin',
+                        'province' => 'Harare',
                         'district' => 'National Hub',
                         'kycStatus' => 'Super Admin'
                     ];
+                    $_SESSION['user'] = $userProfile;
                     send_json_response([
                         'success' => true,
                         'user' => $userProfile,
@@ -125,11 +138,17 @@ if ($method === 'POST') {
             $userProfile = [
                 'id' => $user['id'],
                 'name' => $user['name'],
+                'organisation' => $user['organisation'] ?? '',
                 'email_or_phone' => $user['email_or_phone'],
                 'role' => $user['role'],
+                'province' => $user['province'] ?? 'Manicaland',
                 'district' => $user['district'] ?? 'Nyanga',
+                'main_produce' => $user['main_produce'] ?? '',
+                'vehicle_type' => $user['vehicle_type'] ?? '',
                 'kycStatus' => $user['kyc_status'] ?? 'Verified'
             ];
+
+            $_SESSION['user'] = $userProfile;
 
             send_json_response([
                 'success' => true,
@@ -139,6 +158,17 @@ if ($method === 'POST') {
         } catch (Exception $e) {
             send_json_response(['error' => true, 'message' => $e->getMessage()], 500);
         }
+    } elseif ($action === 'logout') {
+        $_SESSION = [];
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+        session_destroy();
+        send_json_response(['success' => true, 'message' => 'Signed out successfully.']);
     } elseif ($action === 'update_kyc') {
         try {
             $user_id = $data['user_id'] ?? '';
@@ -152,7 +182,7 @@ if ($method === 'POST') {
     }
 } elseif ($method === 'GET') {
     try {
-        $stmt = $pdo->query("SELECT id, name, email_or_phone, role, district, kyc_status, created_at FROM users ORDER BY created_at DESC");
+        $stmt = $pdo->query("SELECT id, name, organisation, email_or_phone, role, province, district, main_produce, vehicle_type, kyc_status, created_at FROM users ORDER BY created_at DESC");
         $users = $stmt->fetchAll();
         send_json_response($users);
     } catch (Exception $e) {

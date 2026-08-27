@@ -4,7 +4,7 @@
  * while maintaining offline resilience when disconnected.
  */
 
-const CACHE_NAME = 'vunotho-v3';
+const CACHE_NAME = 'vunotho-v4.5';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -21,10 +21,15 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Network-first strategy for dynamic resilience
+// Network-first strategy with safe offline fallback
 self.addEventListener('fetch', (event) => {
   // Skip non-GET or cross-origin requests
   if (event.request.method !== 'GET' || !event.request.url.startsWith(self.location.origin)) {
+    return;
+  }
+
+  // Bypass service worker caching for API calls to ensure live data
+  if (event.request.url.includes('/api/')) {
     return;
   }
 
@@ -39,13 +44,18 @@ self.addEventListener('fetch', (event) => {
         }
         return networkResponse;
       })
-      .catch(() => {
-        // Fallback to cache when offline
-        return caches.match(event.request).then((cached) => {
-          if (cached) return cached;
-          if (event.request.mode === 'navigate') {
-            return caches.match('./index.html');
-          }
+      .catch(async () => {
+        // Fallback to cache when network is offline
+        const cached = await caches.match(event.request);
+        if (cached) return cached;
+        if (event.request.mode === 'navigate') {
+          const indexCached = await caches.match('./index.html');
+          if (indexCached) return indexCached;
+        }
+        return new Response('Network error and no offline cache available.', {
+          status: 503,
+          statusText: 'Service Unavailable',
+          headers: { 'Content-Type': 'text/plain' }
         });
       })
   );

@@ -2,14 +2,30 @@
 .env
 .env.local
 .env.*.local
+.env*
 
-# SQLite local databases
+# Local planning, financial accounts & research documents
+vonotho the plan/
+"vonotho the plan"
+*.xlsx
+*.xls
+accounts.xlsx
+accounts.xls
+*.docx
+*.doc
+"market analysis as at 27aug2026 source gemini via google.docx"
+*.odg
+draw_vunotho.odg
+.~lock.*
+
+# SQLite local databases & locks
 *.db
 *.sqlite
 *.sqlite3
+/tmp/vunotho*
 
-# Node & OS files
+# Node, logs & dependencies
 node_modules/
+dist/
 .DS_Store
 *.log
-.~lock.*

@@ -4,8 +4,12 @@
  * Supports Remote PostgreSQL / MySQL (Neon, Supabase, PlanetScale) & SQLite Fallback
  */
 
-// Set Global JSON & CORS Headers
-header('Content-Type: application/json; charset=utf-8');
+require_once __DIR__ . '/security.php';
+
+// Set Global JSON & CORS Headers for API requests
+if (strpos($_SERVER['REQUEST_URI'] ?? '', '/api/') !== false) {
+    header('Content-Type: application/json; charset=utf-8');
+}
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
@@ -13,6 +17,10 @@ header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-W
 if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit;
+}
+
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'HEAD') {
+    $_SERVER['REQUEST_METHOD'] = 'GET';
 }
 
 function load_env_file() {
@@ -53,7 +61,9 @@ function get_db_connection() {
     try {
         $database_url = getenv('DATABASE_URL');
 
-        if ($database_url) {
+        static $remoteFailed = false;
+
+        if ($database_url && !$remoteFailed) {
             // Parse standard DATABASE_URL (postgresql://user:pass@host:port/dbname or mysql://...)
             $url = parse_url($database_url);
             $scheme = $url['scheme'] ?? 'pgsql';
@@ -64,7 +74,7 @@ function get_db_connection() {
             $dbname = ltrim($url['path'] ?? 'postgres', '/');
 
             if ($scheme === 'pgsql' || $scheme === 'postgres' || $scheme === 'postgresql') {
-                $dsn = "pgsql:host={$host};port={$port};dbname={$dbname};sslmode=require";
+                $dsn = "pgsql:host={$host};port={$port};dbname={$dbname};sslmode=require;connect_timeout=6";
             } else {
                 $dsn = "mysql:host={$host};port={$port};dbname={$dbname};charset=utf8mb4";
             }
@@ -73,11 +83,12 @@ function get_db_connection() {
                 $pdo = new PDO($dsn, $user, $pass, [
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                    PDO::ATTR_TIMEOUT => 4
+                    PDO::ATTR_TIMEOUT => 6
                 ]);
             } catch (Exception $remoteEx) {
-                // If remote host is unreachable on local network (e.g. IPv6 constraint), fallback gracefully to SQLite
-                error_log("Notice: Remote DB unreachable ({$remoteEx->getMessage()}), using SQLite fallback.");
+                // If remote host is unreachable on local network, fallback gracefully to SQLite
+                $remoteFailed = true;
+                error_log("Notice: Remote DB unreachable ({$remoteEx->getMessage()}), using fast SQLite fallback.");
                 $sqlitePath = sys_get_temp_dir() . '/vunotho.db';
                 $pdo = new PDO("sqlite:" . $sqlitePath, null, null, [
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -108,7 +119,7 @@ function get_db_connection() {
             ]);
         }
 
-        // Initialize Database Tables
+        // Initialize Database Tables (cached to prevent repeat DDL latency)
         init_db_schema($pdo);
 
         return $pdo;
@@ -123,6 +134,18 @@ function get_db_connection() {
 }
 
 function init_db_schema($pdo) {
+    static $initialized = false;
+    if ($initialized) return;
+
+    $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+    $cacheKeyFile = sys_get_temp_dir() . '/vunotho_schema_' . md5($driver . getenv('DATABASE_URL')) . '.lock';
+
+    // If schema was already verified within the last 1 hour, skip expensive DDL checks
+    if (file_exists($cacheKeyFile) && (time() - filemtime($cacheKeyFile) < 3600)) {
+        $initialized = true;
+        return;
+    }
+
     // 1. Produce Listings Table
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS listings (
@@ -216,14 +239,33 @@ function init_db_schema($pdo) {
         CREATE TABLE IF NOT EXISTS users (
             id VARCHAR(64) PRIMARY KEY,
             name VARCHAR(128),
+            organisation VARCHAR(128),
             email_or_phone VARCHAR(128) UNIQUE,
             password_hash VARCHAR(255),
             role VARCHAR(32),
+            province VARCHAR(64),
             district VARCHAR(64),
+            main_produce VARCHAR(128),
+            vehicle_type VARCHAR(64),
             kyc_status VARCHAR(32) DEFAULT 'Pending KYC',
             created_at VARCHAR(64)
         )
     ");
+
+    // Safe column migrations for SQLite / PostgreSQL
+    $optionalCols = [
+        'organisation' => 'VARCHAR(128)',
+        'province' => 'VARCHAR(64)',
+        'main_produce' => 'VARCHAR(128)',
+        'vehicle_type' => 'VARCHAR(64)'
+    ];
+    foreach ($optionalCols as $col => $type) {
+        try {
+            $pdo->exec("ALTER TABLE users ADD COLUMN {$col} {$type}");
+        } catch (Exception $ign) {
+            // Column already exists
+        }
+    }
 
     // 7. System Configurations Table
     $pdo->exec("
@@ -248,15 +290,38 @@ function init_db_schema($pdo) {
         ");
         $adminInsert->execute([$adminEmail, $adminHash, date('c')]);
     }
+
+    // Seed default commercial buyer demands if empty
+    $demandCount = $pdo->query("SELECT COUNT(*) FROM demands")->fetchColumn();
+    if ($demandCount == 0) {
+        $seedDemands = [
+            ['DEM-SEED-01', 'USR-BUYER-01', 'Bulawayo Fresh Wholesalers', 'Tomatoes', 1500, 0.55, 'Grade A (Premium)', 'Belmont Wholesale Hub (Bulawayo)', date('c', strtotime('+5 days')), 'Active', date('c')],
+            ['DEM-SEED-02', 'USR-BUYER-02', 'Harare Fresh Produce Depot', 'Table Potatoes', 2500, 0.50, 'Grade A (Premium)', 'Mbare Musika Hub (Harare)', date('c', strtotime('+7 days')), 'Active', date('c')],
+            ['DEM-SEED-03', 'USR-BUYER-03', 'Mutare Agro-Processing Ltd', 'Onions', 1200, 0.45, 'Grade B (Processing)', 'Mutare Industrial Site', date('c', strtotime('+10 days')), 'Active', date('c')],
+            ['DEM-SEED-04', 'USR-BUYER-04', 'Masvingo Fresh Market Hub', 'Leafy Greens', 800, 0.48, 'Grade A (Premium)', 'Masvingo Central Hub', date('c', strtotime('+4 days')), 'Active', date('c')]
+        ];
+        $insertDemand = $pdo->prepare("
+            INSERT INTO demands (id, buyer_id, buyer_name, crop, target_quantity_kg, offered_price_per_kg, quality_required, delivery_hub, deadline, status, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        foreach ($seedDemands as $sd) {
+            $insertDemand->execute($sd);
+        }
+    }
+
+    // Touch cache marker file
+    @file_put_contents($cacheKeyFile, time());
+    $initialized = true;
 }
 
 function send_json_response($data, $status = 200) {
     http_response_code($status);
-    echo json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    echo json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
     exit;
 }
 
 function get_request_body() {
     $raw = file_get_contents('php://input');
-    return json_decode($raw, true) ?: [];
+    $decoded = json_decode($raw, true) ?: [];
+    return sanitize_payload($decoded);
 }

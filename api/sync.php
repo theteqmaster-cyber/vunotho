@@ -29,91 +29,169 @@ try {
         switch ($action) {
             case 'CREATE_LISTING':
                 $id = $data['id'] ?? ('LIST-' . time() . '-' . rand(1000, 9999));
-                $stmt = $pdo->prepare("
-                    INSERT INTO listings (id, farmer_id, farmer_name, crop, quantity_kg, quality, lat, lng, district, sync_status, status, created_at)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Synced', ?, ?)
-                ");
-                $stmt->execute([
-                    $id,
-                    $data['farmer_id'] ?? 'FARMER-01',
-                    $data['farmer_name'] ?? 'Farmer',
-                    $data['crop'] ?? 'Potatoes',
-                    floatval($data['quantity_kg'] ?? 0),
-                    $data['quality'] ?? 'Grade A (Premium)',
-                    floatval($data['lat'] ?? -18.2167),
-                    floatval($data['lng'] ?? 32.7500),
-                    $data['district'] ?? 'Nyanga',
-                    $data['status'] ?? 'Open',
-                    $data['created_at'] ?? date('c')
-                ]);
+                $check = $pdo->prepare("SELECT id FROM listings WHERE id = ?");
+                $check->execute([$id]);
+                if ($check->fetch()) {
+                    $stmt = $pdo->prepare("
+                        UPDATE listings SET farmer_id=?, farmer_name=?, crop=?, quantity_kg=?, quality=?, lat=?, lng=?, district=?, sync_status='Synced', status=? WHERE id=?
+                    ");
+                    $stmt->execute([
+                        $data['farmer_id'] ?? 'FARMER-01',
+                        $data['farmer_name'] ?? 'Farmer',
+                        $data['crop'] ?? 'Potatoes',
+                        floatval($data['quantity_kg'] ?? 0),
+                        $data['quality'] ?? 'Grade A (Premium)',
+                        floatval($data['lat'] ?? -18.2167),
+                        floatval($data['lng'] ?? 32.7500),
+                        $data['district'] ?? 'Nyanga',
+                        $data['status'] ?? 'Open',
+                        $id
+                    ]);
+                } else {
+                    $stmt = $pdo->prepare("
+                        INSERT INTO listings (id, farmer_id, farmer_name, crop, quantity_kg, quality, lat, lng, district, sync_status, status, created_at)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Synced', ?, ?)
+                    ");
+                    $stmt->execute([
+                        $id,
+                        $data['farmer_id'] ?? 'FARMER-01',
+                        $data['farmer_name'] ?? 'Farmer',
+                        $data['crop'] ?? 'Potatoes',
+                        floatval($data['quantity_kg'] ?? 0),
+                        $data['quality'] ?? 'Grade A (Premium)',
+                        floatval($data['lat'] ?? -18.2167),
+                        floatval($data['lng'] ?? 32.7500),
+                        $data['district'] ?? 'Nyanga',
+                        $data['status'] ?? 'Open',
+                        $data['created_at'] ?? date('c')
+                    ]);
+                }
                 $syncedCount++;
                 break;
 
             case 'CREATE_DEMAND':
                 $id = $data['id'] ?? ('DEM-' . time() . '-' . rand(1000, 9999));
-                $stmt = $pdo->prepare("
-                    INSERT INTO demands (id, buyer_id, buyer_name, crop, target_quantity_kg, offered_price_per_kg, quality_required, delivery_hub, deadline, status, created_at)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Active', ?)
-                ");
-                $stmt->execute([
-                    $id,
-                    $data['buyer_id'] ?? 'BUYER-01',
-                    $data['buyer_name'] ?? 'Buyer',
-                    $data['crop'] ?? 'Potatoes',
-                    floatval($data['target_quantity_kg'] ?? 0),
-                    floatval($data['offered_price_per_kg'] ?? 0.95),
-                    $data['quality_required'] ?? 'Grade A',
-                    $data['delivery_hub'] ?? 'Harare',
-                    $data['deadline'] ?? date('c'),
-                    $data['created_at'] ?? date('c')
-                ]);
+                $check = $pdo->prepare("SELECT id FROM demands WHERE id = ?");
+                $check->execute([$id]);
+                if ($check->fetch()) {
+                    $stmt = $pdo->prepare("
+                        UPDATE demands SET buyer_id=?, buyer_name=?, crop=?, target_quantity_kg=?, offered_price_per_kg=?, quality_required=?, delivery_hub=?, deadline=?, status=? WHERE id=?
+                    ");
+                    $stmt->execute([
+                        $data['buyer_id'] ?? 'BUYER-01',
+                        $data['buyer_name'] ?? 'Buyer',
+                        $data['crop'] ?? 'Potatoes',
+                        floatval($data['target_quantity_kg'] ?? 0),
+                        floatval($data['offered_price_per_kg'] ?? 0.95),
+                        $data['quality_required'] ?? 'Grade A',
+                        $data['delivery_hub'] ?? 'Harare',
+                        $data['deadline'] ?? date('c'),
+                        $data['status'] ?? 'Active',
+                        $id
+                    ]);
+                } else {
+                    $stmt = $pdo->prepare("
+                        INSERT INTO demands (id, buyer_id, buyer_name, crop, target_quantity_kg, offered_price_per_kg, quality_required, delivery_hub, deadline, status, created_at)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Active', ?)
+                    ");
+                    $stmt->execute([
+                        $id,
+                        $data['buyer_id'] ?? 'BUYER-01',
+                        $data['buyer_name'] ?? 'Buyer',
+                        $data['crop'] ?? 'Potatoes',
+                        floatval($data['target_quantity_kg'] ?? 0),
+                        floatval($data['offered_price_per_kg'] ?? 0.95),
+                        $data['quality_required'] ?? 'Grade A',
+                        $data['delivery_hub'] ?? 'Harare',
+                        $data['deadline'] ?? date('c'),
+                        $data['created_at'] ?? date('c')
+                    ]);
+                }
                 $syncedCount++;
                 break;
 
             case 'SETTLE_TRANSACTION':
                 $id = $data['id'] ?? ('TX-' . time() . '-' . rand(1000, 9999));
-                $stmt = $pdo->prepare("
-                    INSERT INTO transactions (id, reference, payment_method, farmer_id, farmer_name, buyer_id, buyer_name, crop, quantity_kg, gross_total, transport_deduction, platform_fee, net_payout, status, created_at)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                ");
-                $stmt->execute([
-                    $id,
-                    $data['reference'] ?? ('REF-' . rand(100000, 999999)),
-                    $data['payment_method'] ?? 'EcoCash',
-                    $data['farmer_id'] ?? 'FARMER-01',
-                    $data['farmer_name'] ?? 'Farmer',
-                    $data['buyer_id'] ?? 'BUYER-01',
-                    $data['buyer_name'] ?? 'Buyer',
-                    $data['crop'] ?? 'Potatoes',
-                    floatval($data['quantity_kg'] ?? 0),
-                    floatval($data['gross_total'] ?? 0),
-                    floatval($data['transport_deduction'] ?? 0),
-                    floatval($data['platform_fee'] ?? 0),
-                    floatval($data['net_payout'] ?? 0),
-                    'Settled',
-                    $data['created_at'] ?? date('c')
-                ]);
+                $check = $pdo->prepare("SELECT id FROM transactions WHERE id = ?");
+                $check->execute([$id]);
+                if (!$check->fetch()) {
+                    $stmt = $pdo->prepare("
+                        INSERT INTO transactions (id, reference, payment_method, farmer_id, farmer_name, buyer_id, buyer_name, crop, quantity_kg, gross_total, transport_deduction, platform_fee, net_payout, status, created_at)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ");
+                    $stmt->execute([
+                        $id,
+                        $data['reference'] ?? ('REF-' . rand(100000, 999999)),
+                        $data['payment_method'] ?? 'EcoCash',
+                        $data['farmer_id'] ?? 'FARMER-01',
+                        $data['farmer_name'] ?? 'Farmer',
+                        $data['buyer_id'] ?? 'BUYER-01',
+                        $data['buyer_name'] ?? 'Buyer',
+                        $data['crop'] ?? 'Potatoes',
+                        floatval($data['quantity_kg'] ?? 0),
+                        floatval($data['gross_total'] ?? 0),
+                        floatval($data['transport_deduction'] ?? 0),
+                        floatval($data['platform_fee'] ?? 0),
+                        floatval($data['net_payout'] ?? 0),
+                        'Settled',
+                        $data['created_at'] ?? date('c')
+                    ]);
+                }
                 $syncedCount++;
                 break;
 
             case 'LOG_VALUE_RECOVERY':
                 $id = $data['id'] ?? ('VR-' . time() . '-' . rand(1000, 9999));
-                $stmt = $pdo->prepare("
-                    INSERT INTO value_recovery (id, listing_id, crop, farmer_id, farmer_name, pathway, kg_diverted, recovered_value_usd, facility, timestamp)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                ");
-                $stmt->execute([
-                    $id,
-                    $data['listing_id'] ?? 'direct',
-                    $data['crop'] ?? 'Potatoes',
-                    $data['farmer_id'] ?? 'unassigned',
-                    $data['farmer_name'] ?? 'Farmer',
-                    $data['pathway'] ?? 'Processing',
-                    floatval($data['kg_diverted'] ?? 0),
-                    floatval($data['recovered_value_usd'] ?? 0),
-                    $data['facility'] ?? 'Vunotho Hub',
-                    $data['timestamp'] ?? date('c')
-                ]);
+                $check = $pdo->prepare("SELECT id FROM value_recovery WHERE id = ?");
+                $check->execute([$id]);
+                if (!$check->fetch()) {
+                    $stmt = $pdo->prepare("
+                        INSERT INTO value_recovery (id, listing_id, crop, farmer_id, farmer_name, pathway, kg_diverted, recovered_value_usd, facility, timestamp)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ");
+                    $stmt->execute([
+                        $id,
+                        $data['listing_id'] ?? 'direct',
+                        $data['crop'] ?? 'Potatoes',
+                        $data['farmer_id'] ?? 'unassigned',
+                        $data['farmer_name'] ?? 'Farmer',
+                        $data['pathway'] ?? 'Processing',
+                        floatval($data['kg_diverted'] ?? 0),
+                        floatval($data['recovered_value_usd'] ?? 0),
+                        $data['facility'] ?? 'Vunotho Hub',
+                        $data['timestamp'] ?? date('c')
+                    ]);
+                }
+                $syncedCount++;
+                break;
+
+            case 'REGISTER_USER':
+                $email = strtolower(trim($data['email_or_phone'] ?? ''));
+                if (!empty($email)) {
+                    $check = $pdo->prepare("SELECT id FROM users WHERE email_or_phone = ?");
+                    $check->execute([$email]);
+                    if (!$check->fetch()) {
+                        $id = $data['id'] ?? ('USR-' . time() . '-' . rand(1000, 9999));
+                        $pwdHash = !empty($data['password']) ? password_hash($data['password'], PASSWORD_DEFAULT) : password_hash('wish2026', PASSWORD_DEFAULT);
+                        $stmt = $pdo->prepare("
+                            INSERT INTO users (id, name, organisation, email_or_phone, password_hash, role, province, district, main_produce, vehicle_type, kyc_status, created_at)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending KYC', ?)
+                        ");
+                        $stmt->execute([
+                            $id,
+                            $data['name'] ?? 'User',
+                            $data['organisation'] ?? '',
+                            $email,
+                            $pwdHash,
+                            $data['role'] ?? 'farmer',
+                            $data['province'] ?? 'Manicaland',
+                            $data['district'] ?? 'Nyanga',
+                            $data['main_produce'] ?? '',
+                            $data['vehicle_type'] ?? '',
+                            date('c')
+                        ]);
+                    }
+                }
                 $syncedCount++;
                 break;
         }

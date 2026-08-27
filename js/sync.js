@@ -173,4 +173,6 @@ class VunothoSync {
 }
 
 // Global Singleton Instance
-window.vunothoSync = new VunothoSync();
+if (typeof window !== 'undefined') {
+  window.vunothoSync = window.vunothoSync || new VunothoSync();
+}

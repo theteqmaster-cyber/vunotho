@@ -20,10 +20,16 @@ class VunothoAPI {
     };
 
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000);
+
       const response = await fetch(url, {
         ...options,
-        headers
+        headers,
+        signal: controller.signal
       });
+
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         throw new Error(`API Error [${response.status}]: ${response.statusText}`);

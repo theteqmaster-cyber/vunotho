@@ -190,7 +190,8 @@ class AdminView {
                     <tr style="border-bottom: 1px solid var(--border-light);">
                       <td style="padding: 0.75rem 0.5rem;">
                         <strong>${u.name}</strong>
-                        <div style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">${u.id}</div>
+                        ${u.organisation ? `<span class="badge badge-teal" style="font-size: 0.65rem; margin-left: 0.35rem;">${u.organisation}</span>` : ''}
+                        <div style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">${u.id}${u.main_produce ? ' • ' + u.main_produce : (u.vehicle_type ? ' • ' + u.vehicle_type : '')}</div>
                       </td>
                       <td style="padding: 0.75rem 0.5rem;">
                         <span class="badge ${u.role === 'farmer' ? 'badge-green' : u.role === 'buyer' ? 'badge-teal' : u.role === 'admin' ? 'badge-gold' : 'badge-orange'}">
@@ -198,7 +199,7 @@ class AdminView {
                         </span>
                       </td>
                       <td style="padding: 0.75rem 0.5rem; font-family: var(--font-mono);">${u.email_or_phone}</td>
-                      <td style="padding: 0.75rem 0.5rem;">${u.district || 'Nyanga'}</td>
+                      <td style="padding: 0.75rem 0.5rem;">${u.district || 'Nyanga'}, ${u.province || 'Manicaland'}</td>
                       <td style="padding: 0.75rem 0.5rem;">
                         <span class="badge ${u.kyc_status === 'Verified' || u.kyc_status === 'Super Admin' ? 'badge-verified' : 'badge-orange'}">
                           ${u.kyc_status || 'Pending KYC'}

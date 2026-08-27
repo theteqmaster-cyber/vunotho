@@ -35,21 +35,28 @@ class VunothoLogistics {
       clusters[key].stopsCount += 1;
     });
 
-    // Create manifest proposals from clusters
-    return Object.values(clusters).map((cluster) => {
-      const loadUtilizationPct = Math.min(100, Math.round((cluster.totalWeightKg / this.STANDARD_TRUCK_CAPACITY_KG) * 100));
-      const estTotalDistance = 15 + cluster.stopsCount * 8; // base km + waypoint detours
-      const estTransporterPayout = Number((cluster.totalWeightKg * 0.05 + estTotalDistance * 0.4).toFixed(2));
+      const stops = cluster.items.map(item => ({
+        farmerName: item.farmer_name || 'Smallholder Farmer',
+        crop: item.crop || 'Produce',
+        weightKg: Number(item.quantity_kg || 0),
+        lat: item.lat || -18.2167,
+        lng: item.lng || 32.7500,
+        district: item.district || cluster.district
+      }));
 
       return {
         id: `MAN-${Date.now()}-${Math.random().toString(36).substr(2, 4).toUpperCase()}`,
         clusterId: cluster.clusterId,
         crop: cluster.crop,
         district: cluster.district,
+        originDistrict: cluster.district || 'Nyanga',
+        destination: cluster.district === 'Gwanda' ? 'Belmont Hub (Bulawayo)' : (cluster.district === 'Mutare' ? 'Mutare Regional Depot' : 'Mbare Musika Wholesale Hub (Harare)'),
         totalWeightKg: cluster.totalWeightKg,
         stopsCount: cluster.stopsCount,
+        stops,
         loadUtilizationPct,
         estTotalDistance,
+        estimatedDistanceKm: estTotalDistance,
         estTransporterPayout,
         items: cluster.items,
         status: 'Pending Dispatch' // Pending Dispatch, Dispatched, In Transit, Completed

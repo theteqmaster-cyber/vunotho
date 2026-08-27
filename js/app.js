@@ -11,19 +11,36 @@ class VunothoApp {
   async init() {
     console.log('Initializing Vunotho Operating System...');
 
-    // 1. Initialize DB and Sync Engine
-    await window.vunothoDB.init();
-    window.vunothoSync.init();
-
-    // 2. Splash Screen Lifecycle (3s once per session)
+    // 1. Splash Screen Lifecycle (run immediately so progress bar animates smoothly)
     this.initSplashScreen();
+
+    // 2. Initialize DB and Sync Engine safely
+    try {
+      if (window.vunothoDB) {
+        await window.vunothoDB.init();
+      }
+    } catch (dbErr) {
+      console.warn('DB initialization warning:', dbErr);
+    }
+
+    try {
+      if (window.vunothoSync) {
+        window.vunothoSync.init();
+      }
+    } catch (syncErr) {
+      console.warn('Sync engine initialization warning:', syncErr);
+    }
 
     // 3. Listen to Hash / Route Changes (e.g. #admin or /admin)
     window.addEventListener('hashchange', () => this.handleRouting());
     window.addEventListener('popstate', () => this.handleRouting());
 
     // 4. Initial Route & Auth Check
-    await this.handleRouting();
+    try {
+      await this.handleRouting();
+    } catch (routeErr) {
+      console.error('Initial route handling error:', routeErr);
+    }
 
     // 5. Register Service Worker if supported
     if ('serviceWorker' in navigator) {
@@ -83,27 +100,11 @@ class VunothoApp {
     if (!container) return;
     container.innerHTML = `
       <div class="view-loader-container">
-        <div class="orbital-loader-container" style="margin-bottom: 1.5rem;">
-          <!-- 5 Orbiting Tiny Satellites -->
-          <div class="orbital-ring">
-            <div class="orbital-particle particle-1"></div>
-            <div class="orbital-particle particle-2"></div>
-            <div class="orbital-particle particle-3"></div>
-            <div class="orbital-particle particle-4"></div>
-            <div class="orbital-particle particle-5"></div>
-          </div>
-
-          <!-- Floating Core Emblem Disc -->
-          <div class="orbital-core-disc">
-            <span class="orbital-v-logo">V</span>
-          </div>
+        <div class="brand-logo" style="width: 48px; height: 48px; font-size: 1.4rem; margin-bottom: 1.25rem; box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);">V</div>
+        <div class="splash-progress-track" style="width: 240px; height: 4px; background: rgba(0, 0, 0, 0.08);">
+          <div class="splash-progress-bar" style="width: 75%; animation: pulse-fill 1.4s ease-in-out infinite alternate;"></div>
         </div>
-        <div class="splash-progress-wrapper" style="max-width: 320px;">
-          <div class="splash-progress-track">
-            <div class="splash-progress-bar" style="width: 80%; animation: pulse-fill 1.6s ease-in-out infinite alternate;"></div>
-          </div>
-          <div class="splash-status-caption" style="color: var(--navy-800); font-weight: 600;">${message}</div>
-        </div>
+        <div style="font-size: 0.85rem; color: var(--navy-800); font-weight: 700; margin-top: 0.75rem; font-family: var(--font-mono);">${message}</div>
       </div>
     `;
   }
@@ -132,7 +133,7 @@ class VunothoApp {
     }
 
     // 3. Logged out -> Render Public Landing Page
-    this.renderLandingPage();
+    await this.renderLandingPage();
     this.updateHeaderNav('guest');
   }
 
@@ -140,11 +141,11 @@ class VunothoApp {
     this.handleRouting();
   }
 
-  renderLandingPage() {
+  async renderLandingPage() {
     const container = document.getElementById('app-view-container');
     if (!container) return;
     this.currentView = 'landing';
-    window.landingView.render(container);
+    await window.landingView.render(container);
   }
 
   renderAdminLogin() {

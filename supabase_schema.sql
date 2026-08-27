@@ -85,10 +85,14 @@ CREATE TABLE IF NOT EXISTS public.manifests (
 CREATE TABLE IF NOT EXISTS public.users (
     id VARCHAR(64) PRIMARY KEY,
     name VARCHAR(128),
+    organisation VARCHAR(128),
     email_or_phone VARCHAR(128) UNIQUE,
     password_hash VARCHAR(255),
     role VARCHAR(32),
+    province VARCHAR(64),
     district VARCHAR(64),
+    main_produce VARCHAR(128),
+    vehicle_type VARCHAR(64),
     kyc_status VARCHAR(32) DEFAULT 'Pending KYC',
     created_at VARCHAR(64)
 );

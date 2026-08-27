@@ -43,15 +43,35 @@ class VunothoAuth {
   /**
    * Register a new user and save directly to Supabase PostgreSQL database
    */
-  async register(name, emailOrPhone, password, role, district) {
-    const payload = {
-      action: 'register',
-      name: (name || '').trim(),
-      email_or_phone: (emailOrPhone || '').trim(),
-      password,
-      role: role || 'farmer',
-      district: district || 'Nyanga'
-    };
+  async register(paramsOrName, emailOrPhone, password, role, district) {
+    let payload = {};
+    if (typeof paramsOrName === 'object' && paramsOrName !== null) {
+      payload = {
+        action: 'register',
+        name: (paramsOrName.name || '').trim(),
+        organisation: (paramsOrName.organisation || '').trim(),
+        email_or_phone: (paramsOrName.email_or_phone || paramsOrName.emailOrPhone || '').trim(),
+        password: paramsOrName.password,
+        role: paramsOrName.role || 'farmer',
+        province: paramsOrName.province || 'Manicaland',
+        district: paramsOrName.district || 'Nyanga',
+        main_produce: paramsOrName.main_produce || paramsOrName.mainProduce || '',
+        vehicle_type: paramsOrName.vehicle_type || paramsOrName.vehicleType || ''
+      };
+    } else {
+      payload = {
+        action: 'register',
+        name: (paramsOrName || '').trim(),
+        organisation: '',
+        email_or_phone: (emailOrPhone || '').trim(),
+        password,
+        role: role || 'farmer',
+        province: 'Manicaland',
+        district: district || 'Nyanga',
+        main_produce: '',
+        vehicle_type: ''
+      };
+    }
 
     let response = null;
     let result = null;
@@ -102,9 +122,13 @@ class VunothoAuth {
       const user = {
         id: `USR-${Date.now().toString(36).toUpperCase()}`,
         name: payload.name,
+        organisation: payload.organisation,
         email_or_phone: payload.email_or_phone,
         role: payload.role,
+        province: payload.province,
         district: payload.district,
+        main_produce: payload.main_produce,
+        vehicle_type: payload.vehicle_type,
         kycStatus: 'Pending KYC',
         created_at: new Date().toISOString()
       };
