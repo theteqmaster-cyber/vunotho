@@ -39,59 +39,46 @@ class _MainShellState extends State<MainShell> {
 
     return Scaffold(
       appBar: AppBar(
-        titleSpacing: 16,
+        titleSpacing: 12,
         title: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              padding: const EdgeInsets.all(7),
+              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
               decoration: BoxDecoration(
                 color: VunothoColors.primary,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: const Text(
                 'V',
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w900,
-                  fontSize: 18,
+                  fontSize: 15,
                 ),
               ),
             ),
-            const SizedBox(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'VUNOTHO',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 1.2,
-                    color: VunothoColors.textDark,
-                  ),
-                ),
-                Text(
-                  'AGRICULTURAL OS',
-                  style: TextStyle(
-                    fontSize: 9,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 1.0,
-                    color: Colors.grey.shade600,
-                  ),
-                ),
-              ],
+            const SizedBox(width: 6),
+            const Text(
+              'VUNOTHO',
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 1.0,
+                color: VunothoColors.textDark,
+              ),
             ),
           ],
         ),
         actions: [
           const SyncStatusBadge(isOnline: true),
-          const SizedBox(width: 8),
+          const SizedBox(width: 4),
           PopupMenuButton<String>(
             icon: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
                 color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: VunothoColors.lightBorder),
               ),
               child: Row(
@@ -99,9 +86,9 @@ class _MainShellState extends State<MainShell> {
                 children: [
                   Text(
                     currentRole.toUpperCase(),
-                    style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                   ),
-                  const Icon(Icons.arrow_drop_down_rounded, size: 18),
+                  const Icon(Icons.arrow_drop_down_rounded, size: 16),
                 ],
               ),
             ),

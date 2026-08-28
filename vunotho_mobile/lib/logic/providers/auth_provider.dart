@@ -19,19 +19,6 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> _init() async {
     _user = await OfflineStorageService.getUser();
-    if (_user == null) {
-      // Default initial session for immediate access
-      _user = UserProfileModel(
-        id: 'USR-DEFAULT-01',
-        name: 'Simba Mukamuri',
-        emailOrPhone: '0776118117',
-        role: 'farmer',
-        district: 'Nyanga',
-        mainProduce: 'Butternut Squash',
-        createdAt: DateTime.now().toIso8601String(),
-      );
-      await OfflineStorageService.saveUser(_user!);
-    }
     _isLoading = false;
     notifyListeners();
   }

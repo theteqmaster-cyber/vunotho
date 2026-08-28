@@ -54,26 +54,29 @@ class FarmerDashboard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'FARMER HARVEST PORTAL',
-                          style: TextStyle(
-                            color: Color(0xFFA7F3D0),
-                            fontSize: 12,
-                            fontWeight: FontWeight.w800,
-                            letterSpacing: 1.1,
+                        const Expanded(
+                          child: Text(
+                            'FARMER HARVEST PORTAL',
+                            style: TextStyle(
+                              color: Color(0xFFA7F3D0),
+                              fontSize: 11,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 1.0,
+                            ),
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
                           decoration: BoxDecoration(
                             color: Colors.white.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: const Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(Icons.shield_rounded, color: Colors.white, size: 14),
-                              SizedBox(width: 4),
-                              Text('Protected Value', style: TextStyle(color: Colors.white, fontSize: 11)),
+                              Icon(Icons.shield_rounded, color: Colors.white, size: 13),
+                              SizedBox(width: 3),
+                              Text('Protected', style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w600)),
                             ],
                           ),
                         ),
@@ -323,14 +326,17 @@ class FarmerDashboard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                title,
-                style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: VunothoColors.textMuted),
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: VunothoColors.textMuted),
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
               Container(
-                padding: const EdgeInsets.all(6),
+                padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(color: bgColor, borderRadius: BorderRadius.circular(8)),
-                child: Icon(icon, color: color, size: 16),
+                child: Icon(icon, color: color, size: 15),
               ),
             ],
           ),

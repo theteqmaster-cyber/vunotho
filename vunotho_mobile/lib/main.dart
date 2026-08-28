@@ -8,6 +8,7 @@ import 'logic/providers/auth_provider.dart';
 import 'logic/providers/demand_provider.dart';
 import 'logic/providers/listing_provider.dart';
 import 'logic/providers/transport_provider.dart';
+import 'presentation/auth/login_screen.dart';
 import 'presentation/main_shell.dart';
 
 void main() async {
@@ -49,7 +50,22 @@ class VunothoApp extends StatelessWidget {
         title: 'Vunotho - Agricultural OS',
         debugShowCheckedModeBanner: false,
         theme: VunothoTheme.lightTheme,
-        home: const MainShell(),
+        home: Consumer<AuthProvider>(
+          builder: (context, auth, _) {
+            if (auth.isLoading) {
+              return const Scaffold(
+                backgroundColor: Color(0xFF0A192F),
+                body: Center(
+                  child: CircularProgressIndicator(color: VunothoColors.primary),
+                ),
+              );
+            }
+            if (!auth.isAuthenticated) {
+              return const LoginScreen();
+            }
+            return const MainShell();
+          },
+        ),
       ),
     );
   }
