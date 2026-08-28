@@ -1,6 +1,9 @@
 {
   "version": 2,
   "functions": {
+    "*.php": {
+      "runtime": "vercel-php@0.7.2"
+    },
     "api/**/*.php": {
       "runtime": "vercel-php@0.7.2"
     },
@@ -10,6 +13,10 @@
   },
   "routes": [
     {
+      "src": "/(css|js|images|manifest.json|sw.js|favicon.jpg|favicon.ico)(.*)",
+      "dest": "/$1$2"
+    },
+    {
       "src": "/api/(.*)\\.php",
       "dest": "/api/$1.php"
     },
@@ -18,9 +25,22 @@
       "dest": "/api/$1.php"
     },
     {
+      "src": "/(farmer|buyer|transporter|admin|login|logout|about|why-vunotho|privacy|data-policy|contact|access)",
+      "dest": "/$1.php"
+    },
+    {
+      "src": "/(.*)\\.php",
+      "dest": "/$1.php"
+    },
+    {
+      "src": "/",
+      "dest": "/index.php"
+    },
+    {
       "src": "/(.*)",
       "dest": "/$1"
     }
   ]
 }
+
 
