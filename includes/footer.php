@@ -85,8 +85,8 @@
   <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none [&>*]:pointer-events-auto"></div>
 
   <!-- Interactive JavaScript Libraries -->
-  <script src="/js/pricing.js"></script>
-  <script src="/js/settlement.js"></script>
+  <script src="/js/pricing.js?v=5.0"></script>
+  <script src="/js/settlement.js?v=5.0"></script>
 
   <script>
     function showToast(message, type = 'info') {

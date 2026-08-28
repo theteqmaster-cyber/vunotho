@@ -34,7 +34,7 @@ $pageTitle = $pageTitle ?? 'Vunotho — Farmer-to-Market Operating System';
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
   <!-- Compiled Tailwind CSS Stylesheet -->
-  <link rel="stylesheet" href="/css/tailwind.css" />
+  <link rel="stylesheet" href="/css/tailwind.css?v=5.0" />
 
   <!-- Dynamic PWA Controller Script -->
   <script>
