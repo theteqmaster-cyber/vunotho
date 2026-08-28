@@ -1,0 +1,12 @@
+.git
+.gitignore
+vunotho old lib/
+vunotho_mobile/
+.env
+Dockerfile
+docker-compose.yml
+.dockerignore
+*.md
+LICENSE
+.idea
+.vscode

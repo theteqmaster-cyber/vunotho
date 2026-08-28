@@ -1,0 +1,39 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # 1. Allow existing files and directories to be accessed directly (css, js, images, etc.)
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # 2. Route API endpoints (/api/listings -> api/listings.php)
+    RewriteRule ^api/([a-zA-Z0-9_-]+)$ api/$1.php [L,QSA]
+    RewriteRule ^api/([a-zA-Z0-9_-]+)\.php$ api/$1.php [L,QSA]
+
+    # 3. Route Named Portal Pages (/farmer -> farmer.php, /buyer -> buyer.php)
+    RewriteRule ^farmer/?$ farmer.php [L,QSA]
+    RewriteRule ^buyer/?$ buyer.php [L,QSA]
+    RewriteRule ^transporter/?$ transporter.php [L,QSA]
+    RewriteRule ^admin/?$ admin.php [L,QSA]
+    RewriteRule ^login/?$ login.php [L,QSA]
+    RewriteRule ^logout/?$ logout.php [L,QSA]
+    RewriteRule ^access/?$ access.php [L,QSA]
+    RewriteRule ^about/?$ about.php [L,QSA]
+    RewriteRule ^why-vunotho/?$ why-vunotho.php [L,QSA]
+    RewriteRule ^contact/?$ contact.php [L,QSA]
+    RewriteRule ^privacy/?$ privacy.php [L,QSA]
+    RewriteRule ^data-policy/?$ data-policy.php [L,QSA]
+
+    # 4. Fallback to index.php
+    RewriteRule ^$ index.php [L,QSA]
+    RewriteRule ^index/?$ index.php [L,QSA]
+</IfModule>
+
+# Security Headers & MIME Types
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

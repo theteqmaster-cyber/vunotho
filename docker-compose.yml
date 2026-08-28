@@ -1,0 +1,13 @@
+services:
+  vunotho-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vunotho_app
+    ports:
+      - "8080:80"
+    environment:
+      - DATABASE_URL=postgresql://postgres.phbnfclsdkgkrmvevxtc:itafulakamphathi@aws-0-us-west-2.pooler.supabase.com:5432/postgres
+      - ADMIN_EMAIL=admin@vunotho@gmail.com
+      - ADMIN_PASSWORD=wish2026
+    restart: unless-stopped
