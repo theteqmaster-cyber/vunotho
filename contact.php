@@ -29,20 +29,21 @@ $pageTitle = 'Contact Us & Field Support — Vunotho Agricultural Platform';
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<div class="max-w-4xl mx-auto space-y-12">
-  
-  <!-- Header Card -->
-  <div class="bg-gradient-to-br from-white via-[#FAF8F5] to-[#F1F5F9] p-8 md:p-12 rounded-3xl border border-slate-200 shadow-warm-lg">
-    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold font-mono mb-4">
-      📞 National Field Support & Partnerships
+<div class="vn-container py-10">
+  <div class="max-w-4xl mx-auto space-y-10">
+    
+    <!-- Header Card -->
+    <div class="bg-white/95 backdrop-blur-md p-8 md:p-12 rounded-3xl border border-emerald-100/80 shadow-sm">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold font-mono mb-4">
+        📞 National Field Support & Partnerships
+      </div>
+      <h1 class="text-3xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight mb-4">
+        Get in Touch with <span class="text-emerald-700">Vunotho</span>
+      </h1>
+      <p class="text-xs md:text-sm text-slate-600 leading-relaxed max-w-2xl">
+        Reach our agricultural coordination team across Harare, Nyanga, Gwanda, Mutasa, and Bulawayo for farmer onboarding, bulk buyer procurement, or haulier fleet integration.
+      </p>
     </div>
-    <h1 class="text-3xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight mb-4">
-      Get in Touch with <span class="text-emerald-600">Vunotho</span>
-    </h1>
-    <p class="text-xs md:text-sm text-slate-600 leading-relaxed max-w-2xl">
-      Reach our agricultural coordination team across Harare, Nyanga, Gwanda, Mutasa, and Bulawayo for farmer onboarding, bulk buyer procurement, or haulier fleet integration.
-    </p>
-  </div>
 
   <!-- Status Alert -->
   <?php if (!empty($message)): ?>
@@ -159,7 +160,6 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 
   </div>
-
 </div>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

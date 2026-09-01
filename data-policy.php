@@ -8,23 +8,24 @@ $pageTitle = 'Data Protection & Handling Policy — Vunotho Agricultural Platfor
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<div class="max-w-4xl mx-auto space-y-10">
-  
-  <!-- Header Card -->
-  <div class="bg-gradient-to-br from-white via-[#FAF8F5] to-[#F1F5F9] p-8 md:p-12 rounded-3xl border border-slate-200 shadow-warm-lg">
-    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-bold font-mono mb-4">
-      🔒 Enterprise Architecture • Security Standards
+<div class="vn-container py-10">
+  <div class="max-w-4xl mx-auto space-y-10">
+    
+    <!-- Header Card -->
+    <div class="bg-white/95 backdrop-blur-md p-8 md:p-12 rounded-3xl border border-emerald-100/80 shadow-sm">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold font-mono mb-4">
+        🔒 Enterprise Architecture • Security Standards
+      </div>
+      <h1 class="text-3xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight mb-4">
+        Data Handling & Protection Policy
+      </h1>
+      <p class="text-xs md:text-sm text-slate-600 leading-relaxed max-w-2xl">
+        Technical and operational protocols governing data capture, cryptographic integrity, offline-first reconciliation, and financial ledger security.
+      </p>
     </div>
-    <h1 class="text-3xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight mb-4">
-      Data Handling & Protection Policy
-    </h1>
-    <p class="text-xs md:text-sm text-slate-600 leading-relaxed max-w-2xl">
-      Technical and operational protocols governing data capture, cryptographic integrity, offline-first reconciliation, and financial ledger security.
-    </p>
-  </div>
 
-  <!-- Policy Deep Dive -->
-  <div class="bg-white/90 backdrop-blur-md p-8 md:p-10 rounded-3xl border border-slate-200 shadow-warm-md space-y-8 text-xs md:text-sm text-slate-700 leading-relaxed">
+    <!-- Policy Deep Dive -->
+    <div class="bg-white/95 backdrop-blur-md p-8 md:p-10 rounded-3xl border border-emerald-100/80 shadow-sm space-y-8 text-xs md:text-sm text-slate-700 leading-relaxed">
     
     <section class="space-y-3">
       <h2 class="text-lg font-black text-slate-900">1. Architectural Principles of Data Protection</h2>
@@ -70,7 +71,6 @@ require_once __DIR__ . '/includes/header.php';
     </section>
 
   </div>
-
 </div>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
