@@ -1063,13 +1063,10 @@ $pageTitle = ucfirst($activeTab) . ' — Vunotho Farmer Operations';
 
     <!-- ==================== 5. BOTTOM ACTION GROWTH BANNER ==================== -->
     <div class="vn-growth-banner mt-6">
-      <div class="flex items-center gap-5">
-        <!-- Crisp Smartphone Mockup Graphic with Official Vunotho "V" Logo -->
-        <div class="vn-growth-phone-mockup">
-          <div class="w-full h-full bg-[#071726] rounded-xl flex flex-col items-center justify-center p-1 border border-emerald-500/40 shadow-inner">
-            <img src="/images/vunotho_logo.png" alt="Official Vunotho Logo" class="w-12 h-12 rounded-xl object-cover shadow-md border border-emerald-400/40" />
-            <span class="text-[9px] font-black tracking-wider text-emerald-300 mt-1">VUNOTHO</span>
-          </div>
+      <div class="flex items-center gap-4 sm:gap-5">
+        <!-- Floating Official Vunotho Logo -->
+        <div class="flex-shrink-0 flex items-center justify-center">
+          <img src="/images/vunotho_logo.png" alt="Official Vunotho Logo" class="w-16 h-16 sm:w-20 sm:h-20 object-contain filter drop-shadow-[0_8px_16px_rgba(22,163,74,0.3)] transform hover:scale-105 transition-transform" />
         </div>
 
         <div>

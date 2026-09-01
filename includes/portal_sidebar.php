@@ -19,9 +19,7 @@ $activeTab = $_GET['tab'] ?? 'dashboard';
   <!-- 1. Brand Logo Header & Collapse Button -->
   <div class="vn-sidebar-header">
     <a href="/farmer.php" class="flex items-center gap-3 group text-decoration-none min-w-0">
-      <div class="w-9 h-9 rounded-xl overflow-hidden shadow-md border border-emerald-500/40 flex-shrink-0 bg-[#0B2032] flex items-center justify-center p-0.5">
-        <img src="/images/vunotho_logo.png" alt="Vunotho Official Logo" class="w-full h-full object-cover rounded-lg" />
-      </div>
+      <img src="/images/vunotho_logo.png" alt="Vunotho Official Logo" class="w-9 h-9 object-contain filter drop-shadow-md flex-shrink-0 group-hover:scale-105 transition-transform" />
       <div class="flex flex-col min-w-0 vn-sidebar-text">
         <span class="font-black text-base tracking-wider text-white leading-tight">VUNOTHO</span>
         <span class="text-[10px] font-semibold text-emerald-400 leading-none mt-0.5">Agricultural OS</span>
