@@ -76,5 +76,57 @@
     </div>
   </footer>
 
+  <!-- Public Mobile PWA Bottom Floating Bar -->
+  <nav class="vn-pwa-bottom-bar" aria-label="Public Mobile Navigation">
+    <?php $currentScript = basename($_SERVER['SCRIPT_NAME'] ?? ''); ?>
+    <a href="/index.php" class="vn-pwa-tab-item <?= $currentScript === 'index.php' ? 'active' : '' ?>">
+      <div class="vn-pwa-tab-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </div>
+      <span class="vn-pwa-tab-label">Home</span>
+    </a>
+
+    <a href="/index.php#simulator" class="vn-pwa-tab-item">
+      <div class="vn-pwa-tab-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="2" width="16" height="20" rx="2"/>
+          <line x1="8" y1="6" x2="16" y2="6"/>
+          <line x1="8" y1="10" x2="16" y2="10"/>
+        </svg>
+      </div>
+      <span class="vn-pwa-tab-label">Simulator</span>
+    </a>
+
+    <!-- Center Floating Action Button (Download / Launch App) -->
+    <div class="vn-pwa-fab-container">
+      <a href="/access.php" class="vn-pwa-fab-btn" title="Download Vunotho App">
+        📲
+      </a>
+    </div>
+
+    <a href="/farmer.php" class="vn-pwa-tab-item <?= $currentScript === 'farmer.php' ? 'active' : '' ?>">
+      <div class="vn-pwa-tab-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <span class="vn-pwa-tab-label">Farmer Desk</span>
+    </a>
+
+    <a href="/access.php" class="vn-pwa-tab-item <?= $currentScript === 'access.php' ? 'active' : '' ?>">
+      <div class="vn-pwa-tab-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+          <line x1="12" y1="18" x2="12.01" y2="18"/>
+        </svg>
+      </div>
+      <span class="vn-pwa-tab-label">Get App</span>
+    </a>
+  </nav>
+
 </body>
 </html>
+

@@ -174,3 +174,66 @@ $activeTab = $_GET['tab'] ?? 'dashboard';
   </div>
 
 </aside>
+
+<!-- ==================== FLUTTER-LIKE MOBILE PWA FLOATING BOTTOM NAVIGATION BAR ==================== -->
+<?php
+$roleKey = strtolower($currentUser['role'] ?? 'farmer');
+$basePage = $roleKey === 'buyer' ? '/buyer.php' : ($roleKey === 'haulier' || $roleKey === 'transporter' ? '/transporter.php' : '/farmer.php');
+$tab1Name = $roleKey === 'buyer' ? 'Demands' : ($roleKey === 'haulier' || $roleKey === 'transporter' ? 'Routes' : 'Produce');
+$tab1Key = $roleKey === 'buyer' ? 'demands' : ($roleKey === 'haulier' || $roleKey === 'transporter' ? 'manifests' : 'produce');
+$modalAction = $roleKey === 'buyer' ? "if(typeof openModal==='function'){openModal('create-demand-modal');}else{window.location.href='{$basePage}?tab=demands';}" : "if(typeof openModal==='function'){openModal('create-listing-modal');}else{window.location.href='{$basePage}?tab=produce';}";
+?>
+<nav class="vn-pwa-bottom-bar" aria-label="Mobile Navigation">
+  
+  <!-- 1. Home / Desk -->
+  <a href="<?= $basePage ?>?tab=dashboard" class="vn-pwa-tab-item <?= ($activeTab === 'dashboard' || empty($activeTab)) ? 'active' : '' ?>">
+    <div class="vn-pwa-tab-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+    </div>
+    <span class="vn-pwa-tab-label">Home</span>
+  </a>
+
+  <!-- 2. Produce / Orders -->
+  <a href="<?= $basePage ?>?tab=<?= $tab1Key ?>" class="vn-pwa-tab-item <?= ($activeTab === $tab1Key || $activeTab === 'orders') ? 'active' : '' ?>">
+    <div class="vn-pwa-tab-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+    </div>
+    <span class="vn-pwa-tab-label"><?= $tab1Name ?></span>
+  </a>
+
+  <!-- 3. Center Floating Action Button (+) -->
+  <div class="vn-pwa-fab-container">
+    <button type="button" class="vn-pwa-fab-btn" onclick="<?= $modalAction ?>" title="Log New Produce Batch / Order">
+      +
+    </button>
+  </div>
+
+  <!-- 4. Market / Prices -->
+  <a href="<?= $basePage ?>?tab=prices" class="vn-pwa-tab-item <?= in_array($activeTab, ['prices', 'buyers', 'transport']) ? 'active' : '' ?>">
+    <div class="vn-pwa-tab-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+        <polyline points="17 6 23 6 23 12"/>
+      </svg>
+    </div>
+    <span class="vn-pwa-tab-label">Market</span>
+  </a>
+
+  <!-- 5. Profile & Settings -->
+  <a href="<?= $basePage ?>?tab=settings" class="vn-pwa-tab-item <?= in_array($activeTab, ['settings', 'payments', 'learning']) ? 'active' : '' ?>">
+    <div class="vn-pwa-tab-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+    </div>
+    <span class="vn-pwa-tab-label">Profile</span>
+  </a>
+
+</nav>
+

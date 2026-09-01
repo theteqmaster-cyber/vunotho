@@ -89,10 +89,10 @@ require_once __DIR__ . '/includes/header.php';
           </p>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-slate-100 space-y-2">
-          <div class="text-[10px] text-slate-500 font-mono">Android 7.0+ • Direct APK (42 MB)</div>
-          <a href="/downloads/vunotho-mobile.apk" download="vunotho-mobile.apk" class="w-full py-2.5 rounded-full bg-emerald-800 hover:bg-emerald-900 text-white font-extrabold text-xs transition-all flex items-center justify-center gap-1.5 shadow-md">
-            <span>⬇</span> Download APK Directly
+        <div class="mt-6 pt-4 border-t border-slate-100 space-y-2.5">
+          <div class="text-[10px] text-slate-500 font-mono font-bold">Android 7.0+ • Direct APK (42 MB)</div>
+          <a href="/downloads/vunotho-mobile.apk" download="vunotho-mobile.apk" style="background: #064E3B; color: #ffffff !important; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px 18px; border-radius: 9999px; font-weight: 800; font-size: 13px; text-decoration: none; box-shadow: 0 4px 14px rgba(6, 78, 59, 0.35);" class="hover:opacity-95 transition-opacity">
+            <span>⬇</span> <span>Download Android APK</span>
           </a>
         </div>
       </div>
@@ -110,10 +110,10 @@ require_once __DIR__ . '/includes/header.php';
           </p>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-slate-100 space-y-2">
+        <div class="mt-6 pt-4 border-t border-slate-100 space-y-2.5">
           <div class="text-[10px] text-emerald-800 font-bold font-mono">Available via Web App (PWA)</div>
-          <button onclick="openIosPwaModal()" class="w-full py-2.5 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs transition-all flex items-center justify-center gap-1.5 shadow-md">
-            <span>📲</span> Install via Web App
+          <button onclick="openIosPwaModal()" style="background: #0F172A; color: #ffffff !important; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px 18px; border-radius: 9999px; font-weight: 800; font-size: 13px; text-decoration: none; border: none; cursor: pointer; box-shadow: 0 4px 14px rgba(15, 23, 42, 0.3);" class="hover:opacity-95 transition-opacity">
+            <span>📲</span> <span>Install via Web App</span>
           </button>
         </div>
       </div>
@@ -131,10 +131,10 @@ require_once __DIR__ . '/includes/header.php';
           </p>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-slate-100 space-y-2">
-          <div class="text-[10px] text-slate-500 font-mono">Windows 10 / 11 (64-bit)</div>
-          <button onclick="openDesktopComingSoonModal('Windows Native Client')" class="w-full py-2.5 rounded-full bg-teal-700 hover:bg-teal-800 text-white font-extrabold text-xs transition-all flex items-center justify-center gap-1.5 shadow-md">
-            <span>💻</span> Get Windows Client
+        <div class="mt-6 pt-4 border-t border-slate-100 space-y-2.5">
+          <div class="text-[10px] text-slate-500 font-mono font-bold">Windows 10 / 11 (64-bit)</div>
+          <button onclick="openDesktopComingSoonModal('Windows Native Client')" style="background: #0D9488; color: #ffffff !important; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px 18px; border-radius: 9999px; font-weight: 800; font-size: 13px; border: none; cursor: pointer; box-shadow: 0 4px 14px rgba(13, 148, 136, 0.3);" class="hover:opacity-95 transition-opacity">
+            <span>💻</span> <span>Get Windows Client</span>
           </button>
         </div>
       </div>
@@ -152,10 +152,10 @@ require_once __DIR__ . '/includes/header.php';
           </p>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-slate-100 space-y-2">
-          <div class="text-[10px] text-slate-500 font-mono">AppImage / .deb / Flatpak</div>
-          <button onclick="openDesktopComingSoonModal('Linux Native Client')" class="w-full py-2.5 rounded-full bg-amber-700 hover:bg-amber-800 text-white font-extrabold text-xs transition-all flex items-center justify-center gap-1.5 shadow-md">
-            <span>🐧</span> Get Linux Client
+        <div class="mt-6 pt-4 border-t border-slate-100 space-y-2.5">
+          <div class="text-[10px] text-slate-500 font-mono font-bold">AppImage / .deb / Flatpak</div>
+          <button onclick="openDesktopComingSoonModal('Linux Native Client')" style="background: #B45309; color: #ffffff !important; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px 18px; border-radius: 9999px; font-weight: 800; font-size: 13px; border: none; cursor: pointer; box-shadow: 0 4px 14px rgba(180, 83, 9, 0.3);" class="hover:opacity-95 transition-opacity">
+            <span>🐧</span> <span>Get Linux Client</span>
           </button>
         </div>
       </div>
