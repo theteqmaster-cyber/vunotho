@@ -11,41 +11,65 @@ require_once __DIR__ . '/includes/header.php';
 <div class="vn-container py-10">
   <div class="max-w-5xl mx-auto space-y-10">
     
-    <!-- 1. HERO SECTION -->
+    <!-- 1. HERO SECTION WITH RICH DEVICE PREVIEW -->
     <div class="bg-gradient-to-br from-[#071726] via-[#0A2E1D] to-[#064E3B] text-white p-8 md:p-12 rounded-3xl border border-emerald-500/20 shadow-xl relative overflow-hidden">
-      <div class="relative z-10 max-w-3xl space-y-4">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-extrabold tracking-wide uppercase font-mono">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-          <span>Universal Multi-Platform Client</span>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+        
+        <div class="lg:col-span-7 space-y-4">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-extrabold tracking-wide uppercase font-mono">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            <span>Universal Multi-Platform Client</span>
+          </div>
+
+          <h1 class="text-3xl md:text-5xl font-black tracking-tight leading-tight">
+            Access Vunotho on <span class="text-emerald-400">Any Device, Anywhere</span>
+          </h1>
+
+          <p class="text-sm md:text-base text-slate-300 leading-relaxed">
+            Engineered specifically for rural Zimbabwean field conditions. Operates seamlessly even when cellular data is slow, intermittent, or completely offline.
+          </p>
+
+          <!-- OS Support Pills -->
+          <div class="flex flex-wrap items-center gap-2.5 pt-2">
+            <span class="px-3 py-1.5 rounded-xl bg-white/10 border border-white/15 text-xs font-bold text-slate-100 flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+              Android
+            </span>
+            <span class="px-3 py-1.5 rounded-xl bg-white/10 border border-white/15 text-xs font-bold text-slate-100 flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"/></svg>
+              iPhone / iOS
+            </span>
+            <span class="px-3 py-1.5 rounded-xl bg-white/10 border border-white/15 text-xs font-bold text-slate-100 flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              Windows PC
+            </span>
+            <span class="px-3 py-1.5 rounded-xl bg-white/10 border border-white/15 text-xs font-bold text-slate-100 flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+              Linux
+            </span>
+          </div>
         </div>
 
-        <h1 class="text-3xl md:text-5xl font-black tracking-tight leading-tight">
-          Access Vunotho on <span class="text-emerald-400">Any Device, Anywhere</span>
-        </h1>
-
-        <p class="text-sm md:text-base text-slate-300 leading-relaxed">
-          Engineered specifically for rural Zimbabwean field conditions. Operates seamlessly even when cellular data is slow, intermittent, or completely offline.
-        </p>
-
-        <!-- OS Support Pills -->
-        <div class="flex flex-wrap items-center gap-2.5 pt-2">
-          <span class="px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700 text-xs font-bold text-slate-200 flex items-center gap-1.5">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-            Android
-          </span>
-          <span class="px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700 text-xs font-bold text-slate-200 flex items-center gap-1.5">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"/></svg>
-            iPhone / iOS
-          </span>
-          <span class="px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700 text-xs font-bold text-slate-200 flex items-center gap-1.5">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            Windows PC
-          </span>
-          <span class="px-3 py-1 rounded-lg bg-slate-800/80 border border-slate-700 text-xs font-bold text-slate-200 flex items-center gap-1.5">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
-            Linux
-          </span>
+        <!-- Right Column: Visual Device Illustration Card -->
+        <div class="lg:col-span-5 relative">
+          <div class="relative rounded-2xl overflow-hidden border border-white/20 shadow-2xl bg-slate-900 group">
+            <img src="/images/farmland.png" alt="Vunotho Farmland Overview" class="w-full h-56 object-cover object-center transform group-hover:scale-105 transition-transform duration-500" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#071726]/90 via-transparent to-transparent"></div>
+            
+            <!-- Floating Mobile Screen Chip -->
+            <div class="absolute bottom-3 left-3 right-3 bg-[#071726]/90 backdrop-blur-md border border-white/20 p-3 rounded-xl flex items-center justify-between text-xs">
+              <div class="flex items-center gap-2.5">
+                <img src="/images/vunotho_logo.png" alt="Vunotho Logo" class="w-8 h-8 rounded-lg object-cover" />
+                <div>
+                  <div class="font-extrabold text-white leading-tight">Vunotho OS Client</div>
+                  <div class="text-[10px] text-emerald-400 font-mono">Offline-First • Multi-Platform</div>
+                </div>
+              </div>
+              <span class="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 font-bold font-mono text-[10px]">v2.4 Live</span>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
 

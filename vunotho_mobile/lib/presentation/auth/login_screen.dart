@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme/vunotho_theme.dart';
 import '../../logic/providers/auth_provider.dart';
@@ -20,29 +21,29 @@ class _LoginScreenState extends State<LoginScreen> {
     {
       'id': 'farmer',
       'title': 'Smallholder Farmer',
-      'icon': Icons.agriculture_rounded,
-      'desc': 'Log produce, Net-Return price guarantee',
+      'icon': Icons.eco_rounded,
+      'desc': 'Log produce, guaranteed Net-Return pricing',
       'color': VunothoColors.primary,
     },
     {
       'id': 'buyer',
       'title': 'Commercial Buyer',
       'icon': Icons.storefront_rounded,
-      'desc': 'Post wholesale commodity demand orders',
+      'desc': 'Wholesale supermarket orders & contracts',
       'color': const Color(0xFF0284C7),
     },
     {
       'id': 'haulier',
-      'title': 'Rural Haulier',
+      'title': 'Rural Transporter',
       'icon': Icons.local_shipping_rounded,
-      'desc': 'Claim 2.5T load aggregation routes',
+      'desc': '2.5T load aggregation corridor routes',
       'color': VunothoColors.accent,
     },
   ];
 
   @override
   void dispose() {
-    _phoneOrEmailController.disposeValidate();
+    _phoneOrEmailController.dispose();
     _pinController.dispose();
     super.dispose();
   }
@@ -57,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     setState(() => _isLoading = true);
-    await Future.delayed(const Duration(milliseconds: 400));
+    await Future.delayed(const Duration(milliseconds: 300));
     if (!mounted) return;
 
     await context.read<AuthProvider>().login(identifier, _selectedRole);
@@ -73,270 +74,243 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0A192F),
+      backgroundColor: const Color(0xFF071726),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Brand Emblem & Heading
-                Container(
-                  width: 72,
-                  height: 72,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [VunothoColors.primary, Color(0xFF34D399)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: VunothoColors.primary.withValues(alpha: 0.5),
-                        blurRadius: 20,
-                        offset: const Offset(0, 8),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 460),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // 1. Official Vunotho Logo Header
+                  Center(
+                    child: Container(
+                      width: 68,
+                      height: 68,
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFF15803D), Color(0xFF064E3B)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFF15803D).withValues(alpha: 0.35),
+                            blurRadius: 20,
+                            offset: const Offset(0, 8),
+                          ),
+                        ],
+                        border: Border.all(color: const Color(0xFF22C55E).withValues(alpha: 0.5), width: 1.5),
                       ),
-                    ],
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'V',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 36,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                  'VUNOTHO',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 2.0,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                const Text(
-                  'Smallholder Agricultural Operating System',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF94A3B8),
-                  ),
-                ),
-                const SizedBox(height: 28),
-
-                // Main Login Card
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(24),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.15),
-                        blurRadius: 25,
-                        offset: const Offset(0, 10),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Select Your Platform Role',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w800,
-                          color: VunothoColors.textDark,
+                      child: const Center(
+                        child: Text(
+                          'V',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 32,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: -1,
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 12),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
 
-                      // Role Selectors
-                      ..._roles.map((r) {
-                        final isSelected = _selectedRole == r['id'];
-                        final color = r['color'] as Color;
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 8),
-                          child: InkWell(
-                            onTap: () => setState(() => _selectedRole = r['id']),
-                            borderRadius: BorderRadius.circular(14),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  Center(
+                    child: Text(
+                      'VUNOTHO',
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 26,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 2.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Center(
+                    child: Text(
+                      'Zimbabwe Agricultural Operating System',
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF4ADE80),
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 28),
+
+                  // 2. Select Platform Role
+                  Text(
+                    'SELECT YOUR ROLE',
+                    style: GoogleFonts.jetBrainsMono(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w800,
+                      color: const Color(0xFF94A3B8),
+                      letterSpacing: 1.2,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+
+                  ..._roles.map((role) {
+                    final isSelected = _selectedRole == role['id'];
+                    final roleColor = role['color'] as Color;
+
+                    return GestureDetector(
+                      onTap: () => setState(() => _selectedRole = role['id']),
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: isSelected ? roleColor.withValues(alpha: 0.15) : const Color(0xFF0F2438),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: isSelected ? roleColor : const Color(0xFF1E3A52),
+                            width: isSelected ? 2 : 1,
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 42,
+                              height: 42,
                               decoration: BoxDecoration(
-                                color: isSelected ? color.withValues(alpha: 0.08) : Colors.grey.shade50,
-                                borderRadius: BorderRadius.circular(14),
-                                border: Border.all(
-                                  color: isSelected ? color : Colors.grey.shade200,
-                                  width: isSelected ? 2 : 1,
-                                ),
+                                color: isSelected ? roleColor : const Color(0xFF1E3A52),
+                                borderRadius: BorderRadius.circular(12),
                               ),
-                              child: Row(
+                              child: Icon(role['icon'] as IconData, color: Colors.white, size: 22),
+                            ),
+                            const SizedBox(width: 14),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      color: isSelected ? color : Colors.grey.shade200,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Icon(
-                                      r['icon'] as IconData,
-                                      color: isSelected ? Colors.white : Colors.grey.shade700,
-                                      size: 18,
+                                  Text(
+                                    role['title'],
+                                    style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
                                     ),
                                   ),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          r['title'] as String,
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.bold,
-                                            color: isSelected ? color : VunothoColors.textDark,
-                                          ),
-                                        ),
-                                        Text(
-                                          r['desc'] as String,
-                                          style: TextStyle(
-                                            fontSize: 11,
-                                            color: Colors.grey.shade600,
-                                          ),
-                                        ),
-                                      ],
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    role['desc'],
+                                    style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 11,
+                                      color: const Color(0xFF94A3B8),
                                     ),
                                   ),
-                                  if (isSelected)
-                                    Icon(Icons.check_circle_rounded, color: color, size: 20),
                                 ],
                               ),
                             ),
-                          ),
-                        );
-                      }),
-                      const SizedBox(height: 16),
+                            if (isSelected)
+                              Icon(Icons.check_circle_rounded, color: roleColor, size: 20),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
 
-                      // Input Fields
-                      const Text(
-                        'Phone / EcoCash or Email',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: VunothoColors.textDark,
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      TextField(
-                        controller: _phoneOrEmailController,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          hintText: 'e.g. 0776118117 or farmer@vunotho.co.zw',
-                          prefixIcon: const Icon(Icons.phone_android_rounded, size: 20),
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(color: VunothoColors.lightBorder),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 14),
+                  const SizedBox(height: 16),
 
-                      const Text(
-                        'Security PIN / Password',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: VunothoColors.textDark,
-                        ),
+                  // 3. Credentials Input
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF0F2438),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: const Color(0xFF1E3A52)),
+                    ),
+                    child: TextField(
+                      controller: _phoneOrEmailController,
+                      style: GoogleFonts.plusJakartaSans(color: Colors.white, fontSize: 14),
+                      decoration: InputDecoration(
+                        hintText: 'Mobile Phone (e.g. 0776118117)',
+                        hintStyle: GoogleFonts.plusJakartaSans(color: const Color(0xFF64748B), fontSize: 13),
+                        prefixIcon: const Icon(Icons.phone_iphone_rounded, color: Color(0xFF4ADE80), size: 20),
+                        border: InputBorder.none,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                       ),
-                      const SizedBox(height: 6),
-                      TextField(
-                        controller: _pinController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: 'Enter 4-digit PIN',
-                          prefixIcon: const Icon(Icons.lock_outline_rounded, size: 20),
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(color: VunothoColors.lightBorder),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-
-                      // Sign In Button
-                      SizedBox(
-                        width: double.infinity,
-                        height: 48,
-                        child: ElevatedButton(
-                          onPressed: _isLoading ? null : _handleSignIn,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: VunothoColors.primary,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                          ),
-                          child: _isLoading
-                              ? const SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
-                                )
-                              : const Text(
-                                  'Sign In to Vunotho Desk',
-                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                                ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 16),
-
-                // Offline / Demo Access
-                TextButton.icon(
-                  onPressed: _isLoading ? null : _handleGuestExplore,
-                  icon: const Icon(Icons.offline_bolt_rounded, color: Color(0xFFFBBF24), size: 18),
-                  label: const Text(
-                    'Explore in Offline / Demo Mode',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                ),
-                const SizedBox(height: 8),
+                  const SizedBox(height: 12),
 
-                const Text(
-                  'Enactus Zimbabwe • Agricultural OS Blueprint',
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF64748B),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF0F2438),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: const Color(0xFF1E3A52)),
+                    ),
+                    child: TextField(
+                      controller: _pinController,
+                      obscureText: true,
+                      style: GoogleFonts.jetBrainsMono(color: Colors.white, fontSize: 14),
+                      decoration: InputDecoration(
+                        hintText: 'Security PIN / Password',
+                        hintStyle: GoogleFonts.plusJakartaSans(color: const Color(0xFF64748B), fontSize: 13),
+                        prefixIcon: const Icon(Icons.lock_outline_rounded, color: Color(0xFF4ADE80), size: 20),
+                        border: InputBorder.none,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 20),
+
+                  // 4. Primary Sign In Button
+                  SizedBox(
+                    height: 52,
+                    child: ElevatedButton(
+                      onPressed: _isLoading ? null : _handleSignIn,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF15803D),
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                        elevation: 4,
+                      ),
+                      child: _isLoading
+                          ? const SizedBox(
+                              width: 22,
+                              height: 22,
+                              child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5),
+                            )
+                          : Text(
+                              'Sign In to Vunotho →',
+                              style: GoogleFonts.plusJakartaSans(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  // 5. Direct Guest Demo Button
+                  OutlinedButton(
+                    onPressed: _isLoading ? null : _handleGuestExplore,
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: const Color(0xFF94A3B8),
+                      side: const BorderSide(color: Color(0xFF1E3A52)),
+                      padding: const EdgeInsets.symmetric(vertical: 13),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    ),
+                    child: Text(
+                      'Explore as Guest (Instant Access)',
+                      style: GoogleFonts.plusJakartaSans(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
-  }
-}
-
-extension on TextEditingController {
-  void disposeValidate() {
-    dispose();
   }
 }
