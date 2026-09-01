@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../core/theme/vunotho_theme.dart';
 import '../logic/providers/auth_provider.dart';
+import 'auth/onboarding_welcome_screen.dart';
 import 'buyer/add_demand_dialog.dart';
 import 'buyer/buyer_dashboard.dart';
 import 'farmer/add_listing_dialog.dart';
@@ -319,7 +320,54 @@ class _MainShellState extends State<MainShell> {
           ),
           const SizedBox(height: 20),
 
-          // 2. Farmgate & Settlement Credentials
+          // 2. Quick Switch Persona & Role
+          Text(
+            'SWITCH ACTIVE DASHBOARD / ROLE',
+            style: GoogleFonts.jetBrainsMono(
+              fontSize: 11,
+              fontWeight: FontWeight.w800,
+              color: VunothoColors.textMuted,
+              letterSpacing: 0.8,
+            ),
+          ),
+          const SizedBox(height: 10),
+
+          Row(
+            children: [
+              _buildQuickRoleButton(
+                context,
+                auth,
+                'farmer',
+                'Farmer 🌾',
+                Icons.eco_rounded,
+                role == 'farmer',
+                const Color(0xFF15803D),
+              ),
+              const SizedBox(width: 8),
+              _buildQuickRoleButton(
+                context,
+                auth,
+                'haulier',
+                'Haulier 🚛',
+                Icons.local_shipping_rounded,
+                role == 'haulier',
+                const Color(0xFFD97706),
+              ),
+              const SizedBox(width: 8),
+              _buildQuickRoleButton(
+                context,
+                auth,
+                'buyer',
+                'Buyer 🏢',
+                Icons.storefront_rounded,
+                role == 'buyer',
+                const Color(0xFF0284C7),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+
+          // 3. Farmgate & Settlement Credentials
           Text(
             'ACCOUNT CREDENTIALS & SETTLEMENT',
             style: GoogleFonts.jetBrainsMono(
@@ -358,7 +406,7 @@ class _MainShellState extends State<MainShell> {
 
           const SizedBox(height: 24),
 
-          // 3. Secure Sign Out / Switch Persona Button
+          // 4. Secure Sign Out / Switch Persona Button
           SizedBox(
             width: double.infinity,
             height: 50,
@@ -381,6 +429,60 @@ class _MainShellState extends State<MainShell> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildQuickRoleButton(
+    BuildContext context,
+    AuthProvider auth,
+    String roleKey,
+    String label,
+    IconData icon,
+    bool isActive,
+    Color activeColor,
+  ) {
+    return Expanded(
+      child: InkWell(
+        onTap: () {
+          auth.switchRole(roleKey);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Switched to ${roleKey.toUpperCase()} Desk'),
+              backgroundColor: activeColor,
+              duration: const Duration(seconds: 1),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            ),
+          );
+        },
+        borderRadius: BorderRadius.circular(14),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+            color: isActive ? activeColor.withValues(alpha: 0.12) : Colors.white,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(
+              color: isActive ? activeColor : VunothoColors.cardBorder,
+              width: isActive ? 1.6 : 1.0,
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, color: isActive ? activeColor : VunothoColors.textMuted, size: 18),
+              const SizedBox(height: 4),
+              Text(
+                label,
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 11,
+                  fontWeight: isActive ? FontWeight.w800 : FontWeight.w600,
+                  color: isActive ? activeColor : VunothoColors.textDark,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -516,9 +618,15 @@ class _MainShellState extends State<MainShell> {
             child: Text('Cancel', style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.w700, color: VunothoColors.textMuted)),
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.of(dialogCtx).pop();
-              auth.logout();
+              await auth.logout();
+              if (context.mounted) {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (_) => const OnboardingWelcomeScreen()),
+                  (route) => false,
+                );
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFFDC2626),

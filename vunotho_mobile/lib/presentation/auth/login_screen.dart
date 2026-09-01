@@ -31,11 +31,23 @@ class _LoginScreenState extends State<LoginScreen> {
   void _handleLogin() async {
     setState(() => _isLoading = true);
 
+    String demoName = 'Simba Mukamuri';
+    String demoDistrict = 'Nyanga';
+    if (_selectedRole == 'haulier') {
+      demoName = 'Blessing Moyo (Logistics)';
+      demoDistrict = 'Harare - Mutare Corridor';
+    } else if (_selectedRole == 'buyer') {
+      demoName = 'Tariro Ndlovu (Procurement)';
+      demoDistrict = 'Bulawayo Central';
+    }
+
     final authProvider = context.read<AuthProvider>();
     final success = await authProvider.login(
       _phoneController.text.trim(),
       _passwordController.text.trim(),
       role: _selectedRole,
+      name: demoName,
+      district: demoDistrict,
     );
 
     if (!mounted) return;
@@ -370,7 +382,35 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 12),
+
+                  // Demo Credentials Helper Card
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF0FDF4),
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(color: const Color(0xFFBBF7D0)),
+                    ),
+                    child: Row(
+                      children: [
+                        const Text('🔑', style: TextStyle(fontSize: 14)),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            'Demo PIN for all personas is 1234. Tap any role above to switch accounts.',
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFF166534),
+                              height: 1.3,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 14),
 
                   // Big Login Button
                   SizedBox(
@@ -442,7 +482,21 @@ class _LoginScreenState extends State<LoginScreen> {
     final isSelected = _selectedRole == roleKey;
     return Expanded(
       child: InkWell(
-        onTap: () => setState(() => _selectedRole = roleKey),
+        onTap: () {
+          setState(() {
+            _selectedRole = roleKey;
+            if (roleKey == 'haulier') {
+              _phoneController.text = '0772345678';
+              _passwordController.text = '1234';
+            } else if (roleKey == 'buyer') {
+              _phoneController.text = '0779876543';
+              _passwordController.text = '1234';
+            } else {
+              _phoneController.text = '0776118117';
+              _passwordController.text = '1234';
+            }
+          });
+        },
         borderRadius: BorderRadius.circular(14),
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 10),
