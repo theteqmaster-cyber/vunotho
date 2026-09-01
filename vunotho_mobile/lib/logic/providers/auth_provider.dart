@@ -4,7 +4,7 @@ import '../../data/models/user_profile_model.dart';
 
 class AuthProvider extends ChangeNotifier {
   UserProfileModel? _user;
-  bool _isLoading = true;
+  bool _isLoading = false;
 
   UserProfileModel? get user => _user;
   bool get isLoading => _isLoading;
@@ -18,7 +18,8 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> _init() async {
-    _user = await OfflineStorageService.getUser();
+    // Start unauthenticated so users experience the landing / onboarding flow
+    _user = null;
     _isLoading = false;
     notifyListeners();
   }
@@ -42,15 +43,19 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> login(String emailOrPhone, String role) async {
+    _isLoading = true;
+    notifyListeners();
+    
     _user = UserProfileModel(
       id: 'USR-${DateTime.now().millisecondsSinceEpoch}',
-      name: emailOrPhone.split('@').first,
+      name: emailOrPhone == 'Guest Farmer' ? 'Simba Mukamuri' : emailOrPhone.split('@').first,
       emailOrPhone: emailOrPhone,
       role: role,
       district: 'Nyanga',
       createdAt: DateTime.now().toIso8601String(),
     );
     await OfflineStorageService.saveUser(_user!);
+    _isLoading = false;
     notifyListeners();
   }
 
