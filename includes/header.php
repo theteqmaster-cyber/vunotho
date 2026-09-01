@@ -1,14 +1,14 @@
 <?php
 /**
  * VUNOTHO ENTERPRISE HEADER COMPONENT
- * Clean AgriConnect Navbar with Floating Logo, Direct Navigation & PWA Capability
+ * AgriConnect Clean Layout with Official Vunotho Brand Identity & Authentic Navigation
  */
 require_once __DIR__ . '/../api/session.php';
 if (!headers_sent()) {
     header('Content-Type: text/html; charset=utf-8');
 }
 $currentUser = get_current_user_profile();
-$pageTitle = $pageTitle ?? 'Vunotho — Empowering Farmers. Growing Tomorrow.';
+$pageTitle = $pageTitle ?? 'Vunotho — Zimbabwe’s Agricultural Operating System';
 $currentScript = basename($_SERVER['SCRIPT_NAME'] ?? '');
 ?>
 <!DOCTYPE html>
@@ -18,7 +18,7 @@ $currentScript = basename($_SERVER['SCRIPT_NAME'] ?? '');
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title><?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8') ?></title>
   
-  <meta name="description" content="Vunotho is Zimbabwe's agricultural operating system: Transparent farmgate net returns, 2.5T load pooling, and guaranteed mobile settlements." />
+  <meta name="description" content="Vunotho is Zimbabwe's decentralized agricultural operating system: Transparent farmgate price intelligence, 2.5T load aggregation, circular post-harvest recovery, and guaranteed EcoCash mobile settlements." />
   <meta name="theme-color" content="#071726" />
   
   <!-- PWA Web App Manifest & Mobile App Capabilities -->
@@ -32,12 +32,12 @@ $currentScript = basename($_SERVER['SCRIPT_NAME'] ?? '');
   <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="/css/tailwind.css?v=5.0" />
   <link rel="stylesheet" href="/css/portal_dashboard.css?v=4.0" />
-  <link rel="stylesheet" href="/css/landing_page.css?v=1.0" />
+  <link rel="stylesheet" href="/css/landing_page.css?v=2.0" />
 
   <!-- Dynamic PWA Controller Script -->
   <script>
@@ -101,17 +101,17 @@ $currentScript = basename($_SERVER['SCRIPT_NAME'] ?? '');
 </head>
 <body class="vn-landing-body text-slate-900 min-h-screen flex flex-col antialiased selection:bg-emerald-500 selection:text-white">
 
-  <!-- Streamlined AgriConnect Navbar -->
+  <!-- Streamlined AgriConnect-Style Navbar -->
   <header class="vn-navbar">
     <div class="vn-container">
       <div class="vn-nav-inner">
         
-        <!-- Left: Brand Logo with Floating "V" Logo -->
+        <!-- Left: Official Floating Vunotho "V" Logo -->
         <a href="/index.php" class="vn-nav-brand">
           <img src="/images/vunotho_logo.png" alt="Official Vunotho Logo" class="vn-nav-brand-logo" />
           <div class="flex flex-col">
             <span class="font-black text-lg tracking-tight text-slate-900 leading-none">VUNOTHO</span>
-            <span class="text-[10px] font-semibold text-emerald-700 leading-none mt-0.5">Grow Better. Live Better.</span>
+            <span class="text-[10px] font-semibold text-emerald-700 leading-none mt-0.5">Agricultural OS</span>
           </div>
         </a>
 
@@ -125,13 +125,13 @@ $currentScript = basename($_SERVER['SCRIPT_NAME'] ?? '');
               <a href="/index.php#solutions" class="vn-nav-link-item">Solutions</a>
             </li>
             <li>
+              <a href="/index.php#simulator" class="vn-nav-link-item">Price Simulator</a>
+            </li>
+            <li>
               <a href="/index.php#impact" class="vn-nav-link-item">Impact</a>
             </li>
             <li>
               <a href="/index.php#technology" class="vn-nav-link-item">Technology</a>
-            </li>
-            <li>
-              <a href="/index.php#simulator" class="vn-nav-link-item">Price Intelligence</a>
             </li>
             <li>
               <a href="/farmer.php" class="vn-nav-link-item text-emerald-800 font-bold">Farmer Desk</a>

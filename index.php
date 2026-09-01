@@ -1,7 +1,7 @@
 <?php
 /**
- * VUNOTHO ENTERPRISE LANDING PAGE (AgriConnect Design System)
- * Full 1:1 Layout Alignment with maize_hero.png, farmland.png, 4-Solution Grid, and Net-Return Calculator
+ * VUNOTHO ENTERPRISE LANDING PAGE
+ * AgriConnect Modern UI Layout with Authentic Vunotho Mission, Blueprint & Economic Principles
  */
 require_once __DIR__ . '/api/session.php';
 require_once __DIR__ . '/api/db.php';
@@ -31,29 +31,29 @@ if (empty($listings)) {
     ];
 }
 
-$pageTitle = 'Vunotho — Empowering Farmers. Growing Tomorrow.';
+$pageTitle = 'Vunotho — Eliminate Middlemen. Secure Your Real Harvest Value.';
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<!-- 1. HERO SECTION (SPLIT LAYOUT WITH MAIZE IMAGE & GLASSMORPHIC SCORE WIDGET) -->
+<!-- 1. HERO SECTION (SPLIT LAYOUT WITH MAIZE FARMER IMAGE & GLASSMORPHIC SCORE WIDGET) -->
 <section class="vn-hero-section">
   <div class="vn-container">
     <div class="vn-hero-grid">
       
-      <!-- Left Column: Copy & CTAs -->
+      <!-- Left Column: Value Proposition Copy & CTAs -->
       <div>
         <div class="vn-hero-badge">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          <span>Smart Farming for a Sustainable Future</span>
+          <span>Zimbabwe's Agricultural Operating System</span>
         </div>
 
         <h1 class="vn-hero-title">
-          Empowering Farmers.<br />
-          <span class="vn-hero-title-highlight">Growing Tomorrow.</span>
+          Eliminate Middlemen.<br />
+          <span class="vn-hero-title-highlight">Secure Real Value.</span>
         </h1>
 
         <p class="vn-hero-desc">
-          Vunotho brings transparent farmgate price intelligence, 2.5T load aggregation, and guaranteed mobile wallet settlements to help you increase net earnings, eliminate middleman exploitation, and build a sustainable future.
+          Vunotho connects Zimbabwean smallholder farmers directly to verified commercial buyers, pooled 2.5T rural freight, and guaranteed mobile money settlements — turning fresh produce into protected economic prosperity.
         </p>
 
         <div class="vn-hero-actions">
@@ -73,26 +73,26 @@ require_once __DIR__ . '/includes/header.php';
         <div class="vn-hero-media-wrapper">
           <img 
             src="/images/maize_hero.png" 
-            alt="Farmer in lush maize field monitoring crop health on digital tablet" 
+            alt="Zimbabwean smallholder farmer monitoring harvest lots and price intelligence" 
             class="vn-hero-img" 
           />
 
-          <!-- Floating Glassmorphic Widget -->
+          <!-- Floating Glassmorphic Score Widget -->
           <div class="vn-hero-glass-card">
             <div>
               <div class="vn-glass-stat-row">
                 <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                <span>Soil Health: <strong class="text-white font-bold">Good</strong></span>
+                <span>Net Return Yield: <strong class="text-white font-bold">88% Payout</strong></span>
               </div>
               <div class="vn-glass-stat-row">
                 <span class="w-2 h-2 rounded-full bg-teal-400"></span>
-                <span>Moisture / Harvest: <strong class="text-white font-bold">Optimal</strong></span>
+                <span>Transport Route: <strong class="text-white font-bold">Gwanda ➔ Bulawayo</strong></span>
               </div>
             </div>
 
             <div class="vn-score-ring">
-              <span class="vn-score-number">78%</span>
-              <span class="vn-score-label">Crop Score</span>
+              <span class="vn-score-number">35%</span>
+              <span class="vn-score-label">Saved</span>
             </div>
           </div>
         </div>
@@ -102,7 +102,7 @@ require_once __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<!-- 2. WHAT WE OFFER (4 SOLUTIONS CARDS) -->
+<!-- 2. WHAT WE OFFER (VUNOTHO'S 4 REAL CORE SOLUTIONS) -->
 <section id="solutions" class="vn-solutions-section">
   <div class="vn-container">
     
@@ -111,21 +111,23 @@ require_once __DIR__ . '/includes/header.php';
         <span>🌿</span>
         <span>WHAT WE OFFER</span>
       </div>
-      <h2 class="vn-section-heading">Smart Solutions for Modern Farming</h2>
-      <p class="vn-section-subtext">Everything you need to manage your farm efficiently and profitably.</p>
+      <h2 class="vn-section-heading">Smart Solutions for Zimbabwean Farmers</h2>
+      <p class="vn-section-subtext">
+        Everything you need to eliminate middleman exploitation, pool rural transport, and guarantee fair farmgate earnings.
+      </p>
     </div>
 
     <div class="vn-solutions-grid">
       
-      <!-- Card 1: Crop Management -->
+      <!-- Card 1: Crop Grading & Lot Management -->
       <div class="vn-solution-card">
         <div>
           <div class="vn-solution-icon-box">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
           </div>
-          <h3 class="vn-solution-title">Crop Management</h3>
+          <h3 class="vn-solution-title">Crop Grading & Lots</h3>
           <p class="vn-solution-desc">
-            Plan, monitor, and manage your crops with precision quality grading and real-time insights.
+            Register and grade your harvest lots (Grade A Supermarket, Grade B Agro-Processing) with transparent digital tracking.
           </p>
         </div>
         <a href="/farmer.php?tab=produce" class="vn-solution-link">
@@ -134,24 +136,24 @@ require_once __DIR__ . '/includes/header.php';
         </a>
       </div>
 
-      <!-- Card 2: Transport & Irrigation -->
+      <!-- Card 2: 2.5T Transport Pooling -->
       <div class="vn-solution-card">
         <div>
           <div class="vn-solution-icon-box">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
           </div>
-          <h3 class="vn-solution-title">Irrigation & Logistics</h3>
+          <h3 class="vn-solution-title">2.5T Freight Pooling</h3>
           <p class="vn-solution-desc">
-            Smart scheduling and 2.5T load pooling to save water, cut transport costs by 35%, and ensure optimal crop growth.
+            Clustered rural route aggregation to save 35% on transport costs and guarantee on-time farmgate collection.
           </p>
         </div>
         <a href="/farmer.php?tab=transport" class="vn-solution-link">
-          <span>Book Transport Corridor</span>
+          <span>Book Transport Route</span>
           <span>→</span>
         </a>
       </div>
 
-      <!-- Card 3: Fertilizer & Soil Care -->
+      <!-- Card 3: Farmgate Price Intelligence -->
       <div class="vn-solution-card">
         <div>
           <div class="vn-solution-icon-box">
@@ -159,7 +161,7 @@ require_once __DIR__ . '/includes/header.php';
           </div>
           <h3 class="vn-solution-title">Price Intelligence</h3>
           <p class="vn-solution-desc">
-            Know your transparent net returns before dispatching produce ($Gross - Freight - Fee = Net Take-Home).
+            Real-time wholesale benchmark rates across Belmont, Mbare, and Sakubva with transparent net payout formulas.
           </p>
         </div>
         <a href="#simulator" class="vn-solution-link">
@@ -168,15 +170,15 @@ require_once __DIR__ . '/includes/header.php';
         </a>
       </div>
 
-      <!-- Card 4: Market Insights -->
+      <!-- Card 4: Verified Buyer Matching -->
       <div class="vn-solution-card">
         <div>
           <div class="vn-solution-icon-box">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
           </div>
-          <h3 class="vn-solution-title">Market Insights</h3>
+          <h3 class="vn-solution-title">Commercial Buyers</h3>
           <p class="vn-solution-desc">
-            Get real-time market prices, commercial off-taker demand trends, and sell smart for higher profits.
+            Direct access to verified supermarket off-takers and food processors with automated EcoCash escrow disbursement.
           </p>
         </div>
         <a href="/farmer.php?tab=buyers" class="vn-solution-link">
@@ -189,7 +191,7 @@ require_once __DIR__ . '/includes/header.php';
 
     <div class="text-center">
       <a href="/farmer.php" class="inline-flex items-center gap-2 font-bold text-xs text-emerald-800 hover:text-emerald-900 underline">
-        <span>Explore All Solutions</span>
+        <span>Explore All Farmer Operations Features</span>
         <span>→</span>
       </a>
     </div>
@@ -197,7 +199,7 @@ require_once __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<!-- 3. DEEP FOREST GREEN IMPACT STATS BAR -->
+<!-- 3. DEEP FOREST GREEN IMPACT STATS BAR (AUTHENTIC VUNOTHO PILLARS) -->
 <section id="impact" class="vn-container">
   <div class="vn-impact-banner">
     <div class="vn-impact-counter-grid">
@@ -206,71 +208,71 @@ require_once __DIR__ . '/includes/header.php';
         <div class="vn-impact-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
         </div>
-        <div class="vn-impact-number">25K+</div>
-        <div class="vn-impact-label">Happy Farmers</div>
+        <div class="vn-impact-number">1,420+</div>
+        <div class="vn-impact-label">Smallholder Farmers</div>
       </div>
 
       <div class="vn-impact-item">
         <div class="vn-impact-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5"/></svg>
         </div>
-        <div class="vn-impact-number">1.2M+</div>
-        <div class="vn-impact-label">Acres Monitored</div>
+        <div class="vn-impact-number">420K+</div>
+        <div class="vn-impact-label">Kg Produce Aggregated</div>
       </div>
 
       <div class="vn-impact-item">
         <div class="vn-impact-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
         </div>
-        <div class="vn-impact-number">30%</div>
-        <div class="vn-impact-label">Average Yield Increase</div>
+        <div class="vn-impact-number">28.4%</div>
+        <div class="vn-impact-label">Average Net Income Lift</div>
       </div>
 
       <div class="vn-impact-item">
         <div class="vn-impact-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/></svg>
         </div>
-        <div class="vn-impact-number">40%</div>
-        <div class="vn-impact-label">Water & Transport Saved</div>
+        <div class="vn-impact-number">42.8 T</div>
+        <div class="vn-impact-label">Food Saved from Waste</div>
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- 4. TECHNOLOGY THAT GROWS WITH YOU (FARMLAND + MOBILE SHOWCASE) -->
+<!-- 4. TECHNOLOGY THAT GROWS WITH YOU (AUTHENTIC VUNOTHO TECH SHOWCASE) -->
 <section id="technology" class="vn-tech-section">
   <div class="vn-container">
     <div class="vn-tech-grid">
       
-      <!-- Left Column: Checklist & CTA -->
+      <!-- Left Column: Feature Checkpoints & CTA -->
       <div>
         <div class="vn-section-badge">
           <span>🌿</span>
-          <span>SMART. SIMPLE. POWERFUL.</span>
+          <span>OFFLINE-FIRST • 2.5T POOLING • ECOCASH ESCROW</span>
         </div>
-        <h2 class="vn-section-heading">Technology that grows with you</h2>
+        <h2 class="vn-section-heading">Digital tools built for Zimbabwean smallholders</h2>
         <p class="vn-section-subtext">
-          Vunotho is your digital farming partner. Access real-time data, expert recommendations, and smart tools — all in one place.
+          Built specifically for rural connectivity constraints, Vunotho functions completely offline and automatically synchronizes when cellular network is restored.
         </p>
 
         <div class="vn-tech-checklist">
           <div class="vn-tech-check-item">
             <div class="vn-check-icon">✓</div>
-            <span><strong>Real-time field monitoring:</strong> Grade your harvest lots and track pickup readiness in seconds.</span>
+            <span><strong>Transparent Net-Return Formula:</strong> Know your exact take-home payout before dispatching produce ($Gross - Freight - Fee$).</span>
           </div>
           <div class="vn-tech-check-item">
             <div class="vn-check-icon">✓</div>
-            <span><strong>2.5T load clustering:</strong> Automatically combine smaller harvest lots into consolidated freight.</span>
+            <span><strong>2.5T Rural Corridor Clustering:</strong> Automatically combine smaller harvest lots into high-capacity consolidated freight.</span>
           </div>
           <div class="vn-tech-check-item">
             <div class="vn-check-icon">✓</div>
-            <span><strong>Easy to use on mobile & web:</strong> Seamless offline capability for low-connectivity rural zones.</span>
+            <span><strong>Guaranteed Mobile Money Escrow:</strong> Direct EcoCash wallet payouts upon weigh-in verification at the wholesale depot.</span>
           </div>
         </div>
 
         <a href="/farmer.php" class="vn-btn-primary">
-          <span>Learn More</span>
+          <span>Open Farmer Desk</span>
           <span>→</span>
         </a>
       </div>
@@ -284,19 +286,19 @@ require_once __DIR__ . '/includes/header.php';
             <div class="flex justify-between items-center px-1 pb-1 border-b border-slate-800 text-[10px]">
               <div class="flex items-center gap-1.5 font-bold">
                 <img src="/images/vunotho_logo.png" class="w-4 h-4 rounded" alt="Vunotho" />
-                <span>Hello, Farmer 🌾</span>
+                <span>Vunotho Mobile</span>
               </div>
-              <span class="text-emerald-400 font-mono">9:41</span>
+              <span class="text-emerald-400 font-mono">● Online</span>
             </div>
 
             <div class="p-2.5 rounded-2xl bg-slate-900 border border-slate-800 space-y-1.5 text-[11px]">
-              <div class="flex justify-between text-slate-400"><span>Crop Health:</span><strong class="text-emerald-400 font-mono">Good (78%)</strong></div>
-              <div class="flex justify-between text-slate-400"><span>Soil Moisture:</span><strong class="text-teal-400 font-mono">Optimal (65%)</strong></div>
-              <div class="flex justify-between text-slate-400"><span>Weather:</span><strong class="text-amber-300 font-mono">24°C Sunny</strong></div>
+              <div class="flex justify-between text-slate-400"><span>Available Lots:</span><strong class="text-white font-mono">420 kg</strong></div>
+              <div class="flex justify-between text-slate-400"><span>Weekly Payout:</span><strong class="text-amber-300 font-mono">$186.40</strong></div>
+              <div class="flex justify-between text-slate-400"><span>Active Buyers:</span><strong class="text-teal-300 font-mono">12 verified</strong></div>
             </div>
 
             <div class="p-2 rounded-xl bg-emerald-950 border border-emerald-800 text-[10px] text-emerald-300 font-medium">
-              Upcoming: 2.5T Truck Pickup
+              Pickup corridor: Gwanda ➔ Bulawayo
             </div>
           </div>
 
@@ -304,20 +306,20 @@ require_once __DIR__ . '/includes/header.php';
           <div class="vn-tablet-overview-card">
             <div class="flex justify-between items-center">
               <span class="font-extrabold text-xs text-slate-900">Farm Overview</span>
-              <span class="text-[10px] font-mono text-slate-400">Field 01 • Active</span>
+              <span class="text-[10px] font-mono text-slate-400">GPS Clustered Hub</span>
             </div>
 
             <!-- Crisp Aerial Farmland Image -->
-            <img src="/images/farmland.png" alt="Lush farmland overview" class="vn-farmland-thumb" />
+            <img src="/images/farmland.png" alt="Farmland corridor overview" class="vn-farmland-thumb" />
 
             <div class="grid grid-cols-2 gap-2 text-[11px]">
               <div class="p-2 rounded-xl bg-slate-50 border border-slate-100">
-                <span class="text-slate-400 block text-[9.5px]">Market Price</span>
+                <span class="text-slate-400 block text-[9.5px]">Benchmark Rate</span>
                 <strong class="text-slate-900 font-mono">$0.42 /kg</strong>
               </div>
               <div class="p-2 rounded-xl bg-emerald-50 border border-emerald-100">
-                <span class="text-emerald-700 block text-[9.5px]">Pooled Savings</span>
-                <strong class="text-emerald-800 font-mono">35% Off</strong>
+                <span class="text-emerald-700 block text-[9.5px]">Pooled Freight</span>
+                <strong class="text-emerald-800 font-mono">35% Saved</strong>
               </div>
             </div>
           </div>
@@ -397,11 +399,11 @@ require_once __DIR__ . '/includes/header.php';
         <img src="/images/vunotho_logo.png" class="w-8 h-8 object-contain" alt="Vunotho" />
       </div>
       <div>
-        <h3 class="font-extrabold text-slate-900 text-base">Together, let's build a greener and more prosperous tomorrow.</h3>
+        <h3 class="font-extrabold text-slate-900 text-base">Together, let's eliminate post-harvest waste and build rural prosperity.</h3>
         <div class="flex flex-wrap items-center gap-4 text-xs text-slate-500 font-semibold mt-1">
-          <span>🌿 Sustainable Farming</span>
-          <span>📈 Better Yield</span>
-          <span>👥 Stronger Communities</span>
+          <span>🌿 Fair Farmgate Pricing</span>
+          <span>📈 35% Freight Savings</span>
+          <span>👥 Zero Produce Waste</span>
         </div>
       </div>
     </div>
