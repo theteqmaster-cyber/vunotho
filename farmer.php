@@ -210,12 +210,12 @@ $pageTitle = ucfirst($activeTab) . ' — Vunotho Farmer Operations';
       </div>
 
       <!-- Right Header Actions -->
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-3 sm:gap-4">
         <!-- Notification Bell -->
-        <div class="relative">
-          <button class="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-700 hover:text-slate-900 transition-all" onclick="showToast('You have 3 active updates: Tomato price surge, new buyer match, transport confirmed.', 'info')">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-            <span class="absolute top-0 right-0 w-4 h-4 rounded-full bg-amber-500 text-white font-bold text-[9px] flex items-center justify-center">
+        <div class="relative flex-shrink-0">
+          <button class="w-11 h-11 rounded-2xl bg-white border border-emerald-100 shadow-sm flex items-center justify-center text-slate-700 hover:text-emerald-700 hover:border-emerald-300 transition-all cursor-pointer" onclick="showToast('You have 3 active updates: Tomato price surge, new buyer match, transport confirmed.', 'info')" title="Notifications">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-amber-500 text-white font-mono font-black text-[10px] flex items-center justify-center border-2 border-white shadow-sm">
               3
             </span>
           </button>
@@ -224,14 +224,19 @@ $pageTitle = ucfirst($activeTab) . ' — Vunotho Farmer Operations';
         <!-- User Profile Pill with Working Dropdown & Direct Sign Out -->
         <div class="relative">
           <div id="user-header-pill" class="vn-user-header-pill" onclick="toggleUserDropdown(event)">
-            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-600 to-emerald-800 flex items-center justify-center text-white text-xs font-bold shadow-sm">
+            <!-- Avatar Circle (38px solid circle, never squished) -->
+            <div class="w-9 h-9 min-w-[36px] rounded-full bg-gradient-to-tr from-emerald-600 via-emerald-500 to-teal-500 flex items-center justify-center text-white text-sm font-extrabold shadow-sm flex-shrink-0">
               <?= strtoupper(substr($firstName, 0, 1)) ?>
             </div>
-            <div class="flex flex-col text-left pr-1">
-              <span class="text-xs font-bold text-slate-900 leading-tight"><?= htmlspecialchars($user['name'] ?? 'Mako Gufe') ?></span>
-              <span class="text-[10px] text-slate-500"><?= htmlspecialchars($user['district'] ?? 'Bulawayo') ?>, Zimbabwe</span>
+            
+            <div class="flex flex-col text-left pl-0.5 pr-1 min-w-0">
+              <span class="text-xs font-extrabold text-slate-900 leading-tight truncate"><?= htmlspecialchars($user['name'] ?? 'Mako Gufe') ?></span>
+              <span class="text-[11px] font-medium text-slate-500 leading-tight mt-0.5 truncate"><?= htmlspecialchars($user['district'] ?? 'Bulawayo') ?>, Zimbabwe</span>
             </div>
-            <span class="text-slate-400 text-xs pl-1">⌵</span>
+
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400 flex-shrink-0 ml-1">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
           </div>
 
           <!-- Working Dropdown Menu -->
