@@ -7,7 +7,9 @@ import 'buyer/add_demand_dialog.dart';
 import 'buyer/buyer_dashboard.dart';
 import 'farmer/add_listing_dialog.dart';
 import 'farmer/farmer_dashboard.dart';
+import 'farmer/farmer_produce_screen.dart';
 import 'haulier/haulier_dashboard.dart';
+import 'marketplace/marketplace_screen.dart';
 
 class MainShell extends StatefulWidget {
   const MainShell({super.key});
@@ -34,8 +36,9 @@ class _MainShellState extends State<MainShell> {
         currentBody = const FarmerDashboard();
       }
     } else if (_bottomNavIndex == 1) {
-      // Harvest Lots View
-      currentBody = const FarmerDashboard();
+      currentBody = const FarmerProduceScreen();
+    } else if (_bottomNavIndex == 2) {
+      currentBody = const MarketplaceScreen();
     } else {
       currentBody = _buildProfileView(context, authProvider);
     }
