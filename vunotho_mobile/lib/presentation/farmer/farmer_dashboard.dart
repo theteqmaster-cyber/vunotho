@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme/vunotho_theme.dart';
 import '../../data/models/listing_model.dart';
+import '../../logic/providers/auth_provider.dart';
 import '../../logic/providers/listing_provider.dart';
 import 'add_listing_dialog.dart';
 
@@ -11,8 +12,13 @@ class FarmerDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = context.watch<AuthProvider>();
     final listingProvider = context.watch<ListingProvider>();
     final listings = listingProvider.listings;
+
+    final rawName = authProvider.user?.name ?? 'Simba Mukamuri';
+    final firstName = rawName.trim().split(' ').first;
+    final district = authProvider.user?.district ?? 'Nyanga';
 
     final totalKg = listings.fold(0.0, (acc, l) => acc + l.quantityKg);
     final effectiveKg = totalKg > 0 ? totalKg : 4500.0;
@@ -43,7 +49,7 @@ class FarmerDashboard extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            'Hi, Farmer',
+                            'Hi, $firstName',
                             style: GoogleFonts.plusJakartaSans(
                               fontSize: 22,
                               fontWeight: FontWeight.w900,
@@ -61,7 +67,7 @@ class FarmerDashboard extends StatelessWidget {
                           const Icon(Icons.location_on_rounded, size: 13, color: VunothoColors.primary),
                           const SizedBox(width: 3),
                           Text(
-                            'Bulawayo Central, Zimbabwe',
+                            '$district Hub, Zimbabwe',
                             style: GoogleFonts.plusJakartaSans(
                               fontSize: 11.5,
                               fontWeight: FontWeight.w600,

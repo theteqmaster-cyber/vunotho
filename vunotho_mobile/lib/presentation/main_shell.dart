@@ -53,23 +53,34 @@ class _MainShellState extends State<MainShell> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 32,
-              height: 32,
+              width: 34,
+              height: 34,
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF143D28), Color(0xFF2E7D32)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.1),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
               ),
-              child: const Center(
-                child: Text(
-                  'V',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w900,
-                    fontSize: 16,
+              padding: const EdgeInsets.all(3),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(
+                  'assets/images/vunotho_logo.png',
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) => const Center(
+                    child: Text(
+                      'V',
+                      style: TextStyle(
+                        color: Color(0xFF143D28),
+                        fontWeight: FontWeight.w900,
+                        fontSize: 16,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -87,9 +98,46 @@ class _MainShellState extends State<MainShell> {
           ],
         ),
         actions: [
+          // Offline / Live Sync Mode Badge (Interactive)
+          InkWell(
+            onTap: () => _showOfflineStatusDialog(context),
+            borderRadius: BorderRadius.circular(9999),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: const Color(0xFFF1F5F9),
+                borderRadius: BorderRadius.circular(9999),
+                border: Border.all(color: const Color(0xFFCBD5E1)),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 6,
+                    height: 6,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF10B981),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    'LIVE SYNC',
+                    style: GoogleFonts.jetBrainsMono(
+                      fontSize: 9,
+                      fontWeight: FontWeight.w800,
+                      color: const Color(0xFF334155),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(width: 6),
+
           // Active Role & Verified Badge
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
               color: const Color(0xFFE8F5E9),
               borderRadius: BorderRadius.circular(9999),
@@ -106,11 +154,11 @@ class _MainShellState extends State<MainShell> {
                     shape: BoxShape.circle,
                   ),
                 ),
-                const SizedBox(width: 6),
+                const SizedBox(width: 5),
                 Text(
                   currentRole.toUpperCase(),
                   style: GoogleFonts.jetBrainsMono(
-                    fontSize: 10,
+                    fontSize: 9.5,
                     fontWeight: FontWeight.w800,
                     color: const Color(0xFF1B5E20),
                   ),
@@ -118,15 +166,15 @@ class _MainShellState extends State<MainShell> {
               ],
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 4),
 
           // Secure Sign Out Action Icon
           IconButton(
             tooltip: 'Sign Out / Switch Account',
-            icon: const Icon(Icons.logout_rounded, size: 20, color: VunothoColors.textMuted),
+            icon: const Icon(Icons.logout_rounded, size: 19, color: VunothoColors.textMuted),
             onPressed: () => _confirmSignOut(context, authProvider),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 6),
         ],
       ),
       body: currentBody,
@@ -371,6 +419,80 @@ class _MainShellState extends State<MainShell> {
           ),
         ],
       ),
+    );
+  }
+
+  void _showOfflineStatusDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        title: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: const Color(0xFFE8F5E9),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Icon(Icons.wifi_tethering_rounded, color: Color(0xFF1B5E20), size: 22),
+            ),
+            const SizedBox(width: 10),
+            Text(
+              'Offline-First Sync Engine',
+              style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.w800),
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Vunotho operates seamlessly in rural areas with intermittent connectivity. Here is your current engine status:',
+              style: GoogleFonts.plusJakartaSans(fontSize: 12.5, color: VunothoColors.textBody, height: 1.45),
+            ),
+            const SizedBox(height: 14),
+            _buildSyncStatusRow('🟢', 'Local Farmgate Ledger', 'Active (Cached locally)'),
+            const SizedBox(height: 8),
+            _buildSyncStatusRow('🟢', 'Price Benchmark Simulator', 'Active & Operational'),
+            const SizedBox(height: 8),
+            _buildSyncStatusRow('🟢', 'Harvest Lot Registration', 'Queues offline auto-sync'),
+            const SizedBox(height: 8),
+            _buildSyncStatusRow('🟠', 'Live Supermarket Bidding', 'Requires cellular data (EcoNet/NetOne)'),
+          ],
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: VunothoColors.primaryDark,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+            child: const Text('Got It', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSyncStatusRow(String emoji, String title, String subtitle) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(emoji, style: const TextStyle(fontSize: 12)),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title, style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.w700, color: const Color(0xFF0F172A))),
+              Text(subtitle, style: GoogleFonts.plusJakartaSans(fontSize: 10.5, color: VunothoColors.textMuted)),
+            ],
+          ),
+        ),
+      ],
     );
   }
 

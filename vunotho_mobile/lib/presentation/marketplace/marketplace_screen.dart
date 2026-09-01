@@ -372,24 +372,118 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(demand.buyerName, style: GoogleFonts.plusJakartaSans(fontSize: 14, fontWeight: FontWeight.w800)),
-              Text('\$${demand.offeredPricePerKg.toStringAsFixed(2)} /kg', style: GoogleFonts.jetBrainsMono(fontSize: 12, fontWeight: FontWeight.w900, color: const Color(0xFF15803D))),
+              Row(
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF15803D).withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(Icons.storefront_rounded, color: Color(0xFF15803D), size: 20),
+                  ),
+                  const SizedBox(width: 12),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        demand.buyerName,
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w800,
+                          color: VunothoColors.textDark,
+                        ),
+                      ),
+                      Text(
+                        'Hub: ${demand.deliveryHub}',
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 11,
+                          color: VunothoColors.textMuted,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3.5),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFE8F5E9),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  '\$${demand.offeredPricePerKg.toStringAsFixed(2)} /kg',
+                  style: GoogleFonts.jetBrainsMono(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w900,
+                    color: const Color(0xFF1B5E20),
+                  ),
+                ),
+              ),
             ],
           ),
-          const SizedBox(height: 6),
-          Text('${demand.targetQuantityKg.toStringAsFixed(0)} KG of ${demand.crop}', style: GoogleFonts.plusJakartaSans(fontSize: 13, fontWeight: FontWeight.w700)),
           const SizedBox(height: 12),
+
+          Row(
+            children: [
+              Text(
+                'Order: ',
+                style: GoogleFonts.plusJakartaSans(fontSize: 12, color: VunothoColors.textMuted),
+              ),
+              Text(
+                '${demand.targetQuantityKg.toStringAsFixed(0)} KG of ${demand.crop}',
+                style: GoogleFonts.plusJakartaSans(fontSize: 12.5, fontWeight: FontWeight.w800),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF1F5F9),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Text(
+              demand.qualityRequired,
+              style: GoogleFonts.plusJakartaSans(fontSize: 10, fontWeight: FontWeight.w600, color: const Color(0xFF334155)),
+            ),
+          ),
+          const SizedBox(height: 12),
+          const Divider(height: 1, color: Color(0xFFF1F5F9)),
+          const SizedBox(height: 12),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Value: \$${totalVal.toStringAsFixed(2)}', style: GoogleFonts.jetBrainsMono(fontSize: 13, fontWeight: FontWeight.bold)),
-              ElevatedButton(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Contract Value', style: GoogleFonts.plusJakartaSans(fontSize: 10.5, color: VunothoColors.textMuted)),
+                  Text(
+                    '\$${totalVal.toStringAsFixed(2)}',
+                    style: GoogleFonts.jetBrainsMono(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w900,
+                      color: const Color(0xFF15803D),
+                    ),
+                  ),
+                ],
+              ),
+              ElevatedButton.icon(
                 onPressed: () => _openFulfillSheet(context, demand.buyerName, demand.crop),
+                icon: const Icon(Icons.handshake_rounded, size: 16, color: Colors.white),
+                label: Text(
+                  'Fulfill Order',
+                  style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.w800, color: Colors.white),
+                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: VunothoColors.primaryDark,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  foregroundColor: Colors.white,
+                  elevation: 0,
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
-                child: const Text('Fulfill Order', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
               ),
             ],
           ),
