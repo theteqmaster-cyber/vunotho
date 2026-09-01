@@ -37,28 +37,28 @@ class _MainShellState extends State<MainShell> {
       // Harvest Lots View
       currentBody = const FarmerDashboard();
     } else {
-      currentBody = _buildSettingsView(context, authProvider);
+      currentBody = _buildProfileView(context, authProvider);
     }
 
     return Scaffold(
-      backgroundColor: VunothoColors.lightBg,
+      backgroundColor: VunothoColors.scaffoldBg,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        titleSpacing: 12,
+        titleSpacing: 16,
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 30,
-              height: 30,
+              width: 32,
+              height: 32,
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  colors: [Color(0xFF15803D), Color(0xFF064E3B)],
+                  colors: [Color(0xFF143D28), Color(0xFF2E7D32)],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                borderRadius: BorderRadius.circular(9),
+                borderRadius: BorderRadius.circular(10),
               ),
               child: const Center(
                 child: Text(
@@ -66,16 +66,16 @@ class _MainShellState extends State<MainShell> {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w900,
-                    fontSize: 15,
+                    fontSize: 16,
                   ),
                 ),
               ),
             ),
-            const SizedBox(width: 7),
+            const SizedBox(width: 8),
             Text(
               'VUNOTHO',
               style: GoogleFonts.plusJakartaSans(
-                fontSize: 14,
+                fontSize: 15,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 0.8,
                 color: VunothoColors.textDark,
@@ -84,91 +84,44 @@ class _MainShellState extends State<MainShell> {
           ],
         ),
         actions: [
-          // Role & Sync Popup Menu Button
-          PopupMenuButton<String>(
-            tooltip: 'Switch Portal',
-            padding: EdgeInsets.zero,
-            icon: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: const Color(0xFFDCFCE7),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFF86EFAC)),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 6,
-                    height: 6,
-                    decoration: const BoxDecoration(
-                      color: Color(0xFF15803D),
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  const SizedBox(width: 5),
-                  Text(
-                    currentRole.toUpperCase(),
-                    style: GoogleFonts.jetBrainsMono(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w800,
-                      color: const Color(0xFF15803D),
-                    ),
-                  ),
-                  const Icon(Icons.arrow_drop_down_rounded, size: 16, color: Color(0xFF15803D)),
-                ],
-              ),
+          // Active Role & Verified Badge
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(
+              color: const Color(0xFFE8F5E9),
+              borderRadius: BorderRadius.circular(9999),
+              border: Border.all(color: const Color(0xFF86EFAC)),
             ),
-            onSelected: (role) {
-              if (role == 'logout') {
-                authProvider.logout();
-              } else {
-                authProvider.switchRole(role);
-              }
-            },
-            itemBuilder: (context) => [
-              const PopupMenuItem(
-                value: 'farmer',
-                child: Row(
-                  children: [
-                    Icon(Icons.eco_rounded, color: Color(0xFF15803D), size: 18),
-                    SizedBox(width: 10),
-                    Text('Farmer Hub'),
-                  ],
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 6,
+                  height: 6,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF1B5E20),
+                    shape: BoxShape.circle,
+                  ),
                 ),
-              ),
-              const PopupMenuItem(
-                value: 'buyer',
-                child: Row(
-                  children: [
-                    Icon(Icons.storefront_rounded, color: Color(0xFF0284C7), size: 18),
-                    SizedBox(width: 10),
-                    Text('Buyer Hub'),
-                  ],
+                const SizedBox(width: 6),
+                Text(
+                  currentRole.toUpperCase(),
+                  style: GoogleFonts.jetBrainsMono(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w800,
+                    color: const Color(0xFF1B5E20),
+                  ),
                 ),
-              ),
-              const PopupMenuItem(
-                value: 'haulier',
-                child: Row(
-                  children: [
-                    Icon(Icons.local_shipping_rounded, color: Color(0xFFD97706), size: 18),
-                    SizedBox(width: 10),
-                    Text('Haulier Hub'),
-                  ],
-                ),
-              ),
-              const PopupMenuDivider(),
-              const PopupMenuItem(
-                value: 'logout',
-                child: Row(
-                  children: [
-                    Icon(Icons.logout_rounded, color: Color(0xFFDC2626), size: 18),
-                    SizedBox(width: 10),
-                    Text('Sign Out', style: TextStyle(color: Color(0xFFDC2626))),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+
+          // Secure Sign Out Action Icon
+          IconButton(
+            tooltip: 'Sign Out / Switch Account',
+            icon: const Icon(Icons.logout_rounded, size: 20, color: VunothoColors.textMuted),
+            onPressed: () => _confirmSignOut(context, authProvider),
           ),
           const SizedBox(width: 8),
         ],
@@ -184,7 +137,7 @@ class _MainShellState extends State<MainShell> {
             showDialog(context: context, builder: (_) => const AddListingDialog());
           }
         },
-        backgroundColor: const Color(0xFF15803D),
+        backgroundColor: VunothoColors.primaryDark,
         foregroundColor: Colors.white,
         elevation: 4,
         shape: const CircleBorder(),
@@ -192,7 +145,7 @@ class _MainShellState extends State<MainShell> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
-      // Modern Botanical Bottom Navigation Bar
+      // Botanical Floating Bottom Navigation Bar
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         notchMargin: 8,
@@ -206,7 +159,7 @@ class _MainShellState extends State<MainShell> {
           children: [
             _buildNavTab(0, Icons.home_rounded, 'Home'),
             _buildNavTab(1, Icons.eco_rounded, 'Produce'),
-            const SizedBox(width: 48), // Gap for floating + button
+            const SizedBox(width: 48), // Space for floating button
             _buildNavTab(2, Icons.storefront_rounded, 'Market'),
             _buildNavTab(3, Icons.person_rounded, 'Profile'),
           ],
@@ -228,7 +181,7 @@ class _MainShellState extends State<MainShell> {
             Icon(
               icon,
               size: 22,
-              color: isSelected ? const Color(0xFF15803D) : const Color(0xFF94A3B8),
+              color: isSelected ? VunothoColors.primaryDark : const Color(0xFF94A3B8),
             ),
             const SizedBox(height: 2),
             Text(
@@ -236,7 +189,7 @@ class _MainShellState extends State<MainShell> {
               style: GoogleFonts.plusJakartaSans(
                 fontSize: 10,
                 fontWeight: isSelected ? FontWeight.w800 : FontWeight.w500,
-                color: isSelected ? const Color(0xFF15803D) : const Color(0xFF94A3B8),
+                color: isSelected ? VunothoColors.primaryDark : const Color(0xFF94A3B8),
               ),
             ),
           ],
@@ -245,39 +198,36 @@ class _MainShellState extends State<MainShell> {
     );
   }
 
-  Widget _buildSettingsView(BuildContext context, AuthProvider auth) {
+  Widget _buildProfileView(BuildContext context, AuthProvider auth) {
     final user = auth.user;
+    final role = auth.currentRole;
+
     return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Profile Card
+          // 1. Authenticated Profile Card
           Container(
             padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(22),
-              border: Border.all(color: VunothoColors.lightBorder),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.02),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
+              border: Border.all(color: VunothoColors.cardBorder),
+              boxShadow: VunothoTheme.softShadow,
             ),
             child: Row(
               children: [
                 Container(
-                  width: 54,
-                  height: 54,
+                  width: 56,
+                  height: 56,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFDCFCE7),
+                    color: const Color(0xFFE8F5E9),
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: const Center(
-                    child: Icon(Icons.person_rounded, color: Color(0xFF15803D), size: 30),
+                    child: Icon(Icons.person_rounded, color: Color(0xFF1B5E20), size: 32),
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -291,22 +241,22 @@ class _MainShellState extends State<MainShell> {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        '${(user?.role ?? 'farmer').toUpperCase()} • Nyanga District',
-                        style: GoogleFonts.plusJakartaSans(fontSize: 11, color: VunothoColors.textMuted),
+                        user?.emailOrPhone ?? '0776118117',
+                        style: GoogleFonts.jetBrainsMono(fontSize: 12, color: VunothoColors.textMuted),
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 5),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2.5),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFDCFCE7),
+                          color: const Color(0xFFE8F5E9),
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
-                          'KYC Verified • Level 1 Smallholder',
+                          '${role.toUpperCase()} • KYC Level 1 Verified',
                           style: GoogleFonts.jetBrainsMono(
-                            fontSize: 9,
+                            fontSize: 9.5,
                             fontWeight: FontWeight.w800,
-                            color: const Color(0xFF15803D),
+                            color: const Color(0xFF1B5E20),
                           ),
                         ),
                       ),
@@ -318,55 +268,56 @@ class _MainShellState extends State<MainShell> {
           ),
           const SizedBox(height: 20),
 
+          // 2. Farmgate & Settlement Credentials
           Text(
-            'SWITCH ACTIVE PORTAL',
+            'ACCOUNT CREDENTIALS & SETTLEMENT',
             style: GoogleFonts.jetBrainsMono(
               fontSize: 11,
               fontWeight: FontWeight.w800,
-              color: const Color(0xFF64748B),
-              letterSpacing: 1.0,
+              color: VunothoColors.textMuted,
+              letterSpacing: 0.8,
             ),
           ),
           const SizedBox(height: 10),
 
-          _buildPortalTile(
-            'Smallholder Farmer Desk',
-            'Log produce, guaranteed Net-Return pricing',
-            Icons.eco_rounded,
+          _buildCredentialTile(
+            'Registered Farm Location',
+            'Nyanga Horticultural Valley, Zimbabwe',
+            Icons.location_on_rounded,
             const Color(0xFF15803D),
-            auth.currentRole == 'farmer',
-            () => auth.switchRole('farmer'),
           ),
-          _buildPortalTile(
-            'Commercial Buyer Desk',
-            'Post wholesale supermarket demand contracts',
-            Icons.storefront_rounded,
+          _buildCredentialTile(
+            'EcoCash Escrow Payout Wallet',
+            '+263 77 611 8117 (Active & Verified)',
+            Icons.account_balance_wallet_rounded,
             const Color(0xFF0284C7),
-            auth.currentRole == 'buyer',
-            () => auth.switchRole('buyer'),
           ),
-          _buildPortalTile(
-            'Rural Transporter Desk',
-            '2.5T light truck pooled logistics manifests',
+          _buildCredentialTile(
+            'Pooled Logistics Discount Tier',
+            '35% Freight Subsidy Applied via 2.5T Pool',
             Icons.local_shipping_rounded,
             const Color(0xFFD97706),
-            auth.currentRole == 'haulier',
-            () => auth.switchRole('haulier'),
+          ),
+          _buildCredentialTile(
+            'Data Encryption & Sync Engine',
+            'Offline-First SQLite / Supabase Cloud Sync',
+            Icons.lock_outline_rounded,
+            const Color(0xFF0D9488),
           ),
 
           const SizedBox(height: 24),
 
-          // Sign Out Button
+          // 3. Secure Sign Out / Switch Persona Button
           SizedBox(
             width: double.infinity,
-            height: 48,
+            height: 50,
             child: OutlinedButton.icon(
-              onPressed: () => auth.logout(),
+              onPressed: () => _confirmSignOut(context, auth),
               icon: const Icon(Icons.logout_rounded, size: 18, color: Color(0xFFDC2626)),
               label: Text(
-                'Sign Out / Switch Account',
+                'Sign Out / Switch to Another Account',
                 style: GoogleFonts.plusJakartaSans(
-                  fontSize: 13,
+                  fontSize: 13.5,
                   fontWeight: FontWeight.bold,
                   color: const Color(0xFFDC2626),
                 ),
@@ -383,38 +334,75 @@ class _MainShellState extends State<MainShell> {
     );
   }
 
-  Widget _buildPortalTile(
-    String title,
-    String subtitle,
-    IconData icon,
-    Color color,
-    bool isActive,
-    VoidCallback onTap,
-  ) {
+  Widget _buildCredentialTile(String title, String subtitle, IconData icon, Color iconColor) {
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
-      child: ListTile(
-        onTap: onTap,
-        tileColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-          side: BorderSide(
-            color: isActive ? color : VunothoColors.lightBorder,
-            width: isActive ? 2 : 1,
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: VunothoColors.cardBorder),
+        boxShadow: VunothoTheme.softShadow,
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              color: iconColor.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: iconColor, size: 18),
           ),
-        ),
-        leading: Container(
-          width: 38,
-          height: 38,
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(12),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: GoogleFonts.plusJakartaSans(fontSize: 12.5, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 1),
+                Text(subtitle, style: GoogleFonts.plusJakartaSans(fontSize: 11, color: VunothoColors.textMuted)),
+              ],
+            ),
           ),
-          child: Icon(icon, color: color, size: 20),
+        ],
+      ),
+    );
+  }
+
+  void _confirmSignOut(BuildContext context, AuthProvider auth) {
+    showDialog(
+      context: context,
+      builder: (dialogCtx) => AlertDialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Text(
+          'Sign Out?',
+          style: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.w800),
         ),
-        title: Text(title, style: GoogleFonts.plusJakartaSans(fontSize: 13.5, fontWeight: FontWeight.bold)),
-        subtitle: Text(subtitle, style: GoogleFonts.plusJakartaSans(fontSize: 10.5, color: VunothoColors.textMuted)),
-        trailing: isActive ? Icon(Icons.check_circle_rounded, color: color, size: 20) : null,
+        content: Text(
+          'You will be returned to the Welcome screen where you can sign in with another role or account.',
+          style: GoogleFonts.plusJakartaSans(fontSize: 13, color: VunothoColors.textMuted),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogCtx).pop(),
+            child: Text('Cancel', style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.w700, color: VunothoColors.textMuted)),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(dialogCtx).pop();
+              auth.logout();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFFDC2626),
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+            child: Text('Sign Out', style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.bold)),
+          ),
+        ],
       ),
     );
   }
