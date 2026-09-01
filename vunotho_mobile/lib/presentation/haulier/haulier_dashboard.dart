@@ -180,7 +180,7 @@ class HaulierDashboard extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const Divider(height: 20, color: VunothoColors.lightBorder),
+                          Divider(height: 20, color: VunothoColors.lightBorder),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

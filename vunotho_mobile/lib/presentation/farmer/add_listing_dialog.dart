@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '../../core/constants/supabase_config.dart';
 import '../../core/theme/vunotho_theme.dart';
 import '../../logic/providers/auth_provider.dart';
 import '../../logic/providers/listing_provider.dart';
@@ -14,199 +14,351 @@ class AddListingDialog extends StatefulWidget {
 
 class _AddListingDialogState extends State<AddListingDialog> {
   final _formKey = GlobalKey<FormState>();
-  String _selectedCrop = SupabaseConfig.crops.first;
-  String _selectedGrade = SupabaseConfig.qualityGrades.first;
-  String _selectedDistrict = SupabaseConfig.districts.first;
-  final TextEditingController _kgController = TextEditingController(text: '500');
+  String _selectedCrop = 'Butternut Squash';
+  double _quantityKg = 500.0;
+  String _selectedQuality = 'Grade A (Export / Retail)';
+  String _selectedDistrict = 'Nyanga';
   bool _isSubmitting = false;
 
-  double get _currentKg => double.tryParse(_kgController.text) ?? 0.0;
+  final List<String> _crops = [
+    'Butternut Squash',
+    'Sugar Beans',
+    'Tomatoes',
+    'Table Potatoes',
+    'Cabbage & Leafy Greens',
+    'Maize Grain',
+  ];
 
-  @override
-  void dispose() {
-    _kgController.dispose();
-    super.dispose();
+  final List<String> _qualityGrades = [
+    'Grade A (Export / Retail)',
+    'Grade B (Processing / Puree)',
+    'Grade C (Local Wholesale)',
+    'Off-Spec (Animal Feed / Compost)',
+  ];
+
+  final List<String> _districts = [
+    'Nyanga',
+    'Mutasa',
+    'Chipinge',
+    'Gwanda',
+    'Goromonzi',
+    'Marondera',
+  ];
+
+  double _calculateEstimatedValue() {
+    double baseRate = 0.50;
+    if (_selectedCrop.contains('Butternut')) baseRate = 0.85;
+    if (_selectedCrop.contains('Beans')) baseRate = 1.20;
+    if (_selectedCrop.contains('Tomatoes')) baseRate = 0.60;
+    if (_selectedCrop.contains('Potatoes')) baseRate = 0.70;
+
+    double multiplier = 1.0;
+    if (_selectedQuality.contains('Grade A')) multiplier = 1.0;
+    if (_selectedQuality.contains('Grade B')) multiplier = 0.75;
+    if (_selectedQuality.contains('Grade C')) multiplier = 0.55;
+    if (_selectedQuality.contains('Off-Spec')) multiplier = 0.35;
+
+    return _quantityKg * baseRate * multiplier;
+  }
+
+  void _submitForm() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      _formKey.currentState?.save();
+      setState(() => _isSubmitting = true);
+
+      final authProvider = context.read<AuthProvider>();
+      final listingProvider = context.read<ListingProvider>();
+
+      await listingProvider.addListing(
+        farmerName: authProvider.user?.name ?? 'Simba Mukamuri',
+        crop: _selectedCrop,
+        quantityKg: _quantityKg,
+        quality: _selectedQuality,
+        district: _selectedDistrict,
+      );
+      if (!mounted) return;
+
+      setState(() => _isSubmitting = false);
+      Navigator.of(context).pop();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('✓ $_selectedCrop (${_quantityKg.toStringAsFixed(0)} kg) registered successfully!'),
+          backgroundColor: VunothoColors.primaryDark,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final listingProvider = context.read<ListingProvider>();
-    final authProvider = context.read<AuthProvider>();
-    final estValue = listingProvider.calculateEstimatedValue(_selectedGrade, _currentKg);
+    final estValue = _calculateEstimatedValue();
 
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       backgroundColor: Colors.white,
-      insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 440),
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.all(22),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Header
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: 36,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFE8F5E9),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Center(
+                            child: Icon(Icons.eco_rounded, color: Color(0xFF1B5E20), size: 20),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          'Log Harvest Batch',
+                          style: GoogleFonts.plusJakartaSans(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w800,
+                            color: VunothoColors.textDark,
+                          ),
+                        ),
+                      ],
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.close_rounded, size: 20, color: VunothoColors.textMuted),
+                      onPressed: () => Navigator.of(context).pop(),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 18),
+
+                // 1. Select Produce Crop
+                Text(
+                  'Produce Crop',
+                  style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.w700, color: VunothoColors.textBody),
+                ),
+                const SizedBox(height: 6),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: VunothoColors.inputBg,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: VunothoColors.cardBorder),
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      value: _selectedCrop,
+                      isExpanded: true,
+                      icon: const Icon(Icons.keyboard_arrow_down_rounded, color: VunothoColors.textMuted),
+                      items: _crops.map((crop) {
+                        return DropdownMenuItem(
+                          value: crop,
+                          child: Text(crop, style: GoogleFonts.plusJakartaSans(fontSize: 13.5, fontWeight: FontWeight.w600)),
+                        );
+                      }).toList(),
+                      onChanged: (val) {
+                        if (val != null) setState(() => _selectedCrop = val);
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 14),
+
+                // 2. Quantity Harvested (KG)
+                Text(
+                  'Quantity Harvested (KG)',
+                  style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.w700, color: VunothoColors.textBody),
+                ),
+                const SizedBox(height: 6),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  decoration: BoxDecoration(
+                    color: VunothoColors.inputBg,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: VunothoColors.cardBorder),
+                  ),
+                  child: TextFormField(
+                    initialValue: _quantityKg.toStringAsFixed(0),
+                    keyboardType: TextInputType.number,
+                    style: GoogleFonts.jetBrainsMono(fontSize: 14, fontWeight: FontWeight.w700),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      suffixText: 'KG',
+                      suffixStyle: GoogleFonts.jetBrainsMono(fontSize: 12, fontWeight: FontWeight.bold, color: VunothoColors.textMuted),
+                    ),
+                    onChanged: (val) {
+                      final parsed = double.tryParse(val);
+                      if (parsed != null && parsed > 0) {
+                        setState(() => _quantityKg = parsed);
+                      }
+                    },
+                    validator: (val) {
+                      if (val == null || val.isEmpty) return 'Enter quantity in KG';
+                      final parsed = double.tryParse(val);
+                      if (parsed == null || parsed <= 0) return 'Enter a valid positive number';
+                      return null;
+                    },
+                  ),
+                ),
+                const SizedBox(height: 14),
+
+                // 3. Quality Grade Classification
+                Text(
+                  'Quality Grade Classification',
+                  style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.w700, color: VunothoColors.textBody),
+                ),
+                const SizedBox(height: 6),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: VunothoColors.inputBg,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: VunothoColors.cardBorder),
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      value: _selectedQuality,
+                      isExpanded: true,
+                      icon: const Icon(Icons.keyboard_arrow_down_rounded, color: VunothoColors.textMuted),
+                      items: _qualityGrades.map((grade) {
+                        return DropdownMenuItem(
+                          value: grade,
+                          child: Text(grade, style: GoogleFonts.plusJakartaSans(fontSize: 13, fontWeight: FontWeight.w600)),
+                        );
+                      }).toList(),
+                      onChanged: (val) {
+                        if (val != null) setState(() => _selectedQuality = val);
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 14),
+
+                // 4. Farming District (Cluster)
+                Text(
+                  'Farming District (Cluster)',
+                  style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.w700, color: VunothoColors.textBody),
+                ),
+                const SizedBox(height: 6),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: VunothoColors.inputBg,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: VunothoColors.cardBorder),
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      value: _selectedDistrict,
+                      isExpanded: true,
+                      icon: const Icon(Icons.keyboard_arrow_down_rounded, color: VunothoColors.textMuted),
+                      items: _districts.map((d) {
+                        return DropdownMenuItem(
+                          value: d,
+                          child: Text(d, style: GoogleFonts.plusJakartaSans(fontSize: 13, fontWeight: FontWeight.w600)),
+                        );
+                      }).toList(),
+                      onChanged: (val) {
+                        if (val != null) setState(() => _selectedDistrict = val);
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 18),
+
+                // Estimated Value Card
+                Container(
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFFBEB),
+                    borderRadius: BorderRadius.circular(18),
+                    border: Border.all(color: const Color(0xFFFDE68A)),
+                  ),
+                  child: Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(8),
+                        width: 36,
+                        height: 36,
                         decoration: BoxDecoration(
-                          color: VunothoColors.primarySurface,
+                          color: const Color(0xFFF59E0B).withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Icon(Icons.eco_rounded, color: VunothoColors.primary, size: 22),
-                      ),
-                      const SizedBox(width: 10),
-                      const Text(
-                        'Log Harvest Batch',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: VunothoColors.textDark,
+                        child: const Center(
+                          child: Icon(Icons.attach_money_rounded, color: Color(0xFFD97706), size: 22),
                         ),
                       ),
-                    ],
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.close_rounded),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-
-              // Crop Dropdown
-              const Text('Produce Crop', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
-              const SizedBox(height: 6),
-              DropdownButtonFormField<String>(
-                initialValue: _selectedCrop,
-                items: SupabaseConfig.crops.map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
-                onChanged: (v) => setState(() => _selectedCrop = v!),
-                decoration: const InputDecoration(prefixIcon: Icon(Icons.agriculture_rounded)),
-              ),
-              const SizedBox(height: 14),
-
-              // Quantity in KG
-              const Text('Quantity Harvested (KG)', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
-              const SizedBox(height: 6),
-              TextFormField(
-                controller: _kgController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.scale_rounded),
-                  suffixText: 'KG',
-                ),
-                onChanged: (_) => setState(() {}),
-                validator: (val) {
-                  if (val == null || val.isEmpty || double.tryParse(val) == null || double.parse(val) <= 0) {
-                    return 'Please enter a valid harvest weight';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 14),
-
-              // Quality Grade
-              const Text('Quality Grade Classification', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
-              const SizedBox(height: 6),
-              DropdownButtonFormField<String>(
-                initialValue: _selectedGrade,
-                items: SupabaseConfig.qualityGrades.map((g) => DropdownMenuItem(value: g, child: Text(g))).toList(),
-                onChanged: (v) => setState(() => _selectedGrade = v!),
-                decoration: const InputDecoration(prefixIcon: Icon(Icons.verified_rounded)),
-              ),
-              const SizedBox(height: 14),
-
-              // Farming District
-              const Text('Farming District (Cluster)', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
-              const SizedBox(height: 6),
-              DropdownButtonFormField<String>(
-                initialValue: _selectedDistrict,
-                items: SupabaseConfig.districts.map((d) => DropdownMenuItem(value: d, child: Text(d))).toList(),
-                onChanged: (v) => setState(() => _selectedDistrict = v!),
-                decoration: const InputDecoration(prefixIcon: Icon(Icons.location_on_rounded)),
-              ),
-              const SizedBox(height: 18),
-
-              // Dynamic Floor Price Estimate Card
-              Container(
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: VunothoColors.accentSurface,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: const Color(0xFFFDE68A)),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(Icons.monetization_on_rounded, color: VunothoColors.accent, size: 28),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
+                      const SizedBox(width: 12),
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             'Estimated Value Floor (USD)',
-                            style: TextStyle(fontSize: 12, color: Color(0xFF92400E), fontWeight: FontWeight.w600),
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFF92400E),
+                            ),
                           ),
                           Text(
                             '\$${estValue.toStringAsFixed(2)}',
-                            style: const TextStyle(
+                            style: GoogleFonts.jetBrainsMono(
                               fontSize: 18,
-                              fontWeight: FontWeight.w800,
-                              color: Color(0xFF78350F),
+                              fontWeight: FontWeight.w900,
+                              color: const Color(0xFF78350F),
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
+                const SizedBox(height: 18),
 
-              // Submit Button
-              ElevatedButton(
-                onPressed: _isSubmitting
-                    ? null
-                    : () async {
-                        if (!_formKey.currentState!.validate()) return;
-                        setState(() => _isSubmitting = true);
-
-                        final farmerName = authProvider.user?.name ?? 'Smallholder Farmer';
-                        final success = await listingProvider.addListing(
-                          farmerName: farmerName,
-                          crop: _selectedCrop,
-                          quantityKg: _currentKg,
-                          quality: _selectedGrade,
-                          district: _selectedDistrict,
-                        );
-
-                        if (context.mounted) {
-                          Navigator.of(context).pop();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              backgroundColor: VunothoColors.primaryDark,
-                              content: Text(
-                                success
-                                    ? '✅ Listing synced to Vunotho marketplace!'
-                                    : '💾 Harvest saved offline! Will auto-sync when online.',
-                              ),
+                // Submit Button
+                SizedBox(
+                  height: 48,
+                  child: ElevatedButton(
+                    onPressed: _isSubmitting ? null : _submitForm,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: VunothoColors.primaryDark,
+                      foregroundColor: Colors.white,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    ),
+                    child: _isSubmitting
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5),
+                          )
+                        : Text(
+                            'Publish Produce Listing',
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w800,
                             ),
-                          );
-                        }
-                      },
-                child: _isSubmitting
-                    ? const SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                      )
-                    : const Text('Publish Produce Listing'),
-              ),
-            ],
+                          ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
