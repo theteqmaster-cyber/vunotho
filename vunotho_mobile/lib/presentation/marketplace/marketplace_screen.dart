@@ -240,40 +240,47 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: (d['badgeColor'] as Color).withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(12),
+                Expanded(
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: (d['badgeColor'] as Color).withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Icon(Icons.storefront_rounded, color: d['badgeColor'] as Color, size: 20),
                       ),
-                      child: Icon(Icons.storefront_rounded, color: d['badgeColor'] as Color, size: 20),
-                    ),
-                    const SizedBox(width: 12),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          d['buyer'] as String,
-                          style: GoogleFonts.plusJakartaSans(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w800,
-                            color: VunothoColors.textDark,
-                          ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              d['buyer'] as String,
+                              style: GoogleFonts.plusJakartaSans(
+                                fontSize: 13.5,
+                                fontWeight: FontWeight.w800,
+                                color: VunothoColors.textDark,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              'Deadline: ${d['deadline']}',
+                              style: GoogleFonts.plusJakartaSans(
+                                fontSize: 10.5,
+                                color: VunothoColors.textMuted,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
                         ),
-                        Text(
-                          'Deadline: ${d['deadline']}',
-                          style: GoogleFonts.plusJakartaSans(
-                            fontSize: 11,
-                            color: VunothoColors.textMuted,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
+                const SizedBox(width: 8),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3.5),
                   decoration: BoxDecoration(
@@ -299,9 +306,12 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                   'Order: ',
                   style: GoogleFonts.plusJakartaSans(fontSize: 12, color: VunothoColors.textMuted),
                 ),
-                Text(
-                  '${(d['qty'] as double).toStringAsFixed(0)} KG of ${d['crop']}',
-                  style: GoogleFonts.plusJakartaSans(fontSize: 12.5, fontWeight: FontWeight.w800),
+                Expanded(
+                  child: Text(
+                    '${(d['qty'] as double).toStringAsFixed(0)} KG of ${d['crop']}',
+                    style: GoogleFonts.plusJakartaSans(fontSize: 12.5, fontWeight: FontWeight.w800),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ],
             ),
@@ -315,6 +325,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
               child: Text(
                 d['grade'] as String,
                 style: GoogleFonts.plusJakartaSans(fontSize: 10, fontWeight: FontWeight.w600, color: const Color(0xFF334155)),
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             const SizedBox(height: 12),
@@ -372,40 +383,47 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF15803D).withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(12),
+              Expanded(
+                child: Row(
+                  children: [
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF15803D).withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Icon(Icons.storefront_rounded, color: Color(0xFF15803D), size: 20),
                     ),
-                    child: const Icon(Icons.storefront_rounded, color: Color(0xFF15803D), size: 20),
-                  ),
-                  const SizedBox(width: 12),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        demand.buyerName,
-                        style: GoogleFonts.plusJakartaSans(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w800,
-                          color: VunothoColors.textDark,
-                        ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            demand.buyerName,
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 13.5,
+                              fontWeight: FontWeight.w800,
+                              color: VunothoColors.textDark,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            'Hub: ${demand.deliveryHub}',
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 10.5,
+                              color: VunothoColors.textMuted,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
                       ),
-                      Text(
-                        'Hub: ${demand.deliveryHub}',
-                        style: GoogleFonts.plusJakartaSans(
-                          fontSize: 11,
-                          color: VunothoColors.textMuted,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
+              const SizedBox(width: 8),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3.5),
                 decoration: BoxDecoration(
