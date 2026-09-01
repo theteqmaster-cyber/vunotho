@@ -135,12 +135,12 @@ class _OnboardingWelcomeScreenState extends State<OnboardingWelcomeScreen> with 
                               ),
                               const SizedBox(height: 16),
                               Text(
-                                "Zimbabwe's agricultural operating system connecting smallholders directly to commercial buyers and pooled freight.",
+                                "Zimbabwe's agricultural operating system unlocking 100% harvest value recovery — routing fresh produce, processing grades, and biomass directly to commercial off-takers.",
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.plusJakartaSans(
                                   fontSize: 13.5,
                                   fontWeight: FontWeight.w400,
-                                  color: Colors.white.withValues(alpha: 0.85),
+                                  color: Colors.white.withValues(alpha: 0.88),
                                   height: 1.5,
                                 ),
                               ),
@@ -212,7 +212,7 @@ class _OnboardingWelcomeScreenState extends State<OnboardingWelcomeScreen> with 
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      'Scroll to explore Vunotho',
+                                      'Scroll to explore value recovery',
                                       style: GoogleFonts.plusJakartaSans(
                                         fontSize: 11,
                                         fontWeight: FontWeight.w600,
@@ -235,12 +235,12 @@ class _OnboardingWelcomeScreenState extends State<OnboardingWelcomeScreen> with 
                     ),
                   ),
 
-                  // --- EXPLANATION SECTION (WHAT IS VUNOTHO & HOW IT WORKS) ---
+                  // --- EXPLANATION SECTION (100% PRODUCE VALUE RECOVERY) ---
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF6F8F5),
-                      borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFF6F8F5),
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -257,55 +257,164 @@ class _OnboardingWelcomeScreenState extends State<OnboardingWelcomeScreen> with 
                         ),
                         const SizedBox(height: 24),
 
+                        // Section Header Badge
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFE8F5E9),
+                                borderRadius: BorderRadius.circular(9999),
+                                border: Border.all(color: const Color(0xFF86EFAC)),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(Icons.recycling_rounded, color: Color(0xFF15803D), size: 14),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    '100% VALUE RECOVERY & ZERO WASTE',
+                                    style: GoogleFonts.jetBrainsMono(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w800,
+                                      color: const Color(0xFF15803D),
+                                      letterSpacing: 0.6,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
                         Text(
-                          'HOW VUNOTHO EMPOWERS YOU',
-                          style: GoogleFonts.jetBrainsMono(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w800,
-                            color: const Color(0xFF2E7D32),
-                            letterSpacing: 1.2,
+                          'Every Kilogram Has Value.',
+                          style: GoogleFonts.plusJakartaSans(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w900,
+                            color: const Color(0xFF0F172A),
+                            letterSpacing: -0.5,
                           ),
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Transforming Agriculture in Zimbabwe',
+                          'Traditional supply chains discard 40–60% of smallholder crops as cosmetic waste. Vunotho unlocks multi-tier circular monetization so farmers get paid for their entire harvest.',
                           style: GoogleFonts.plusJakartaSans(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w900,
-                            color: const Color(0xFF0F172A),
+                            fontSize: 13,
+                            color: const Color(0xFF64748B),
+                            height: 1.5,
                           ),
+                        ),
+                        const SizedBox(height: 22),
+
+                        // Value Pillar 1: Grade A (Supermarket & Export)
+                        _buildExplanationCard(
+                          icon: Icons.verified_rounded,
+                          iconColor: const Color(0xFF15803D),
+                          tierBadge: 'GRADE A • FRESH TABLE',
+                          tierBadgeColor: const Color(0xFF15803D),
+                          title: 'Supermarket & Export Retail',
+                          description:
+                              'Top-tier, visually prime produce matched directly to supermarket fresh aisles and export buyers with guaranteed Net-Return pricing.',
+                        ),
+                        const SizedBox(height: 12),
+
+                        // Value Pillar 2: Grade B (Purées, Chips, Canneries)
+                        _buildExplanationCard(
+                          icon: Icons.factory_rounded,
+                          iconColor: const Color(0xFFD97706),
+                          tierBadge: 'GRADE B • AGRO-PROCESSING',
+                          tierBadgeColor: const Color(0xFFD97706),
+                          title: 'Purées, Pastes, Sauces & Chips',
+                          description:
+                              'Imperfect, off-spec, or surplus produce routed to canning factories, juice extractors, and dried chip makers instead of rotting at farmgate.',
+                        ),
+                        const SizedBox(height: 12),
+
+                        // Value Pillar 3: Grade C & Residue (Compost & Animal Feed)
+                        _buildExplanationCard(
+                          icon: Icons.eco_rounded,
+                          iconColor: const Color(0xFF0D9488),
+                          tierBadge: 'GRADE C • CIRCULAR ENRICHMENT',
+                          tierBadgeColor: const Color(0xFF0D9488),
+                          title: 'Organic Compost & Animal Feed',
+                          description:
+                              'Harvest residues and cull biomass converted into nutrient-rich compost, organic bio-fertilizers, and high-protein livestock feed.',
+                        ),
+                        const SizedBox(height: 12),
+
+                        // Value Pillar 4: 2.5T Pooled Transport & Direct Escrow
+                        _buildExplanationCard(
+                          icon: Icons.local_shipping_rounded,
+                          iconColor: const Color(0xFF0284C7),
+                          tierBadge: 'LOGISTICS & SETTLEMENT',
+                          tierBadgeColor: const Color(0xFF0284C7),
+                          title: '2.5T Pooled Freight & Instant Escrow',
+                          description:
+                              'Multi-farmer cluster aggregation cuts freight costs by 35% with instant EcoCash / OneMoney mobile payouts on verified depot handover.',
                         ),
                         const SizedBox(height: 20),
 
-                        // Value Pillar 1
-                        _buildExplanationCard(
-                          icon: Icons.shield_outlined,
-                          iconColor: const Color(0xFF15803D),
-                          title: 'Zero Middleman Exploitation',
-                          description:
-                              'Lock in transparent, guaranteed Net-Return pricing before harvesting. No predatory middlemen taking 60% of your earnings.',
+                        // Value Proposition Highlight Callout
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [Color(0xFF143D28), Color(0xFF1E5B3A)],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFF143D28).withValues(alpha: 0.2),
+                                blurRadius: 12,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 42,
+                                height: 42,
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: 0.15),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: const Center(
+                                  child: Text('🌾', style: TextStyle(fontSize: 20)),
+                                ),
+                              ),
+                              const SizedBox(width: 14),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Zero Harvest Left Behind',
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w800,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      'From retail crates to puree jars and soil compost — maximize every dollar from your land.',
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 11.5,
+                                        color: const Color(0xFFD1FAE5),
+                                        height: 1.35,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        const SizedBox(height: 12),
-
-                        // Value Pillar 2
-                        _buildExplanationCard(
-                          icon: Icons.local_shipping_outlined,
-                          iconColor: const Color(0xFFD97706),
-                          title: '2.5T Pooled Freight Logistics',
-                          description:
-                              'Aggregate produce with neighboring farms across Nyanga, Mutasa, and Chipinge to save 35% on transport costs.',
-                        ),
-                        const SizedBox(height: 12),
-
-                        // Value Pillar 3
-                        _buildExplanationCard(
-                          icon: Icons.account_balance_wallet_outlined,
-                          iconColor: const Color(0xFF0284C7),
-                          title: 'Instant Mobile Money Escrow',
-                          description:
-                              'Receive immediate payouts to your EcoCash or OneMoney wallet as soon as delivery is verified at the off-taker depot.',
-                        ),
-                        const SizedBox(height: 28),
+                        const SizedBox(height: 24),
 
                         // Bottom Call to Action
                         SizedBox(
@@ -352,11 +461,13 @@ class _OnboardingWelcomeScreenState extends State<OnboardingWelcomeScreen> with 
   Widget _buildExplanationCard({
     required IconData icon,
     required Color iconColor,
+    required String tierBadge,
+    required Color tierBadgeColor,
     required String title,
     required String description,
   }) {
     return Container(
-      padding: const EdgeInsets.all(18),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -386,6 +497,27 @@ class _OnboardingWelcomeScreenState extends State<OnboardingWelcomeScreen> with 
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: tierBadgeColor.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Text(
+                        tierBadge,
+                        style: GoogleFonts.jetBrainsMono(
+                          fontSize: 8.5,
+                          fontWeight: FontWeight.w800,
+                          color: tierBadgeColor,
+                          letterSpacing: 0.4,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 5),
                 Text(
                   title,
                   style: GoogleFonts.plusJakartaSans(
