@@ -195,7 +195,7 @@ $pageTitle = ucfirst($activeTab) . ' — Vunotho Farmer Operations';
     <!-- Top Header Canvas -->
     <header class="vn-top-header">
       <div class="flex items-center gap-3">
-        <button class="lg:hidden p-2 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold" onclick="toggleMobileSidebar(true)">
+        <button class="p-2.5 rounded-2xl bg-white border border-slate-200 shadow-sm text-slate-700 hover:text-emerald-700 hover:border-emerald-300 font-bold flex items-center justify-center transition-all cursor-pointer" onclick="toggleSidebarCollapse()" title="Toggle Sidebar (Expand/Collapse)">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
         <div>

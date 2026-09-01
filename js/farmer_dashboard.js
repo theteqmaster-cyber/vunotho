@@ -14,21 +14,21 @@ const CROP_PRICE_BENCHMARKS = {
   'Cabbages': 0.30
 };
 
-// 1. Sidebar Collapse Controller (Desktop & Mobile)
+// 1. Sidebar Full Collapse Controller
 function toggleSidebarCollapse() {
   const sidebar = document.getElementById('portal-sidebar');
   if (!sidebar) return;
 
-  if (window.innerWidth < 992) {
-    sidebar.classList.toggle('open');
-    const backdrop = document.getElementById('sidebar-backdrop');
-    if (backdrop) backdrop.classList.toggle('active');
-  } else {
-    sidebar.classList.toggle('collapsed');
-    const isCollapsed = sidebar.classList.contains('collapsed');
-    try {
-      localStorage.setItem('vunotho_sidebar_collapsed', isCollapsed ? 'true' : 'false');
-    } catch (e) {}
+  sidebar.classList.toggle('collapsed');
+  const isCollapsed = sidebar.classList.contains('collapsed');
+  try {
+    localStorage.setItem('vunotho_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+  } catch (e) {}
+
+  const backdrop = document.getElementById('sidebar-backdrop');
+  if (backdrop && window.innerWidth < 992) {
+    if (!isCollapsed) backdrop.classList.add('active');
+    else backdrop.classList.remove('active');
   }
 }
 
@@ -38,10 +38,10 @@ function toggleMobileSidebar(open) {
   if (!sidebar) return;
 
   if (open) {
-    sidebar.classList.add('open');
+    sidebar.classList.remove('collapsed');
     if (backdrop) backdrop.classList.add('active');
   } else {
-    sidebar.classList.remove('open');
+    sidebar.classList.add('collapsed');
     if (backdrop) backdrop.classList.remove('active');
   }
 }
