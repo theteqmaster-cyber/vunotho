@@ -4,37 +4,65 @@ import 'package:provider/provider.dart';
 import '../../core/theme/vunotho_theme.dart';
 import '../../logic/providers/auth_provider.dart';
 import '../main_shell.dart';
-import 'register_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final _phoneController = TextEditingController(text: '0776118117');
-  final _passwordController = TextEditingController(text: '1234');
+class _RegisterScreenState extends State<RegisterScreen> {
+  final _nameController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _passwordController = TextEditingController();
   String _selectedRole = 'farmer';
+  String _selectedDistrict = 'Nyanga';
   bool _obscurePassword = true;
-  bool _rememberMe = true;
   bool _isLoading = false;
+
+  final List<String> _districts = [
+    'Nyanga',
+    'Mutasa',
+    'Chipinge',
+    'Gwanda',
+    'Bulawayo',
+    'Harare',
+    'Goromonzi',
+    'Marondera',
+  ];
 
   @override
   void dispose() {
+    _nameController.dispose();
     _phoneController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
-  void _handleLogin() async {
-    setState(() => _isLoading = true);
+  void _handleRegister() async {
+    final name = _nameController.text.trim();
+    final phone = _phoneController.text.trim();
+    final pass = _passwordController.text.trim();
 
+    if (name.isEmpty || phone.isEmpty || pass.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('Please fill in all registration fields'),
+          backgroundColor: const Color(0xFFDC2626),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        ),
+      );
+      return;
+    }
+
+    setState(() => _isLoading = true);
     final authProvider = context.read<AuthProvider>();
+
     final success = await authProvider.login(
-      _phoneController.text.trim(),
-      _passwordController.text.trim(),
+      phone,
+      pass,
       role: _selectedRole,
     );
 
@@ -46,57 +74,15 @@ class _LoginScreenState extends State<LoginScreen> {
         MaterialPageRoute(builder: (_) => const MainShell()),
         (route) => false,
       );
-    } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(authProvider.errorMessage ?? 'Authentication failed'),
-          backgroundColor: const Color(0xFFDC2626),
+          content: Text('✓ Welcome to Vunotho, $name!'),
+          backgroundColor: VunothoColors.primaryDark,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         ),
       );
     }
-  }
-
-  void _showForgotPasswordDialog() {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        title: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: const Color(0xFFE8F5E9),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: const Icon(Icons.support_agent_rounded, color: Color(0xFF1B5E20), size: 22),
-            ),
-            const SizedBox(width: 10),
-            Text(
-              'Contact Support',
-              style: GoogleFonts.plusJakartaSans(fontSize: 16, fontWeight: FontWeight.w800),
-            ),
-          ],
-        ),
-        content: Text(
-          'To reset your Vunotho agricultural account PIN or update your EcoCash settlement number, please contact the National Support Line at:\n\n📞 +263 77 963 4613\n\nOr speak directly to your regional depot aggregation officer.',
-          style: GoogleFonts.plusJakartaSans(fontSize: 13, color: VunothoColors.textBody, height: 1.45),
-        ),
-        actions: [
-          ElevatedButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: VunothoColors.primaryDark,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            ),
-            child: const Text('Got It', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -111,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Stack(
               children: [
                 Container(
-                  height: 220,
+                  height: 190,
                   width: double.infinity,
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.vertical(bottom: Radius.circular(36)),
@@ -126,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Container(
-                  height: 220,
+                  height: 190,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.vertical(bottom: Radius.circular(36)),
                     gradient: LinearGradient(
@@ -141,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
 
-                // Back Button & Logo
+                // Back Button
                 Positioned(
                   top: 40,
                   left: 16,
@@ -158,55 +144,23 @@ class _LoginScreenState extends State<LoginScreen> {
                 Positioned(
                   bottom: 20,
                   left: 24,
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: BoxDecoration(
+                      Text(
+                        'Create Account',
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w900,
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(14),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.15),
-                              blurRadius: 10,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        padding: const EdgeInsets.all(4),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(
-                            'assets/images/vunotho_logo.png',
-                            fit: BoxFit.contain,
-                            errorBuilder: (context, error, stackTrace) => const Center(
-                              child: Text('V', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF143D28))),
-                            ),
-                          ),
                         ),
                       ),
-                      const SizedBox(width: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'VUNOTHO',
-                            style: GoogleFonts.plusJakartaSans(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: 1.2,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Text(
-                            'Agricultural Operating System',
-                            style: GoogleFonts.plusJakartaSans(
-                              fontSize: 11,
-                              color: Colors.white.withValues(alpha: 0.85),
-                            ),
-                          ),
-                        ],
+                      Text(
+                        'Join Zimbabwe Agricultural Network',
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 11.5,
+                          color: Colors.white.withValues(alpha: 0.85),
+                        ),
                       ),
                     ],
                   ),
@@ -214,33 +168,112 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
 
-            // 2. SIGN IN FORM BODY
+            // 2. REGISTRATION FORM BODY
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Full Name
                   Text(
-                    'Welcome Back',
-                    style: GoogleFonts.plusJakartaSans(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w900,
-                      color: const Color(0xFF0F172A),
+                    'Full Name',
+                    style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.w700, color: const Color(0xFF334155)),
+                  ),
+                  const SizedBox(height: 6),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF1F5F1),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: const Color(0xFFE2E8E2)),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.person_outline_rounded, size: 20, color: Color(0xFF64748B)),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: TextField(
+                            controller: _nameController,
+                            style: GoogleFonts.plusJakartaSans(fontSize: 13.5, fontWeight: FontWeight.w600),
+                            decoration: const InputDecoration(
+                              hintText: 'e.g. Simba Mukamuri',
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 14),
+
+                  // Phone Number
                   Text(
-                    'Sign in to access your farmgate desk',
-                    style: GoogleFonts.plusJakartaSans(
-                      fontSize: 13,
-                      color: const Color(0xFF64748B),
+                    'Mobile Number (EcoCash / OneMoney)',
+                    style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.w700, color: const Color(0xFF334155)),
+                  ),
+                  const SizedBox(height: 6),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF1F5F1),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: const Color(0xFFE2E8E2)),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.phone_outlined, size: 20, color: Color(0xFF64748B)),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: TextField(
+                            controller: _phoneController,
+                            keyboardType: TextInputType.phone,
+                            style: GoogleFonts.jetBrainsMono(fontSize: 13.5, fontWeight: FontWeight.w600),
+                            decoration: const InputDecoration(
+                              hintText: '0776118117',
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 14),
+
+                  // District Selector
+                  Text(
+                    'Farming District / Hub',
+                    style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.w700, color: const Color(0xFF334155)),
+                  ),
+                  const SizedBox(height: 6),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF1F5F1),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: const Color(0xFFE2E8E2)),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: _selectedDistrict,
+                        isExpanded: true,
+                        icon: const Icon(Icons.keyboard_arrow_down_rounded, color: Color(0xFF64748B)),
+                        items: _districts.map((d) {
+                          return DropdownMenuItem(
+                            value: d,
+                            child: Text(d, style: GoogleFonts.plusJakartaSans(fontSize: 13, fontWeight: FontWeight.w600)),
+                          );
+                        }).toList(),
+                        onChanged: (val) {
+                          if (val != null) setState(() => _selectedDistrict = val);
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 14),
 
                   // Role Selector
                   Text(
-                    'SELECT ROLE',
+                    'ACCOUNT ROLE',
                     style: GoogleFonts.jetBrainsMono(
                       fontSize: 11,
                       fontWeight: FontWeight.w800,
@@ -259,43 +292,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       _buildRolePill('buyer', 'Buyer', Icons.storefront_rounded),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 14),
 
-                  // Phone / Email Input (Soft Sage Green Background)
+                  // Password / PIN
                   Text(
-                    'Mobile Phone / EcoCash',
-                    style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.w700, color: const Color(0xFF334155)),
-                  ),
-                  const SizedBox(height: 6),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF1F5F1), // Soft modern green-tinted input
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: const Color(0xFFE2E8E2)),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.person_outline_rounded, size: 20, color: Color(0xFF64748B)),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: TextField(
-                            controller: _phoneController,
-                            style: GoogleFonts.jetBrainsMono(fontSize: 14, fontWeight: FontWeight.w600),
-                            decoration: const InputDecoration(
-                              hintText: '0776118117',
-                              border: InputBorder.none,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Password / PIN Input
-                  Text(
-                    'Account PIN / Password',
+                    'Create Account PIN / Password',
                     style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.w700, color: const Color(0xFF334155)),
                   ),
                   const SizedBox(height: 6),
@@ -314,7 +315,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: TextField(
                             controller: _passwordController,
                             obscureText: _obscurePassword,
-                            style: GoogleFonts.jetBrainsMono(fontSize: 14, fontWeight: FontWeight.w600),
+                            style: GoogleFonts.jetBrainsMono(fontSize: 13.5, fontWeight: FontWeight.w600),
                             decoration: const InputDecoration(
                               hintText: '••••',
                               border: InputBorder.none,
@@ -332,52 +333,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 22),
 
-                  // Remember Me & Forgot Password Row
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 24,
-                            height: 24,
-                            child: Checkbox(
-                              value: _rememberMe,
-                              onChanged: (val) => setState(() => _rememberMe = val ?? true),
-                              activeColor: const Color(0xFF2E7D32),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                            ),
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            'Remember Me',
-                            style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.w600, color: const Color(0xFF475569)),
-                          ),
-                        ],
-                      ),
-                      TextButton(
-                        onPressed: _showForgotPasswordDialog,
-                        child: Text(
-                          'Forgot Password?',
-                          style: GoogleFonts.plusJakartaSans(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            color: const Color(0xFF2E7D32),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-
-                  // Big Login Button
+                  // Create Account Button
                   SizedBox(
                     width: double.infinity,
                     height: 52,
                     child: ElevatedButton(
-                      onPressed: _isLoading ? null : _handleLogin,
+                      onPressed: _isLoading ? null : _handleRegister,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF2E7D32),
                         foregroundColor: Colors.white,
@@ -391,7 +354,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5),
                             )
                           : Text(
-                              'Login',
+                              'Create Account',
                               style: GoogleFonts.plusJakartaSans(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w800,
@@ -400,25 +363,21 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 18),
 
-                  // Bottom Sign Up Link
+                  // Bottom Sign In Link
                   Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Don't have an account? ",
+                          'Already have an account? ',
                           style: GoogleFonts.plusJakartaSans(fontSize: 13, color: const Color(0xFF64748B)),
                         ),
                         InkWell(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(builder: (_) => const RegisterScreen()),
-                            );
-                          },
+                          onTap: () => Navigator.of(context).pop(),
                           child: Text(
-                            'Sign Up',
+                            'Sign In',
                             style: GoogleFonts.plusJakartaSans(
                               fontSize: 13,
                               fontWeight: FontWeight.w800,

@@ -72,42 +72,49 @@ class _FarmerProduceScreenState extends State<FarmerProduceScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            Container(
-                              width: 38,
-                              height: 38,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFE8F5E9),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: const Center(
-                                child: Icon(Icons.eco_rounded, color: Color(0xFF1B5E20), size: 22),
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'My Harvest Batches',
-                                  style: GoogleFonts.plusJakartaSans(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w900,
-                                    color: VunothoColors.textDark,
-                                  ),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 38,
+                                height: 38,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFE8F5E9),
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
-                                Text(
-                                  'Registered Farmgate Produce',
-                                  style: GoogleFonts.plusJakartaSans(
-                                    fontSize: 11,
-                                    color: VunothoColors.textMuted,
-                                  ),
+                                child: const Center(
+                                  child: Icon(Icons.eco_rounded, color: Color(0xFF1B5E20), size: 22),
                                 ),
-                              ],
-                            ),
-                          ],
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'My Harvest Batches',
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w900,
+                                        color: VunothoColors.textDark,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      'Registered Farmgate Produce',
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 10.5,
+                                        color: VunothoColors.textMuted,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
+                        const SizedBox(width: 8),
                         ElevatedButton.icon(
                           onPressed: () {
                             showDialog(
@@ -115,15 +122,15 @@ class _FarmerProduceScreenState extends State<FarmerProduceScreen> {
                               builder: (_) => const AddListingDialog(),
                             );
                           },
-                          icon: const Icon(Icons.add, size: 16),
+                          icon: const Icon(Icons.add, size: 15),
                           label: Text(
                             'Log Batch',
-                            style: GoogleFonts.plusJakartaSans(fontSize: 12, fontWeight: FontWeight.w800),
+                            style: GoogleFonts.plusJakartaSans(fontSize: 11.5, fontWeight: FontWeight.w800),
                           ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: VunothoColors.primaryDark,
                             foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                             elevation: 0,
                           ),

@@ -143,19 +143,24 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Verified Wholesale Demands',
-                  style: GoogleFonts.plusJakartaSans(fontSize: 15, fontWeight: FontWeight.w800),
-                ),
-                Text(
-                  'Supermarkets & Agro-processors with escrow deposits',
-                  style: GoogleFonts.plusJakartaSans(fontSize: 11, color: VunothoColors.textMuted),
-                ),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Verified Wholesale Demands',
+                    style: GoogleFonts.plusJakartaSans(fontSize: 14.5, fontWeight: FontWeight.w800),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    'Supermarkets & agro-processors with escrow',
+                    style: GoogleFonts.plusJakartaSans(fontSize: 10.5, color: VunothoColors.textMuted),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
             ),
+            const SizedBox(width: 8),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
               decoration: BoxDecoration(
@@ -401,19 +406,24 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Smallholder Produce Stream',
-                  style: GoogleFonts.plusJakartaSans(fontSize: 15, fontWeight: FontWeight.w800),
-                ),
-                Text(
-                  'Harvest lots ready for 2.5T load aggregation',
-                  style: GoogleFonts.plusJakartaSans(fontSize: 11, color: VunothoColors.textMuted),
-                ),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Smallholder Produce Stream',
+                    style: GoogleFonts.plusJakartaSans(fontSize: 14.5, fontWeight: FontWeight.w800),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    'Harvest lots ready for 2.5T load aggregation',
+                    style: GoogleFonts.plusJakartaSans(fontSize: 10.5, color: VunothoColors.textMuted),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
             ),
+            const SizedBox(width: 8),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
               decoration: BoxDecoration(
