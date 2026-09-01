@@ -1,7 +1,7 @@
 <?php
 /**
  * VUNOTHO SMALLHOLDER FARMER OPERATIONS DESK
- * Enterprise Edition: Calm Botanical Atmosphere, HD Vector Icons, Collapsible Sidebar, Direct Sign Out
+ * Enterprise Edition: Official Brand Logo, Calm Botanical Atmosphere, HD Vector Icons, Collapsible Sidebar, Direct Sign Out
  */
 require_once __DIR__ . '/api/session.php';
 require_once __DIR__ . '/api/db.php';
@@ -170,8 +170,8 @@ $pageTitle = ucfirst($activeTab) . ' — Vunotho Farmer Operations';
   
   <!-- Manifest & Favicons -->
   <link rel="manifest" href="/manifest.json" />
-  <link rel="icon" type="image/jpeg" href="/images/favicon.jpg" />
-  <link rel="icon" type="image/svg+xml" href="/images/icon.svg" />
+  <link rel="icon" type="image/png" href="/images/vunotho_logo.png" />
+  <link rel="apple-touch-icon" href="/images/vunotho_logo.png" />
 
   <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -180,7 +180,7 @@ $pageTitle = ucfirst($activeTab) . ' — Vunotho Farmer Operations';
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="/css/tailwind.css?v=5.0" />
-  <link rel="stylesheet" href="/css/portal_dashboard.css?v=3.0" />
+  <link rel="stylesheet" href="/css/portal_dashboard.css?v=4.0" />
 </head>
 <body>
 
@@ -199,12 +199,9 @@ $pageTitle = ucfirst($activeTab) . ' — Vunotho Farmer Operations';
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
         <div>
-          <h1 class="text-2xl lg:text-[1.75rem] font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+          <h1 class="text-2xl lg:text-[1.75rem] font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
             <span>Welcome back, <?= htmlspecialchars($firstName) ?>!</span>
-            <svg width="24" height="24" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline-block">
-              <path d="M18 4C18 4 10 9 10 18C10 22 13 25 18 25C23 25 26 22 26 18C26 9 18 4 18 4Z" fill="#16A34A"/>
-              <path d="M7 23C7 23 12 21 16 25C16 29 13 32 9 32C5 32 4 28 7 23Z" fill="#FBBF24"/>
-            </svg>
+            <img src="/images/vunotho_logo.png" class="w-7 h-7 inline-block rounded-xl object-cover shadow-sm border border-emerald-500/30" alt="Vunotho Logo" />
           </h1>
           <p class="text-xs text-slate-500 font-medium mt-0.5">
             Here's what's happening with your farm today.
@@ -406,7 +403,7 @@ $pageTitle = ucfirst($activeTab) . ' — Vunotho Farmer Operations';
               </div>
               <div class="vn-impact-stat-item">
                 <div class="vn-impact-circle" style="background-color: #0D9488; color: white;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
                 </div>
                 <div class="flex flex-col">
                   <span class="text-base font-extrabold text-slate-900 leading-tight font-mono">18</span>
@@ -494,7 +491,7 @@ $pageTitle = ucfirst($activeTab) . ' — Vunotho Farmer Operations';
               </div>
               <div class="vn-alert-row">
                 <div class="vn-alert-icon bg-orange-100 text-orange-700">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 8"/></svg>
                 </div>
                 <div class="flex-1 min-w-0">
                   <h4 class="font-bold text-slate-900 text-xs">Transport update</h4>
@@ -1067,16 +1064,11 @@ $pageTitle = ucfirst($activeTab) . ' — Vunotho Farmer Operations';
     <!-- ==================== 5. BOTTOM ACTION GROWTH BANNER ==================== -->
     <div class="vn-growth-banner mt-6">
       <div class="flex items-center gap-5">
-        <!-- Crisp Smartphone Mockup Graphic with Official Vunotho Logo -->
+        <!-- Crisp Smartphone Mockup Graphic with Official Vunotho "V" Logo -->
         <div class="vn-growth-phone-mockup">
-          <div class="w-full h-full bg-[#071726] rounded-xl flex flex-col items-center justify-center p-1 border border-emerald-500/20">
-            <!-- Leaf Logo SVG -->
-            <svg width="24" height="24" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M18 4C18 4 10 9 10 18C10 22 13 25 18 25C23 25 26 22 26 18C26 9 18 4 18 4Z" fill="#22C55E"/>
-              <path d="M7 23C7 23 12 21 16 25C16 29 13 32 9 32C5 32 4 28 7 23Z" fill="#FBBF24"/>
-              <path d="M29 23C29 23 24 21 20 25C20 29 23 32 27 32C31 32 32 28 29 23Z" fill="#16A34A"/>
-            </svg>
-            <span class="text-[9px] font-black tracking-wider text-white mt-1">VUNOTHO</span>
+          <div class="w-full h-full bg-[#071726] rounded-xl flex flex-col items-center justify-center p-1 border border-emerald-500/40 shadow-inner">
+            <img src="/images/vunotho_logo.png" alt="Official Vunotho Logo" class="w-12 h-12 rounded-xl object-cover shadow-md border border-emerald-400/40" />
+            <span class="text-[9px] font-black tracking-wider text-emerald-300 mt-1">VUNOTHO</span>
           </div>
         </div>
 
@@ -1113,9 +1105,9 @@ $pageTitle = ucfirst($activeTab) . ' — Vunotho Farmer Operations';
 <div id="new-produce-modal" class="vunotho-modal-backdrop">
   <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-warm-xl max-w-lg w-full relative max-h-[92vh] overflow-y-auto">
     <div class="flex justify-between items-center mb-5 pb-3 border-b border-slate-100">
-      <div class="flex items-center gap-2">
-        <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center">
-          <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><path d="M18 4C18 4 10 9 10 18C10 22 13 25 18 25C23 25 26 22 26 18C26 9 18 4 18 4Z" fill="#16A34A"/><path d="M7 23C7 23 12 21 16 25C16 29 13 32 9 32C5 32 4 28 7 23Z" fill="#FBBF24"/></svg>
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl overflow-hidden shadow-sm border border-emerald-500/40 flex-shrink-0 bg-[#071726] p-0.5">
+          <img src="/images/vunotho_logo.png" alt="Vunotho Official Logo" class="w-full h-full object-cover rounded-lg" />
         </div>
         <div>
           <h3 class="text-lg font-black text-slate-900 leading-tight">List New Produce</h3>
@@ -1204,7 +1196,7 @@ $pageTitle = ucfirst($activeTab) . ' — Vunotho Farmer Operations';
 <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none [&>*]:pointer-events-auto"></div>
 
 <!-- Scripts -->
-<script src="/js/farmer_dashboard.js?v=3.0"></script>
+<script src="/js/farmer_dashboard.js?v=4.0"></script>
 <script>
   function showToast(message, type = 'info') {
     const container = document.getElementById('toast-container');

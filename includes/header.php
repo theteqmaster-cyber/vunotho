@@ -114,14 +114,10 @@ $pageTitle = $pageTitle ?? 'Vunotho — Farmer-to-Market Operating System';
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
       
-      <!-- Brand Logo with Leaf Sprout -->
+      <!-- Brand Logo with Official Vunotho "V" -->
       <a href="/index.php" class="flex items-center gap-3 group">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center shadow-sm group-hover:scale-105 transition-all">
-          <svg width="22" height="22" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 4C18 4 10 9 10 18C10 22 13 25 18 25C23 25 26 22 26 18C26 9 18 4 18 4Z" fill="#FFFFFF"/>
-            <path d="M7 23C7 23 12 21 16 25C16 29 13 32 9 32C5 32 4 28 7 23Z" fill="#FBBF24"/>
-            <path d="M29 23C29 23 24 21 20 25C20 29 23 32 27 32C31 32 32 28 29 23Z" fill="#34D399"/>
-          </svg>
+        <div class="w-9 h-9 rounded-xl overflow-hidden shadow-md border border-emerald-500/40 flex-shrink-0 bg-[#0B2032] flex items-center justify-center p-0.5 group-hover:scale-105 transition-all">
+          <img src="/images/vunotho_logo.png" alt="Official Vunotho Logo" class="w-full h-full object-cover rounded-lg" />
         </div>
         <div class="flex flex-col">
           <span class="font-extrabold text-lg tracking-tight text-slate-900 leading-none">VUNOTHO</span>

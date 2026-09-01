@@ -1,7 +1,7 @@
 <?php
 /**
  * VUNOTHO ENTERPRISE SIDEBAR COMPONENT
- * Fully Collapsible | HD Vector Icons | Direct Sign Out | Offline Switch
+ * Official Vunotho "V" Logo | Fully Collapsible | HD Vector Icons | Direct Sign Out | Offline Switch
  */
 $currentUser = $user ?? get_current_user_profile();
 $userName = $currentUser['name'] ?? 'Makomborero Gufe';
@@ -18,17 +18,13 @@ $activeTab = $_GET['tab'] ?? 'dashboard';
   
   <!-- 1. Brand Logo Header & Collapse Button -->
   <div class="vn-sidebar-header">
-    <a href="/farmer.php" class="flex items-center gap-2.5 group text-decoration-none min-w-0">
-      <div class="vn-logo-icon">
-        <svg width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18 4C18 4 10 9 10 18C10 22 13 25 18 25C23 25 26 22 26 18C26 9 18 4 18 4Z" fill="#22C55E"/>
-          <path d="M7 23C7 23 12 21 16 25C16 29 13 32 9 32C5 32 4 28 7 23Z" fill="#FBBF24"/>
-          <path d="M29 23C29 23 24 21 20 25C20 29 23 32 27 32C31 32 32 28 29 23Z" fill="#16A34A"/>
-        </svg>
+    <a href="/farmer.php" class="flex items-center gap-3 group text-decoration-none min-w-0">
+      <div class="w-9 h-9 rounded-xl overflow-hidden shadow-md border border-emerald-500/40 flex-shrink-0 bg-[#0B2032] flex items-center justify-center p-0.5">
+        <img src="/images/vunotho_logo.png" alt="Vunotho Official Logo" class="w-full h-full object-cover rounded-lg" />
       </div>
       <div class="flex flex-col min-w-0 vn-sidebar-text">
         <span class="font-black text-base tracking-wider text-white leading-tight">VUNOTHO</span>
-        <span class="text-[10px] font-medium text-slate-400 leading-none mt-0.5">Agricultural OS</span>
+        <span class="text-[10px] font-semibold text-emerald-400 leading-none mt-0.5">Agricultural OS</span>
       </div>
     </a>
     
