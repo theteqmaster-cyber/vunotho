@@ -443,100 +443,44 @@ $pageTitle = 'Vunotho — Eliminate Middlemen. Secure Your Real Harvest Value.';
             </div>
           </div>
 
-          <!-- Right Column: Multi-Device Showcase (Authentic Flutter Mobile Preview) -->
+          <!-- Right Column: Clean Farmland & Corridor Hub Showcase -->
           <div>
-            <div class="vn-tech-media-grid">
-              
-              <!-- Authentic Flutter Smartphone Mockup Preview -->
-              <div class="vn-phone-mockup-frame bg-[#F6F8F5] border-[6px] border-slate-900 rounded-[38px] p-3 text-slate-900 shadow-2xl relative overflow-hidden flex flex-col gap-2.5">
-                
-                <!-- Notch / Mobile Status Bar -->
-                <div class="flex justify-between items-center px-2 py-0.5 text-[9px] font-mono text-slate-500 border-b border-slate-200/80">
-                  <span class="font-bold text-slate-800">09:41</span>
-                  <div class="w-14 h-3 bg-slate-900 rounded-full mx-auto"></div>
-                  <span>5G 100%</span>
+            <div class="vn-tablet-overview-card">
+              <div class="flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span class="font-extrabold text-sm text-slate-900">Rural Farmland Corridor Hub</span>
                 </div>
-
-                <!-- Flutter App Header -->
-                <div class="flex justify-between items-center bg-white p-2 rounded-xl border border-slate-200 shadow-sm">
-                  <div class="flex items-center gap-1.5">
-                    <img src="/images/vunotho_logo.png" class="w-5 h-5 rounded-md object-contain border border-slate-100" alt="Vunotho" />
-                    <span class="font-extrabold text-xs text-slate-900 tracking-tight">VUNOTHO</span>
-                  </div>
-                  <span class="px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[8.5px] font-bold font-mono flex items-center gap-1">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span> LIVE
-                  </span>
-                </div>
-
-                <!-- Greeting & Weather Strip -->
-                <div class="px-1 space-y-1">
-                  <div class="text-[12px] font-black text-slate-900 leading-tight">Hi, Simba 🌾</div>
-                  <div class="text-[9px] text-slate-500 font-medium">Nyanga Hub, Zimbabwe</div>
-                  
-                  <div class="flex gap-1 pt-1 overflow-hidden">
-                    <div class="flex-1 p-1 rounded-lg bg-emerald-900 text-white text-[8.5px] font-bold text-center">
-                      Today <span class="text-amber-300">24°C ☀️</span>
-                    </div>
-                    <div class="flex-1 p-1 rounded-lg bg-white border border-slate-200 text-slate-700 text-[8.5px] font-bold text-center">
-                      Tmrw <span class="text-blue-500">23°C ⛅</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Botanical Net Return Hero Banner -->
-                <div class="p-2.5 rounded-xl bg-gradient-to-r from-[#071726] via-[#0A2E1D] to-[#064E3B] text-white space-y-1 shadow-sm">
-                  <div class="flex justify-between items-center text-[7.5px] font-bold">
-                    <span class="px-1.5 py-0.5 rounded bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 font-mono">100% VALUE RECOVERY</span>
-                    <span class="text-amber-300">35% Freight Saved</span>
-                  </div>
-                  <div class="text-[10px] font-black leading-tight pt-0.5">Grow More. Earn More.<br />Waste Less.</div>
-                  <div class="text-[7.5px] text-slate-300 leading-tight">Monetize Grade A, B & C produce.</div>
-                </div>
-
-                <!-- Harvest Batch Item Card -->
-                <div class="p-2 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1">
-                  <div class="flex justify-between items-center text-[10px]">
-                    <div class="font-extrabold text-slate-900">Butternut Squash</div>
-                    <span class="text-emerald-700 font-extrabold font-mono text-[9px]">1,450 KG</span>
-                  </div>
-                  <div class="flex justify-between items-center text-[8.5px] text-slate-500">
-                    <span class="px-1 py-0.5 rounded bg-emerald-50 text-emerald-800 font-bold">Grade A (Supermarket)</span>
-                    <span class="font-mono text-slate-800 font-bold">Est: $609.00</span>
-                  </div>
-                </div>
-
-                <!-- Bottom App Bar with Centered FAB -->
-                <div class="bg-white px-2 py-1.5 rounded-xl border border-slate-200 flex justify-between items-center text-[8px] text-slate-400 font-bold relative mt-auto">
-                  <span class="text-emerald-800 font-extrabold">Home</span>
-                  <span>Produce</span>
-                  <div class="w-6 h-6 rounded-full bg-emerald-800 text-white flex items-center justify-center font-bold text-xs shadow-md mx-auto -mt-3">+</div>
-                  <span>Market</span>
-                  <span>Profile</span>
-                </div>
-
+                <span class="text-[11px] font-mono text-emerald-800 bg-emerald-100/80 px-2.5 py-1 rounded-full font-bold border border-emerald-200">
+                  GPS Clustered • 2.5T Pooling
+                </span>
               </div>
 
-              <!-- Farmland Overview Tablet Card -->
-              <div class="vn-tablet-overview-card">
-                <div class="flex justify-between items-center">
-                  <span class="font-extrabold text-xs text-slate-900">Farm Overview</span>
-                  <span class="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-bold">GPS Clustered Hub</span>
-                </div>
-
-                <img src="/images/farmland.png" alt="Farmland corridor overview" class="vn-farmland-thumb" />
-
-                <div class="grid grid-cols-2 gap-2 text-[11px]">
-                  <div class="p-2 rounded-xl bg-slate-50 border border-slate-100">
-                    <span class="text-slate-400 block text-[9.5px]">Benchmark Rate</span>
-                    <strong class="text-slate-900 font-mono">$0.42 /kg</strong>
+              <div class="relative rounded-2xl overflow-hidden shadow-inner group">
+                <img src="/images/farmland.png" alt="Farmland corridor overview" class="vn-farmland-thumb group-hover:scale-105 transition-transform duration-500" />
+                <div class="absolute bottom-3 left-3 right-3 bg-slate-900/85 backdrop-blur-md px-3 py-2 rounded-xl text-white flex items-center justify-between text-xs">
+                  <div class="flex items-center gap-2">
+                    <span class="text-emerald-400">📍</span>
+                    <span class="font-bold">Nyanga / Mutasa Corridor ➔ Harare Central</span>
                   </div>
-                  <div class="p-2 rounded-xl bg-emerald-50 border border-emerald-100">
-                    <span class="text-emerald-700 block text-[9.5px]">Pooled Freight</span>
-                    <strong class="text-emerald-800 font-mono">35% Saved</strong>
-                  </div>
+                  <span class="font-mono text-emerald-300 text-[11px] font-bold">● Active Route</span>
                 </div>
               </div>
 
+              <div class="grid grid-cols-3 gap-2.5 text-[11px]">
+                <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-center">
+                  <span class="text-slate-500 block text-[10px] font-medium">Benchmark Rate</span>
+                  <strong class="text-slate-900 font-mono text-xs font-black">$0.42 /kg</strong>
+                </div>
+                <div class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-100 text-center">
+                  <span class="text-emerald-700 block text-[10px] font-medium">Pooled Freight</span>
+                  <strong class="text-emerald-800 font-mono text-xs font-black">35% Saved</strong>
+                </div>
+                <div class="p-2.5 rounded-xl bg-teal-50 border border-teal-100 text-center">
+                  <span class="text-teal-700 block text-[10px] font-medium">Offline Engine</span>
+                  <strong class="text-teal-800 font-mono text-xs font-black">Auto-Sync</strong>
+                </div>
+              </div>
             </div>
           </div>
 

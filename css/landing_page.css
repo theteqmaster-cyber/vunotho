@@ -566,42 +566,23 @@
   margin-top: 1px;
 }
 
-/* Phone Mockup + Farmland Tablet Card */
-.vn-tech-media-grid {
-  display: grid;
-  grid-template-columns: 0.85fr 1.15fr;
-  gap: 1.5rem;
-  align-items: center;
-}
-
-.vn-phone-mockup-frame {
-  background: #071726;
-  border: 5px solid #1E293B;
-  border-radius: 36px;
-  padding: 1.25rem 1rem;
-  color: #FFFFFF;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-}
-
+/* Farmland Overview Card */
 .vn-tablet-overview-card {
   background: #FFFFFF;
   border: 1px solid var(--vn-border-subtle);
   border-radius: 24px;
-  padding: 1.25rem;
+  padding: 1.5rem;
   box-shadow: 0 16px 36px rgba(10, 46, 25, 0.08);
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 1rem;
 }
 
 .vn-farmland-thumb {
   width: 100%;
-  height: 150px;
+  height: 220px;
   object-fit: cover;
-  border-radius: 16px;
+  border-radius: 18px;
   display: block;
 }
 
