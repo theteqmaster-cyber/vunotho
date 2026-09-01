@@ -1,26 +1,25 @@
 /**
- * VUNOTHO ROBUST SERVICE WORKER
- * Safe Network-First caching with graceful fallback
+ * VUNOTHO ENTERPRISE SERVICE WORKER (v6.0)
+ * Stale-While-Revalidate for Static Assets & Offline Resilient Storage
  */
 
-const CACHE_NAME = 'vunotho-v5.0-clean';
+const CACHE_NAME = 'vunotho-v6.0-botanical';
 
 const PRECACHE_ASSETS = [
   '/',
-  '/index.php',
+  '/farmer.php',
   '/css/tailwind.css',
-  '/js/pricing.js',
-  '/js/settlement.js',
-  '/images/vunotho_logo.jpg',
+  '/css/portal_dashboard.css',
+  '/js/farmer_dashboard.js',
   '/images/favicon.jpg',
-  '/images/icon.svg'
+  '/images/icon.svg',
+  '/manifest.json'
 ];
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      // Pre-cache core assets gracefully (don't fail install if any single asset fails)
       return Promise.allSettled(
         PRECACHE_ASSETS.map((url) =>
           fetch(url, { cache: 'no-cache' })
@@ -51,56 +50,61 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Only handle HTTP/HTTPS GET requests from the same origin
   if (event.request.method !== 'GET') return;
   if (!event.request.url.startsWith(self.location.origin)) return;
 
-  // Never intercept API routes or dynamic PHP auth endpoints
   const url = new URL(event.request.url);
   if (url.pathname.startsWith('/api/') || url.pathname.includes('logout.php')) {
     return;
   }
 
-  // Network-first strategy with safe error isolation
+  // Cache-first for CSS, JS, and Images for instant sub-20ms rendering
+  if (
+    url.pathname.endsWith('.css') ||
+    url.pathname.endsWith('.js') ||
+    url.pathname.endsWith('.svg') ||
+    url.pathname.endsWith('.jpg') ||
+    url.pathname.endsWith('.png') ||
+    url.pathname.endsWith('.woff2')
+  ) {
+    event.respondWith(
+      caches.match(event.request).then((cachedResponse) => {
+        if (cachedResponse) {
+          // Revalidate in background
+          fetch(event.request).then((networkRes) => {
+            if (networkRes && networkRes.status === 200) {
+              caches.open(CACHE_NAME).then((c) => c.put(event.request, networkRes));
+            }
+          }).catch(() => {});
+          return cachedResponse;
+        }
+        return fetch(event.request).then((networkRes) => {
+          if (networkRes && networkRes.status === 200) {
+            const clone = networkRes.clone();
+            caches.open(CACHE_NAME).then((c) => c.put(event.request, clone));
+          }
+          return networkRes;
+        });
+      })
+    );
+    return;
+  }
+
+  // Network-first with offline fallback for HTML/PHP pages
   event.respondWith(
     fetch(event.request)
       .then((networkResponse) => {
-        // Only attempt to cache complete, uncorrupted, standard 200 responses
-        if (
-          networkResponse &&
-          networkResponse.status === 200 &&
-          networkResponse.type === 'basic'
-        ) {
-          try {
-            const clone = networkResponse.clone();
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(event.request, clone).catch(() => {});
-            }).catch(() => {});
-          } catch (e) {
-            // Ignore cloning errors on compressed/streamed responses
-          }
+        if (networkResponse && networkResponse.status === 200) {
+          const clone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
         }
         return networkResponse;
       })
-      .catch(async () => {
-        // Offline recovery: attempt cache lookup
-        try {
-          const cached = await caches.match(event.request);
-          if (cached) return cached;
-
-          // For document navigations when offline, serve cached index
-          if (event.request.mode === 'navigate') {
-            const indexCached = await caches.match('/index.php') || await caches.match('/');
-            if (indexCached) return indexCached;
-          }
-        } catch (e) {
-          // Fall through
-        }
-
-        return new Response('Vunotho is offline. Please check your network connection.', {
-          status: 503,
-          statusText: 'Service Unavailable',
-          headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+      .catch(() => {
+        return caches.match(event.request).then((cached) => {
+          return cached || new Response('<h1>Offline — Vunotho</h1><p>You are viewing cached offline data.</p>', {
+            headers: { 'Content-Type': 'text/html; charset=utf-8' }
+          });
         });
       })
   );

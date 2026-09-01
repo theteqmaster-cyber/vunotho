@@ -1,0 +1,742 @@
+/* ==========================================================================
+   VUNOTHO ENTERPRISE CALM BOTANICAL DESIGN SYSTEM
+   Inspiring Botanical Wallpaper | Collapsible Sidebar | HD Vector Icons | Premium Typography
+   ========================================================================== */
+
+:root {
+  --vn-sidebar-bg: #071726;
+  --vn-sidebar-collapsed-width: 78px;
+  --vn-sidebar-expanded-width: 260px;
+  
+  --vn-canvas-bg: #F0FDF4;
+  --vn-card-bg: rgba(255, 255, 255, 0.95);
+  --vn-card-border: rgba(220, 252, 231, 0.8);
+  --vn-card-shadow: 0 4px 20px -2px rgba(10, 46, 25, 0.04), 0 2px 6px -1px rgba(10, 46, 25, 0.02);
+  
+  --vn-green: #16A34A;
+  --vn-green-dark: #15803D;
+  --vn-green-deep: #14532D;
+  --vn-green-light: #DCFCE7;
+  
+  --vn-gold: #F59E0B;
+  --vn-gold-light: #FEF3C7;
+  
+  --vn-teal: #0D9488;
+  --vn-teal-light: #CCFBF1;
+  
+  --vn-orange: #EA580C;
+  --vn-orange-light: #FFEDD5;
+
+  --vn-text-main: #0F172A;
+  --vn-text-muted: #475569;
+  --vn-text-sub: #64748B;
+}
+
+/* Master Body Wallpaper: Calm Botanical Leaf Atmosphere */
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #F0FDF4 !important;
+  background-image: 
+    radial-gradient(circle at 85% 15%, rgba(34, 197, 94, 0.07) 0%, transparent 45%),
+    radial-gradient(circle at 10% 60%, rgba(245, 158, 11, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 90% 85%, rgba(13, 148, 136, 0.05) 0%, transparent 45%),
+    url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M95 20C95 20 75 35 75 60C75 75 85 85 95 85C105 85 115 75 115 60C115 35 95 20 95 20Z' fill='%2316A34A' fill-opacity='0.025'/%3E%3Cpath d='M25 80C25 80 45 65 45 40C45 25 35 15 25 15C15 15 5 25 5 40C5 65 25 80 25 80Z' fill='%2316A34A' fill-opacity='0.025'/%3E%3Cpath d='M75 60C85 60 95 50 95 35' stroke='%2316A34A' stroke-width='1.5' stroke-opacity='0.035' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-size: 100% 100%, 100% 100%, 100% 100%, 160px 160px !important;
+  background-attachment: fixed !important;
+  color: var(--vn-text-main);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Master Layout Container */
+.vunotho-app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ==================== 1. SIDEBAR & COLLAPSIBLE STATES ==================== */
+.vn-sidebar {
+  width: var(--vn-sidebar-expanded-width);
+  background-color: var(--vn-sidebar-bg);
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 40;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+  transition: width 0.28s cubic-bezier(0.4, 0, 0.2, 1), transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-x: hidden;
+}
+
+/* Collapsed Sidebar State */
+.vn-sidebar.collapsed {
+  width: var(--vn-sidebar-collapsed-width);
+}
+
+.vn-sidebar.collapsed .vn-sidebar-text,
+.vn-sidebar.collapsed .vn-sidebar-footer-text,
+.vn-sidebar.collapsed .vn-offline-switch-text {
+  display: none !important;
+}
+
+.vn-sidebar.collapsed .vn-sidebar-header {
+  padding: 1.25rem 0.85rem;
+  justify-content: center;
+}
+
+.vn-sidebar.collapsed .vn-nav-link {
+  padding: 0.75rem;
+  justify-content: center;
+  border-radius: 14px;
+}
+
+.vn-sidebar.collapsed .vn-user-card {
+  justify-content: center;
+  padding: 0.25rem;
+}
+
+.vn-sidebar.collapsed .vn-offline-switch-row {
+  justify-content: center;
+  padding: 0.5rem 0;
+}
+
+.vn-sidebar-header {
+  padding: 1.35rem 1.25rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.vn-collapse-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94A3B8;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.vn-collapse-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+}
+
+.vn-sidebar-nav {
+  flex: 1;
+  padding: 0.5rem 0.85rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.vn-sidebar-nav::-webkit-scrollbar {
+  width: 3px;
+}
+.vn-sidebar-nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+
+.vn-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.65rem 0.95rem;
+  border-radius: 9999px;
+  color: #94A3B8;
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.vn-nav-link:hover {
+  color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.vn-nav-link.active {
+  background-color: var(--vn-green);
+  color: #FFFFFF;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.35);
+}
+
+.vn-nav-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Sidebar Footer */
+.vn-sidebar-footer {
+  padding: 1.15rem 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+}
+
+.vn-user-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.vn-user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #16A34A, #15803D);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
+}
+
+.vn-offline-switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.65rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.vn-switch-toggle {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 20px;
+}
+
+.vn-switch-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.vn-switch-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #334155;
+  transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 9999px;
+}
+
+.vn-switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50%;
+}
+
+input:checked + .vn-switch-slider {
+  background-color: var(--vn-green);
+}
+
+input:checked + .vn-switch-slider:before {
+  transform: translateX(18px);
+}
+
+/* ==================== 2. MAIN CANVAS & TOP HEADER ==================== */
+.vn-main-canvas {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1.75rem 2.25rem 2.5rem;
+}
+
+.vn-top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.vn-user-header-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.35rem 0.75rem 0.35rem 0.35rem;
+  border-radius: 9999px;
+  background: #FFFFFF;
+  border: 1px solid var(--vn-card-border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  position: relative;
+}
+
+.vn-user-dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  background: #FFFFFF;
+  border: 1px solid var(--vn-card-border);
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(10, 46, 25, 0.08);
+  width: 200px;
+  padding: 0.5rem;
+  display: none;
+  z-index: 50;
+}
+
+.vn-user-dropdown-menu.active {
+  display: block;
+}
+
+.vn-dropdown-link {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.6rem 0.85rem;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #334155;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.vn-dropdown-link:hover {
+  background: #F8FAFC;
+  color: #0F172A;
+}
+
+.vn-dropdown-link.logout {
+  color: #DC2626;
+}
+
+.vn-dropdown-link.logout:hover {
+  background: #FEF2F2;
+}
+
+/* ==================== 3. TOP 4 KPI CARDS ==================== */
+.vn-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.vn-kpi-card {
+  background: var(--vn-card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--vn-card-border);
+  border-radius: 1.25rem;
+  padding: 1.25rem 1.35rem;
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+  box-shadow: var(--vn-card-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vn-kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(10, 46, 25, 0.07);
+}
+
+.vn-kpi-icon-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.vn-kpi-icon-circle.icon-green { background-color: var(--vn-green); color: #FFFFFF; }
+.vn-kpi-icon-circle.icon-gold { background-color: #FBBF24; color: #FFFFFF; }
+.vn-kpi-icon-circle.icon-teal { background-color: var(--vn-teal); color: #FFFFFF; }
+.vn-kpi-icon-circle.icon-orange { background-color: var(--vn-orange); color: #FFFFFF; }
+
+/* ==================== 4. THREE-COLUMN CONTENT GRID ==================== */
+.vn-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.vn-card {
+  background: var(--vn-card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--vn-card-border);
+  border-radius: 1.25rem;
+  padding: 1.35rem;
+  box-shadow: var(--vn-card-shadow);
+}
+
+.vn-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.15rem;
+}
+
+.vn-card-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--vn-text-main);
+  letter-spacing: -0.015em;
+}
+
+.vn-link-action {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--vn-green-dark);
+  text-decoration: none;
+}
+
+.vn-link-action:hover {
+  text-decoration: underline;
+}
+
+/* Produce List Rows */
+.vn-produce-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid #F1F5F9;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s ease;
+}
+
+.vn-produce-row:last-child {
+  border-bottom: none;
+}
+
+.vn-produce-img {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background-color: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.vn-demand-pill {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.vn-demand-pill.demand-high { background-color: #ECFDF5; color: #059669; }
+.vn-demand-pill.demand-good { background-color: #F0FDF4; color: #16A34A; }
+.vn-demand-pill.demand-moderate { background-color: #FFFBEB; color: #D97706; }
+
+/* Order Rows */
+.vn-order-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.vn-order-row:last-child {
+  border-bottom: none;
+}
+
+.vn-company-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background-color: #F1F5F9;
+  border: 1px solid #E2E8F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Impact Stat Grid */
+.vn-impact-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.vn-impact-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.vn-impact-circle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Notifications Stream */
+.vn-alert-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.vn-alert-row:last-child {
+  border-bottom: none;
+}
+
+.vn-alert-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Market Prices List */
+.vn-market-price-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid #F1F5F9;
+  font-size: 0.85rem;
+}
+
+.vn-market-price-item:last-child {
+  border-bottom: none;
+}
+
+.vn-delta-up {
+  color: #16A34A;
+  font-weight: 800;
+  font-size: 0.78rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.vn-delta-down {
+  color: #DC2626;
+  font-weight: 800;
+  font-size: 0.78rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Need Help Card (Pastel Botanical Theme) */
+.vn-need-help-card {
+  background: #F0FDF4;
+  border: 1px solid #DCFCE7;
+  border-radius: 1.25rem;
+  padding: 1.35rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(22, 163, 74, 0.06);
+}
+
+.vn-leaf-watermark-svg {
+  position: absolute;
+  right: -14px;
+  bottom: -18px;
+  width: 140px;
+  height: 140px;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.vn-chat-btn {
+  background-color: var(--vn-green-deep);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 0.65rem 1.15rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.vn-chat-btn:hover {
+  background-color: #064E3B;
+}
+
+/* ==================== 5. BOTTOM GROWTH BANNER ==================== */
+.vn-growth-banner {
+  background: linear-gradient(135deg, #071726 0%, #0B2032 50%, #064E3B 100%);
+  border-radius: 1.25rem;
+  padding: 1.5rem 2rem;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(7, 23, 38, 0.18);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+}
+
+.vn-growth-phone-mockup {
+  width: 80px;
+  height: 100px;
+  background: #0B2032;
+  border: 2px solid #1E3E62;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+  position: relative;
+  padding: 0.35rem;
+}
+
+.vn-growth-title {
+  color: #FBBF24;
+  font-weight: 800;
+  font-size: 1.15rem;
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.01em;
+}
+
+.vn-growth-desc {
+  color: #E2E8F0;
+  font-size: 0.82rem;
+  max-width: 480px;
+  line-height: 1.45;
+}
+
+.vn-btn-list-produce {
+  background-color: var(--vn-green);
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 0.82rem;
+  padding: 0.75rem 1.35rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.4);
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.vn-btn-list-produce:hover {
+  background-color: var(--vn-green-dark);
+  transform: translateY(-1px);
+}
+
+/* ==================== 6. BOTTOM FOOTER BAR ==================== */
+.vn-footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--vn-text-muted);
+  padding-top: 0.5rem;
+}
+
+/* Responsive Rules */
+@media (max-width: 1200px) {
+  .vn-content-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .vn-col-3 {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  .vn-impact-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .vn-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+  }
+  .vn-sidebar.open {
+    transform: translateX(0);
+  }
+  .vn-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .vn-content-grid {
+    grid-template-columns: 1fr;
+  }
+  .vn-col-3 {
+    grid-column: span 1;
+    grid-template-columns: 1fr;
+  }
+  .vn-main-canvas {
+    padding: 1.25rem 1rem;
+  }
+  .vn-growth-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .vn-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+  .vn-top-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
